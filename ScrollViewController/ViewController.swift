@@ -12,7 +12,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let top = TopScrollView(frame:CGRect(x: 0, y: 100, width: view.bounds.size.width, height: 44))
+        top.titles = ["产不多", "国际要闻", "好像可以用", "fsadfas", "fasdfasdfadf", "国际要闻", "好像可以用", "fsadfas", "国际要闻", "好像可以用", "fsadfas"]
+        top.backgroundColor = UIColor.redColor()
+        top.scrollLineColor = UIColor.greenColor()
+        top.scrollLineHeight = 5
+        
+        view.addSubview(top)
     }
 
     override func didReceiveMemoryWarning() {

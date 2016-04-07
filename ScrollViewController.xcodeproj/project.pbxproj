@@ -14,6 +14,9 @@
 		4B0DD7001CB49EEC00439631 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */; };
 		4B0DD70B1CB49EEC00439631 /* ScrollViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD70A1CB49EEC00439631 /* ScrollViewControllerTests.swift */; };
 		4B0DD7161CB49EEC00439631 /* ScrollViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */; };
+		4B0DD7241CB4F0CA00439631 /* TopScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7231CB4F0CA00439631 /* TopScrollView.swift */; };
+		4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */; };
+		4B0DD7281CB4F42F00439631 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7271CB4F42F00439631 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		4B0DD7111CB49EEC00439631 /* ScrollViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewControllerUITests.swift; sourceTree = "<group>"; };
 		4B0DD7171CB49EEC00439631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B0DD7231CB4F0CA00439631 /* TopScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopScrollView.swift; sourceTree = "<group>"; };
+		4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
+		4B0DD7271CB4F42F00439631 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,9 @@
 				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
 				4B0DD7011CB49EEC00439631 /* Info.plist */,
+				4B0DD7231CB4F0CA00439631 /* TopScrollView.swift */,
+				4B0DD7271CB4F42F00439631 /* ContentView.swift */,
+				4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */,
 			);
 			path = ScrollViewController;
 			sourceTree = "<group>";
@@ -256,7 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B0DD7241CB4F0CA00439631 /* TopScrollView.swift in Sources */,
+				4B0DD7281CB4F42F00439631 /* ContentView.swift in Sources */,
 				4B0DD6F81CB49EEC00439631 /* ViewController.swift in Sources */,
+				4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */,
 				4B0DD6F61CB49EEC00439631 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,6 +414,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ScrollViewController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZeroJ.ScrollViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -413,6 +426,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ScrollViewController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ZeroJ.ScrollViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
