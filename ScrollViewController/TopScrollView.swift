@@ -16,6 +16,8 @@ struct SegmentStyle {
     var showLine = true
     /// 是否缩放文字
     var scaleTitle = true
+    /// 标题是否可以滚动
+    var canScroll = true
     /// 下面的滚动条的高度
     var scrollLineHeight: CGFloat = 2
     /// 文字颜色
@@ -24,15 +26,19 @@ struct SegmentStyle {
     var scrollLineColor = UIColor.brownColor()
     /// 遮盖的背景颜色
     var coverBackgroundColor = UIColor.lightTextColor()
+    /// cover的高度
+    var coverHeight: CGFloat = 28.0
     /// 文字间的间隔
     var titleMargin: CGFloat = 15
     /// 文字 字体
     var titleFont = UIFont.systemFontOfSize(14.0)
     /// 遮盖圆角
-    var coverCornerRadius = 5.0
-    
-    
-    
+    var coverCornerRadius = 14.0
+    /// 放大倍数
+    var bigScale: CGFloat = 1.3
+    /// 缩小倍数
+    var smallScale: CGFloat = 1.0
+
 }
 
 
@@ -86,7 +92,6 @@ class TopScrollView: UIView {
 //        didSet {
 //            for (index, label) in labelsArray.enumerate() {
 //                if index == selectedIndex {
-//                    // 设置transform 需要在控件将要显示或者已经显示在屏幕上的时候设置, 否则字体等显示不正常
 //                    label.transform = CGAffineTransformMakeScale(1.3, 1.3)
 //                }
 //            }
@@ -113,7 +118,10 @@ class TopScrollView: UIView {
         self.segmentStyle = segmentStyle
         self.titles = titles
         super.init(frame: frame)
-        
+        if !self.segmentStyle.canScroll { // 不能滚动的时候就不要把缩放和遮盖或者滚动条同时使用, 否则显示效果不好
+
+            self.segmentStyle.scaleTitle = (!self.segmentStyle.showCover || !self.segmentStyle.showLine)
+        }
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         setupTitles()
         setupUI()
@@ -154,57 +162,45 @@ class TopScrollView: UIView {
         // 再设置滚动条和cover的位置
         setupScrollLineAndCover()
         
-        if let lastBtn = labelsArray.last {
-            scrollView.contentSize = CGSize(width: CGRectGetMaxX(lastBtn.frame) + segmentStyle.titleMargin, height: 0)
-            
+        if segmentStyle.canScroll { // 设置滚动区域
+            if let lastLabel = labelsArray.last {
+                scrollView.contentSize = CGSize(width: CGRectGetMaxX(lastLabel.frame) + segmentStyle.titleMargin, height: 0)
+                
+            }
         }
-    }
-    // 先设置label的位置
-    private func setupScrollLineAndCover() {
-        if let line = scrollLine {
-            line.backgroundColor = segmentStyle.scrollLineColor
-            scrollView.addSubview(line)
-            
-        }
-        if let cover = coverLayer {
-            cover.backgroundColor = segmentStyle.coverBackgroundColor
-            scrollView.insertSubview(cover, atIndex: 0)
-            
-        }
-        let coverX = labelsArray[0].frame.origin.x
-        let coverW = labelsArray[0].frame.size.width
-        let coverH: CGFloat = 28
-        let coverY = (bounds.size.height - coverH) / 2
-        
-        scrollLine?.frame = CGRect(x: coverX, y: bounds.size.height - segmentStyle.scrollLineHeight, width: coverW, height: segmentStyle.scrollLineHeight)
-        
-        // 这里x-xGap width+wGap 是为了让遮盖的左右边缘和文字有一定的距离
-        coverLayer?.frame = CGRect(x: coverX - CGFloat(xGap), y: coverY, width: coverW + CGFloat(wGap), height: coverH)
-        
 
     }
-    // 再设置滚动条和cover的位置
+    
+    // 先设置label的位置
     private func setUpLabelsPosition() {
         var titleX: CGFloat = 0.0
         let titleY: CGFloat = 0.0
         var titleW: CGFloat = 0.0
         let titleH = bounds.size.height - segmentStyle.scrollLineHeight
         
-        var textWidthSum: CGFloat = segmentStyle.titleMargin
-        for textWidth in titlesWidthArray {
-            textWidthSum = textWidthSum + textWidth + segmentStyle.titleMargin
-        }
-        
-        
-        if textWidthSum < currentWidth {//小余屏幕宽度,平分宽度
+        if !segmentStyle.canScroll {// 标题不能滚动, 平分宽度
             titleW = currentWidth / CGFloat(titles.count)
-            
+        
             for (index, label) in labelsArray.enumerate() {
                 
                 titleX = CGFloat(index) * titleW
                 
                 label.frame = CGRect(x: titleX, y: titleY, width: titleW, height: titleH)
                 
+                if !segmentStyle.scaleTitle {
+                    // 这里不能用return 使用continue 跳入下一次遍历
+                    continue
+                }
+                // 缩放, 设置初始的label的transform
+                // FIXME: 这里目前只是默认设置第一个label为初始的label, 修改为可指定为任意的...
+                if index == 0 {
+                    let firstLabel = label as! CustomLabel
+                    // 如果是在layoutSubview()里面设置使用的transform后label的frame不会改变
+                    firstLabel.transform = CGAffineTransformMakeScale(segmentStyle.bigScale , segmentStyle.bigScale)
+                    firstLabel.currentTransformSx = segmentStyle.bigScale
+                    
+                }
+
             }
             
         } else {
@@ -220,15 +216,15 @@ class TopScrollView: UIView {
                 label.frame = CGRect(x: titleX, y: titleY, width: titleW, height: titleH)
                 
                 if !segmentStyle.scaleTitle {
-                    return
+                    continue
                 }
                 // 缩放, 设置初始的label的transform
                 // FIXME: 这里目前只是默认设置第一个label为初始的label, 修改为可指定为任意的...
                 if index == 0 {
                     let firstLabel = label as! CustomLabel
                     // 如果是在layoutSubview()里面设置使用的transform后label的frame不会改变
-                    firstLabel.transform = CGAffineTransformMakeScale(1.3, 1.3)
-                    firstLabel.currentTransformSx = 1.3
+                    firstLabel.transform = CGAffineTransformMakeScale(segmentStyle.bigScale , segmentStyle.bigScale)
+                    firstLabel.currentTransformSx = segmentStyle.bigScale
                     
                 }
             }
@@ -236,7 +232,34 @@ class TopScrollView: UIView {
         }
         
     }
+    
+    // 再设置滚动条和cover的位置
+    private func setupScrollLineAndCover() {
+        if let line = scrollLine {
+            line.backgroundColor = segmentStyle.scrollLineColor
+            scrollView.addSubview(line)
+            
+        }
+        if let cover = coverLayer {
+            cover.backgroundColor = segmentStyle.coverBackgroundColor
+            scrollView.insertSubview(cover, atIndex: 0)
+            
+        }
+        let coverX = labelsArray[0].frame.origin.x
+        let coverW = labelsArray[0].frame.size.width
+        let coverH: CGFloat = segmentStyle.coverHeight
+        let coverY = (bounds.size.height - coverH) / 2
+        if segmentStyle.canScroll {
+            // 这里x-xGap width+wGap 是为了让遮盖的左右边缘和文字有一定的距离
+            coverLayer?.frame = CGRect(x: coverX - CGFloat(xGap), y: coverY, width: coverW + CGFloat(wGap), height: coverH)
+        } else {
+            coverLayer?.frame = CGRect(x: coverX + CGFloat(xGap), y: coverY, width: coverW - CGFloat(wGap), height: coverH)
+        }
 
+        scrollLine?.frame = CGRect(x: coverX, y: bounds.size.height - segmentStyle.scrollLineHeight, width: coverW, height: segmentStyle.scrollLineHeight)
+
+        
+    }
     // 点击时直接实现变化
     func titleLabelOnClick(tapGes: UITapGestureRecognizer) {
         guard let currentLabel = tapGes.view as? CustomLabel else { return }
@@ -250,17 +273,25 @@ class TopScrollView: UIView {
                 let oldLabel = self.labelsArray[self.oldIndex] as! CustomLabel
                 oldLabel.transform = CGAffineTransformIdentity
                 
-                currentLabel.transform = CGAffineTransformMakeScale(1.3, 1.3)
-                currentLabel.currentTransformSx = 1.3
-                oldLabel.currentTransformSx = 1.0
+                currentLabel.transform = CGAffineTransformMakeScale(self.segmentStyle.bigScale, self.segmentStyle.bigScale)
+                currentLabel.currentTransformSx = self.segmentStyle.bigScale
+                oldLabel.currentTransformSx = self.segmentStyle.smallScale
             }
             
             self.scrollLine?.frame.origin.x = currentLabel.frame.origin.x
             // 注意, 通过bounds 获取到的width 是没有进行transform之前的 所以使用frame
             self.scrollLine?.frame.size.width = currentLabel.frame.size.width
             
-            self.coverLayer?.frame.origin.x = currentLabel.frame.origin.x - CGFloat(self.xGap)
-            self.coverLayer?.frame.size.width = currentLabel.frame.size.width + CGFloat(self.wGap)
+            
+            if self.segmentStyle.canScroll {
+                self.coverLayer?.frame.origin.x = currentLabel.frame.origin.x - CGFloat(self.xGap)
+                self.coverLayer?.frame.size.width = currentLabel.frame.size.width + CGFloat(self.wGap)
+            } else {
+                self.coverLayer?.frame.origin.x = currentLabel.frame.origin.x + CGFloat(self.xGap)
+                self.coverLayer?.frame.size.width = currentLabel.frame.size.width - CGFloat(self.wGap)
+            }
+            
+
             
 
             
@@ -271,73 +302,54 @@ class TopScrollView: UIView {
     }
     
     // 手动滚动时需要提供动画效果
-    func adjustUIWithProgress(progress: CGFloat,  leftIndex: Int, rightIndex: Int) {
-        oldIndex = progress >= 0 ? rightIndex : leftIndex
-        currentIndex = progress >= 0 ? leftIndex : rightIndex
+    func adjustUIWithProgress(progress: CGFloat,  oldIndex: Int, currentIndex: Int) {
+        // 记录当前的currentIndex以便于在点击的时候处理
+        self.oldIndex = currentIndex
         
-        let leftLabel = labelsArray[leftIndex] as! CustomLabel
-        let rightLabel = labelsArray[rightIndex] as! CustomLabel
-        
-        // 这里使用center.x显示不正确
-        let xDistance = rightLabel.frame.origin.x - leftLabel.frame.origin.x
-        
-        // 注意, 通过bounds 获取到的width 是没有进行transform之前的 所以使用frame, 避免因为使用了缩放效果引起显示位置不正确
+        print("\(currentIndex)------------currentIndex")
 
-        let wDistance = rightLabel.frame.size.width - leftLabel.frame.size.width
-
-        let deltaX = xDistance * progress
-        let deltaW = wDistance * progress
+        let oldLabel = labelsArray[oldIndex] as! CustomLabel
+        let currentLabel = labelsArray[currentIndex] as! CustomLabel
         
+        // 需要改变的距离 和 宽度
+        let xDistance = currentLabel.frame.origin.x - oldLabel.frame.origin.x
+        let wDistance = currentLabel.frame.size.width - oldLabel.frame.size.width
         
         // 设置滚动条位置
-        scrollLine?.frame.origin.x += deltaX
-        scrollLine?.frame.size.width += deltaW
+        scrollLine?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress
+        scrollLine?.frame.size.width = oldLabel.frame.size.width + wDistance * progress
         
-        // 设置 cover位置
-        coverLayer?.frame.size.width += deltaW
-        coverLayer?.frame.origin.x += deltaX
         
+        if segmentStyle.canScroll {
+            // 设置 cover位置
+            coverLayer?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress - CGFloat(xGap)
+            coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress + CGFloat(wGap)
+        } else {
+            // 设置 cover位置
+            coverLayer?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress + CGFloat(xGap)
+            coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress - CGFloat(wGap)
+        }
+
         
         
         if !segmentStyle.scaleTitle {
             return
         }
+        
         // 注意左右间的比例是相关连的, 加减相同
-        leftLabel.currentTransformSx -= 0.3 * progress
-        rightLabel.currentTransformSx += 0.3 * progress
+        // 设置字体缩放
         
-        leftLabel.transform = CGAffineTransformMakeScale(leftLabel.currentTransformSx, leftLabel.currentTransformSx)
-        rightLabel.transform = CGAffineTransformMakeScale(rightLabel.currentTransformSx, rightLabel.currentTransformSx)
+        let deltaScale = (segmentStyle.bigScale - segmentStyle.smallScale)
         
-//        print("\(leftLabel.currentTransformSx)-----\(rightLabel.currentTransformSx)")
-        
-        // 由于使用了缩放的时候,label的frame都在变化, 所以根据以上的方法设置的 coverLayer, scrollLine的frame和width就回显示不正常, 所以在将要缩放完成的时候(0.02 为大概的范围), 重新设置 --- 影响性能!!!
-        if fabs(leftLabel.currentTransformSx - 1.0) <= 0.02 {
-            
-            // 设置滚动条位置
-            scrollLine?.frame.origin.x = rightLabel.frame.origin.x - CGFloat(xGap)
-            scrollLine?.frame.size.width = rightLabel.frame.size.width + CGFloat(wGap)
-            
-            // 设置 cover位置
-            coverLayer?.frame.size.width = rightLabel.frame.size.width + CGFloat(wGap)
-            coverLayer?.frame.origin.x = rightLabel.frame.origin.x - CGFloat(xGap)
-            
-        }
-        if fabs(rightLabel.currentTransformSx - 1.0) <= 0.02 {
-            
-            // 设置滚动条位置
-            scrollLine?.frame.origin.x = leftLabel.frame.origin.x - CGFloat(xGap)
-            scrollLine?.frame.size.width = leftLabel.frame.size.width + CGFloat(wGap)
-            
-            // 设置 cover位置
-            coverLayer?.frame.size.width = leftLabel.frame.size.width + CGFloat(wGap)
-            coverLayer?.frame.origin.x = leftLabel.frame.origin.x - CGFloat(xGap)
-            
-        }
+        oldLabel.currentTransformSx = segmentStyle.bigScale - deltaScale * progress
+        currentLabel.currentTransformSx = segmentStyle.smallScale + deltaScale * progress
 
+        oldLabel.transform = CGAffineTransformMakeScale(oldLabel.currentTransformSx, oldLabel.currentTransformSx)
+        currentLabel.transform = CGAffineTransformMakeScale(currentLabel.currentTransformSx, currentLabel.currentTransformSx)
 
+        
     }
-
+    // 居中显示title
     func adjustTitleOffSetToCurrentIndex(currentIndex: Int) {
         let currentLabel = labelsArray[currentIndex]
 
@@ -346,7 +358,7 @@ class TopScrollView: UIView {
             offSetX = 0
         }
         
-        var maxOffSetX = scrollView.contentSize.width - currentWidth + segmentStyle.titleMargin
+        var maxOffSetX = scrollView.contentSize.width - currentWidth
         
         // 可以滚动的区域小余屏幕宽度
         if maxOffSetX < 0 {

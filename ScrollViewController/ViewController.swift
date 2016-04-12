@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let titles = ["产不多", "国际要闻", "好像可以用", "fsadfas", "fasdfasdfadf", "国际要闻", "好像可以用", "fsadfas", "国际要闻", "好像可以用", "fsadfas"]
+        let titles = ["产不多", "国际要闻", "国际闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻"]
         
         addChildVcs()
         
