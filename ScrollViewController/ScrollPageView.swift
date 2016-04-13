@@ -35,13 +35,7 @@ class ScrollPageView: UIView {
     
     
     func commonInit() {
-        // 不要添加navigationController包装后的子控制器
-        for childVc in childVcs {
-            if childVc.isKindOfClass(UINavigationController.self) {
-                fatalError("不要添加UINavigationController包装后的子控制器")
-            }
-        }
-        
+
         topView = TopScrollView(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44), segmentStyle: segmentStyle, titles: titlesArray)
         
         contentView = ContentView(frame: CGRect(x: 0, y: CGRectGetMaxY(topView.frame), width: bounds.size.width, height: bounds.size.height - 44), childVcs: childVcs)
@@ -50,7 +44,8 @@ class ScrollPageView: UIView {
         addSubview(contentView)
         addSubview(topView)
         // 在这里调用了懒加载的collectionView, 那么之前设置的self.frame将会用于collectionView,如果在layoutsubviews()里面没有相关的处理frame的操作, 那么将导致内容显示不正常
-        topView.titleBtnOnClick = {(label: UILabel, index: Int) in
+        // 避免循环引用
+        topView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
             
             // 不要执行collectionView的scrollView的滚动代理方法
             self.contentView.forbidTouchToAdjustPosition = true
@@ -63,15 +58,9 @@ class ScrollPageView: UIView {
 }
 
 
-
-
 extension ScrollPageView: ContentViewDelegate {
-    func contentViewDidEndMoveToIndex(currentIndex: Int) {
-        topView.adjustTitleOffSetToCurrentIndex(currentIndex)
-        topView.adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: currentIndex)
+    var titleView: TopScrollView {
+        return topView
     }
-    
-    func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat) {
-        topView.adjustUIWithProgress(progress, oldIndex: fromIndex, currentIndex: toIndex)
-    }
+
 }

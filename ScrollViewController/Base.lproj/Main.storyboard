@@ -17,13 +17,26 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="no2-24-4Ri">
+                                <rect key="frame" x="28" y="568" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="sv7-4Z-Oer" kind="show" id="1ar-EY-0yE"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="no2-24-4Ri" secondAttribute="bottom" constant="2" id="6VC-gd-ukH"/>
+                            <constraint firstItem="no2-24-4Ri" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="28" id="fJh-38-Ouq"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mt9-3l-vZi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="723" y="360"/>
+            <point key="canvasLocation" x="1054" y="355"/>
         </scene>
         <!--Vc1 Controller-->
         <scene sceneID="g6R-7x-oDT">
@@ -37,11 +50,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSE-QW-fa8">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSE-QW-fa8">
                                 <rect key="frame" x="70" y="113" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="by8-mp-D0f" kind="show" id="Dah-3f-1c0"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="ZAT-0e-pfF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -51,10 +64,11 @@
                             <constraint firstItem="nSE-QW-fa8" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leadingMargin" constant="50" id="kMa-FA-Sv1"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="ijX-kr-hj4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pA8-tx-ia2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1370" y="346"/>
+            <point key="canvasLocation" x="323" y="355"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="weN-VC-QRt">
@@ -67,7 +81,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="CIq-eD-6N1"/>
+                        <segue destination="igq-1V-HfK" kind="relationship" relationship="rootViewController" id="XPi-MF-B7K"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaD-NS-tc0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -126,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rVI-Gj-MIf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="704" y="1072"/>
+            <point key="canvasLocation" x="760" y="1115"/>
         </scene>
     </scenes>
 </document>

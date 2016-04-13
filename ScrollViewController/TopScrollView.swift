@@ -8,20 +8,25 @@
 
 import UIKit
 
+protocol TopScrollViewDelegate: class {
+    var contentView:ContentView { get }
+    
+    
+}
 
 struct SegmentStyle {
     /// 是否显示遮盖
-    var showCover = true
+    var showCover = false
     /// 是否显示下划线
-    var showLine = true
+    var showLine = false
     /// 是否缩放文字
-    var scaleTitle = true
+    var scaleTitle = false
     /// 是否可以滚动标题
     var scrollTitle = true
     /// 是否颜色渐变
     var gradualChangeTitleColor = true
     
-    /// 下面的滚动条的高度
+    /// 下面的滚动条的高度 默认2
     var scrollLineHeight: CGFloat = 2
     /// 下面的滚动条的颜色
     var scrollLineColor = UIColor.brownColor()
@@ -31,21 +36,21 @@ struct SegmentStyle {
     /// 遮盖圆角
     var coverCornerRadius = 14.0
     
-    /// cover的高度
+    /// cover的高度 默认28
     var coverHeight: CGFloat = 28.0
-    /// 文字间的间隔
+    /// 文字间的间隔 默认15
     var titleMargin: CGFloat = 15
-    /// 文字 字体
+    /// 文字 字体 默认14.0
     var titleFont = UIFont.systemFontOfSize(14.0)
     
-    /// 放大倍数
+    /// 放大倍数 默认1.3
     var titleBigScale: CGFloat = 1.3
     /// 默认倍数 不可修改
     let titleOriginalScale: CGFloat = 1.0
     
-    /// 文字正常状态颜色 请使用RGB空间的颜色值!!
+    /// 文字正常状态颜色 请使用RGB空间的颜色值!! 如果提供的不是RGB空间的颜色值就可能crash
     var normalTitleColor = UIColor.greenColor()
-    /// 文字选中状态颜色 请使用RGB空间的颜色值!!
+    /// 文字选中状态颜色 请使用RGB空间的颜色值!! 如果提供的不是RGB空间的颜色值就可能crash
     var selectedTitleColor = UIColor.blueColor()
 
 }
@@ -61,6 +66,17 @@ class TopScrollView: UIView {
      修改未在初始化方法里面来设置frame并且设置transform后就可以正常显示了
      
      */
+    
+    
+    //    var selectedIndex = 0 {
+    //        didSet {
+    //            for (index, label) in labelsArray.enumerate() {
+    //                if index == selectedIndex {
+    //                    label.transform = CGAffineTransformMakeScale(1.3, 1.3)
+    //                }
+    //            }
+    //        }
+    //    }
     
     /// 所有的title设置
     var segmentStyle: SegmentStyle
@@ -88,7 +104,7 @@ class TopScrollView: UIView {
     /// 所有的标题
     var titles:[String]
     
-    private lazy var scrollView: UIScrollView = {[weak self] in
+    private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.bounces = true
@@ -97,27 +113,18 @@ class TopScrollView: UIView {
         
     }()
     
-//    var selectedIndex = 0 {
-//        didSet {
-//            for (index, label) in labelsArray.enumerate() {
-//                if index == selectedIndex {
-//                    label.transform = CGAffineTransformMakeScale(1.3, 1.3)
-//                }
-//            }
-//        }
-//    }
 
+    /// 滚动条
     private lazy var scrollLine: UIView? = {[unowned self] in
         let line = UIView()
         return self.segmentStyle.showLine ? line : nil
     }()
-
+    /// 遮盖
     private lazy var coverLayer: UIView? = {[unowned self] in
         let cover = UIView()
         cover.layer.cornerRadius = CGFloat(self.segmentStyle.coverCornerRadius)
         // 这里只有一个cover 需要设置圆角, 故不用考虑离屏渲染的消耗, 直接设置 masksToBounds 来设置圆角
         cover.layer.masksToBounds = true
-//        cover.backgroundColor = self.segmentStyle.coverBackgroundColor
         
         return self.segmentStyle.showCover ? cover : nil
     
@@ -138,6 +145,7 @@ class TopScrollView: UIView {
     private lazy var normalColorRgb: (r: Int, g: Int, b: Int) = self.getColorRGB(self.segmentStyle.normalTitleColor)!
     private lazy var selectedTitleColorRgb: (r: Int, g: Int, b: Int) = self.getColorRGB(self.segmentStyle.selectedTitleColor)!
     
+    //FIXME: 如果提供的不是RGB空间的颜色值就可能crash
     private func getColorRGB(color: UIColor) -> (r: Int, g: Int, b: Int)? {
         let colorString = String(color)
         let colorArr = colorString.componentsSeparatedByString(" ")
@@ -147,7 +155,21 @@ class TopScrollView: UIView {
         return (r: r, g: g, b: b)
         
     }
+    /// 背景图片
+    var backgroundImage: UIImage? = nil {
+        didSet {
+            // 在设置了背景图片的时候才添加imageView
+            if let image = backgroundImage {
+                backgroundImageView.image = image
+                insertSubview(backgroundImageView, atIndex: 0)
 
+            }
+        }
+    }
+    private lazy var backgroundImageView: UIImageView = {[unowned self] in
+        let imageView = UIImageView(frame: self.bounds)
+        return imageView
+    }()
     
     /// 初始化的过程中做了太多的事了 !!!!!!
     init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
@@ -156,7 +178,7 @@ class TopScrollView: UIView {
         super.init(frame: frame)
         if !self.segmentStyle.scrollTitle { // 不能滚动的时候就不要把缩放和遮盖或者滚动条同时使用, 否则显示效果不好
 
-            self.segmentStyle.scaleTitle = (!self.segmentStyle.showCover || !self.segmentStyle.showLine)
+            self.segmentStyle.scaleTitle = !(self.segmentStyle.showCover || self.segmentStyle.showLine)
         }
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         setupTitles()
@@ -278,7 +300,7 @@ class TopScrollView: UIView {
             // 这里x-xGap width+wGap 是为了让遮盖的左右边缘和文字有一定的距离
             coverLayer?.frame = CGRect(x: coverX - CGFloat(xGap), y: coverY, width: coverW + CGFloat(wGap), height: coverH)
         } else {
-            coverLayer?.frame = CGRect(x: coverX + CGFloat(xGap), y: coverY, width: coverW - CGFloat(wGap), height: coverH)
+            coverLayer?.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
         }
 
         scrollLine?.frame = CGRect(x: coverX, y: bounds.size.height - segmentStyle.scrollLineHeight, width: coverW, height: segmentStyle.scrollLineHeight)
@@ -321,8 +343,8 @@ class TopScrollView: UIView {
                 self.coverLayer?.frame.origin.x = currentLabel.frame.origin.x - CGFloat(self.xGap)
                 self.coverLayer?.frame.size.width = currentLabel.frame.size.width + CGFloat(self.wGap)
             } else {
-                self.coverLayer?.frame.origin.x = currentLabel.frame.origin.x + CGFloat(self.xGap)
-                self.coverLayer?.frame.size.width = currentLabel.frame.size.width - CGFloat(self.wGap)
+                self.coverLayer?.frame.origin.x = currentLabel.frame.origin.x
+                self.coverLayer?.frame.size.width = currentLabel.frame.size.width
             }
             
         }
@@ -354,8 +376,8 @@ class TopScrollView: UIView {
             coverLayer?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress - CGFloat(xGap)
             coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress + CGFloat(wGap)
         } else {
-            coverLayer?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress + CGFloat(xGap)
-            coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress - CGFloat(wGap)
+            coverLayer?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress
+            coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress
         }
         
         // 文字颜色渐变
@@ -410,6 +432,9 @@ class TopScrollView: UIView {
         scrollView.setContentOffset(CGPoint(x:offSetX, y: 0), animated: true)
     }
 
+    deinit {
+        print("\(self.debugDescription) --- 销毁")
+    }
 }
 
 
