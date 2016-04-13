@@ -14,7 +14,7 @@ class OriginalCode: UIView {
     static let cellId = "cellId"
     var segmentStyle = SegmentStyle()
     
-    var topView: TopScrollView!
+    var topView: ScrollSegmentView!
     
     lazy var contentView: UIView! = UIView(frame: CGRectZero)
     var titlesArray: [String] = []
@@ -77,7 +77,7 @@ class OriginalCode: UIView {
             }
         }
         
-        topView = TopScrollView(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44), segmentStyle: segmentStyle, titles: titlesArray)
+        topView = ScrollSegmentView(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44), segmentStyle: segmentStyle, titles: titlesArray)
         topView.backgroundColor = UIColor.lightGrayColor()
         
         contentView.frame = CGRect(x: 0, y: CGRectGetMaxY(topView.frame), width: bounds.size.width, height: bounds.size.height - 44)

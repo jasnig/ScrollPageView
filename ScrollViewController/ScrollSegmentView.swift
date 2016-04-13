@@ -8,55 +8,7 @@
 
 import UIKit
 
-protocol TopScrollViewDelegate: class {
-    var contentView:ContentView { get }
-    
-    
-}
-
-struct SegmentStyle {
-    /// 是否显示遮盖
-    var showCover = false
-    /// 是否显示下划线
-    var showLine = false
-    /// 是否缩放文字
-    var scaleTitle = false
-    /// 是否可以滚动标题
-    var scrollTitle = true
-    /// 是否颜色渐变
-    var gradualChangeTitleColor = true
-    
-    /// 下面的滚动条的高度 默认2
-    var scrollLineHeight: CGFloat = 2
-    /// 下面的滚动条的颜色
-    var scrollLineColor = UIColor.brownColor()
-    
-    /// 遮盖的背景颜色
-    var coverBackgroundColor = UIColor.lightTextColor()
-    /// 遮盖圆角
-    var coverCornerRadius = 14.0
-    
-    /// cover的高度 默认28
-    var coverHeight: CGFloat = 28.0
-    /// 文字间的间隔 默认15
-    var titleMargin: CGFloat = 15
-    /// 文字 字体 默认14.0
-    var titleFont = UIFont.systemFontOfSize(14.0)
-    
-    /// 放大倍数 默认1.3
-    var titleBigScale: CGFloat = 1.3
-    /// 默认倍数 不可修改
-    let titleOriginalScale: CGFloat = 1.0
-    
-    /// 文字正常状态颜色 请使用RGB空间的颜色值!! 如果提供的不是RGB空间的颜色值就可能crash
-    var normalTitleColor = UIColor.greenColor()
-    /// 文字选中状态颜色 请使用RGB空间的颜色值!! 如果提供的不是RGB空间的颜色值就可能crash
-    var selectedTitleColor = UIColor.blueColor()
-
-}
-
-
-class TopScrollView: UIView {
+class ScrollSegmentView: UIView {
     
     
     /**
@@ -113,7 +65,6 @@ class TopScrollView: UIView {
         
     }()
     
-
     /// 滚动条
     private lazy var scrollLine: UIView? = {[unowned self] in
         let line = UIView()
@@ -131,7 +82,7 @@ class TopScrollView: UIView {
     }()
     
     /// 懒加载颜色的rgb变化值, 不要每次滚动时都计算
-    private lazy var rgbDelta: (deltaR: Int, deltaG: Int, deltaB: Int) = {[unowned self] in
+    private lazy var rgbDelta: (deltaR: CGFloat, deltaG: CGFloat, deltaB: CGFloat) = {[unowned self] in
         let normalColorRgb = self.normalColorRgb
         let selectedTitleColorRgb = self.selectedTitleColorRgb
         let deltaR = normalColorRgb.r - selectedTitleColorRgb.r
@@ -142,17 +93,45 @@ class TopScrollView: UIView {
     }()
     
     /// 懒加载颜色的rgb变化值, 不要每次滚动时都计算
-    private lazy var normalColorRgb: (r: Int, g: Int, b: Int) = self.getColorRGB(self.segmentStyle.normalTitleColor)!
-    private lazy var selectedTitleColorRgb: (r: Int, g: Int, b: Int) = self.getColorRGB(self.segmentStyle.selectedTitleColor)!
+    private lazy var normalColorRgb: (r: CGFloat, g: CGFloat, b: CGFloat) = {
+        
+        if let normalRgb = self.getColorRGB(self.segmentStyle.normalTitleColor) {
+            return normalRgb
+        } else {
+            fatalError("设置普通状态的文字颜色时 请使用RGB空间的颜色值")
+        }
+        
+    }()
+    private lazy var selectedTitleColorRgb: (r: CGFloat, g: CGFloat, b: CGFloat) =  {
+        
+        if let selectedRgb = self.getColorRGB(self.segmentStyle.selectedTitleColor) {
+            return selectedRgb
+        } else {
+            fatalError("设置选中状态的文字颜色时 请使用RGB空间的颜色值")
+        }
+        
+    }()
     
     //FIXME: 如果提供的不是RGB空间的颜色值就可能crash
-    private func getColorRGB(color: UIColor) -> (r: Int, g: Int, b: Int)? {
-        let colorString = String(color)
-        let colorArr = colorString.componentsSeparatedByString(" ")
-        guard let r = Int(colorArr[1]), let g = Int(colorArr[2]), let b = Int(colorArr[3]) else {
-            return nil
+    private func getColorRGB(color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat)? {
+//        let colorString = String(color)
+//        let colorArr = colorString.componentsSeparatedByString(" ")
+//        print(colorString)
+//        guard let r = Int(colorArr[1]), let g = Int(colorArr[2]), let b = Int(colorArr[3]) else {
+//            return nil
+//        }
+        
+        
+        let numOfComponents = CGColorGetNumberOfComponents(color.CGColor)
+        if numOfComponents == 4 {
+            let componemts = CGColorGetComponents(color.CGColor)
+//            print("\(componemts[0]) --- \(componemts[1]) ---- \(componemts[2]) --- \(componemts[3])")
+
+            return (r: componemts[0], g: componemts[1], b: componemts[2])
+
         }
-        return (r: r, g: g, b: b)
+        return nil
+        
         
     }
     /// 背景图片
@@ -311,6 +290,7 @@ class TopScrollView: UIView {
     func titleLabelOnClick(tapGes: UITapGestureRecognizer) {
         guard let currentLabel = tapGes.view as? CustomLabel else { return }
         currentIndex = currentLabel.tag
+        // 重复点击时的相应, 这里没有处理, 可以传递给外界来处理
         if currentIndex == oldIndex { return }
         
         adjustTitleOffSetToCurrentIndex(currentIndex)
@@ -383,12 +363,13 @@ class TopScrollView: UIView {
         // 文字颜色渐变
         if segmentStyle.gradualChangeTitleColor {
             
-            oldLabel.textColor = UIColor(red:CGFloat(selectedTitleColorRgb.r) + CGFloat(rgbDelta.deltaR) * progress, green: CGFloat(selectedTitleColorRgb.g) + CGFloat(rgbDelta.deltaG) * progress, blue: CGFloat(selectedTitleColorRgb.b) + CGFloat(rgbDelta.deltaB) * progress, alpha: 1.0)
+            oldLabel.textColor = UIColor(red:selectedTitleColorRgb.r + rgbDelta.deltaR * progress, green: selectedTitleColorRgb.g + rgbDelta.deltaG * progress, blue: selectedTitleColorRgb.b + rgbDelta.deltaB * progress, alpha: 1.0)
 
-            currentLabel.textColor = UIColor(red:CGFloat(normalColorRgb.r) - CGFloat(rgbDelta.deltaR) * progress, green: CGFloat(normalColorRgb.g) - CGFloat(rgbDelta.deltaG) * progress, blue: CGFloat(normalColorRgb.b) - CGFloat(rgbDelta.deltaB) * progress, alpha: 1.0)
+            currentLabel.textColor = UIColor(red: normalColorRgb.r - rgbDelta.deltaR * progress, green: normalColorRgb.g - rgbDelta.deltaG * progress, blue: normalColorRgb.b - rgbDelta.deltaB * progress, alpha: 1.0)
             
             
         }
+        
         
         // 缩放文字
         if !segmentStyle.scaleTitle {
@@ -430,6 +411,22 @@ class TopScrollView: UIView {
         }
         
         scrollView.setContentOffset(CGPoint(x:offSetX, y: 0), animated: true)
+        
+        // 没有渐变效果的时候设置切换title时的颜色
+        if !segmentStyle.gradualChangeTitleColor {
+
+
+            for (index, label) in labelsArray.enumerate() {
+                if index == currentIndex {
+                    label.textColor = segmentStyle.selectedTitleColor
+
+                } else {
+                    label.textColor = segmentStyle.normalTitleColor
+
+                }
+            }
+        }
+
     }
 
     deinit {

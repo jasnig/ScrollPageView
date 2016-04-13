@@ -21,8 +21,11 @@
 		4B0DD7001CB49EEC00439631 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */; };
 		4B0DD70B1CB49EEC00439631 /* ScrollViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD70A1CB49EEC00439631 /* ScrollViewControllerTests.swift */; };
 		4B0DD7161CB49EEC00439631 /* ScrollViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */; };
-		4B0DD7241CB4F0CA00439631 /* TopScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7231CB4F0CA00439631 /* TopScrollView.swift */; };
+		4B0DD7241CB4F0CA00439631 /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7231CB4F0CA00439631 /* ScrollSegmentView.swift */; };
 		4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */; };
+		4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */; };
+		4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */; };
+		4B876A5C1CBEA18E004EB4CF /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A5B1CBEA18E004EB4CF /* TestController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,8 +66,11 @@
 		4B0DD7111CB49EEC00439631 /* ScrollViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewControllerUITests.swift; sourceTree = "<group>"; };
 		4B0DD7171CB49EEC00439631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B0DD7231CB4F0CA00439631 /* TopScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopScrollView.swift; sourceTree = "<group>"; };
+		4B0DD7231CB4F0CA00439631 /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
 		4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
+		4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
+		4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc6Controller.swift; sourceTree = "<group>"; };
+		4B876A5B1CBEA18E004EB4CF /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,12 +128,15 @@
 				4B0B5D961CB77C120038FF7B /* Vc3Controller.swift */,
 				4B0B5D981CB77C1B0038FF7B /* Vc4Controller.swift */,
 				4B0B5D9A1CB77C230038FF7B /* Vc5Controller.swift */,
+				4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */,
+				4B876A5B1CBEA18E004EB4CF /* TestController.swift */,
 				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
 				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
 				4B0DD7011CB49EEC00439631 /* Info.plist */,
-				4B0DD7231CB4F0CA00439631 /* TopScrollView.swift */,
+				4B0DD7231CB4F0CA00439631 /* ScrollSegmentView.swift */,
 				4B097E951CBDD2590004B4C0 /* ContentView.swift */,
+				4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */,
 				4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */,
 				4B097E971CBDDC250004B4C0 /* OriginalCode.swift */,
 			);
@@ -284,16 +293,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B0B5D951CB77C080038FF7B /* Vc2Controller.swift in Sources */,
+				4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */,
 				4B0B5D931CB77BFA0038FF7B /* vc1Controller.swift in Sources */,
 				4B0B5D991CB77C1B0038FF7B /* Vc4Controller.swift in Sources */,
-				4B0DD7241CB4F0CA00439631 /* TopScrollView.swift in Sources */,
+				4B0DD7241CB4F0CA00439631 /* ScrollSegmentView.swift in Sources */,
 				4B0DD6F81CB49EEC00439631 /* ViewController.swift in Sources */,
 				4B0B5D9B1CB77C230038FF7B /* Vc5Controller.swift in Sources */,
 				4B097E961CBDD2590004B4C0 /* ContentView.swift in Sources */,
 				4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */,
+				4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */,
 				4B097E981CBDDC250004B4C0 /* OriginalCode.swift in Sources */,
 				4B0B5D971CB77C120038FF7B /* Vc3Controller.swift in Sources */,
 				4B0DD6F61CB49EEC00439631 /* AppDelegate.swift in Sources */,
+				4B876A5C1CBEA18E004EB4CF /* TestController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

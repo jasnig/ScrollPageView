@@ -14,7 +14,7 @@ class ContentView: UIView {
     /// 所有的子控制器
     private var childVcs: [UIViewController] = []
     /// 用来判断是否是点击了title, 点击了就不要调用scrollview的代理来进行相关的计算
-    var forbidTouchToAdjustPosition = false
+    private var forbidTouchToAdjustPosition = false
     /// 用来记录开始滚动的offSetX
     private var oldOffSetX:CGFloat = 0.0
     private var oldIndex = 0
@@ -141,7 +141,6 @@ extension ContentView: UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let offSetX = scrollView.contentOffset.x
         
-        
         // 如果是点击了title, 就不要计算了, 直接在点击相应的方法里就已经处理了滚动
         if forbidTouchToAdjustPosition {
             return
@@ -189,20 +188,20 @@ extension ContentView: UIScrollViewDelegate {
 protocol ContentViewDelegate: class {
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
     func contentViewDidEndMoveToIndex(currentIndex: Int)
-    var titleView: TopScrollView { get }
+    var segmentView: ScrollSegmentView { get }
 }
 
-// 由于每个遵守这个协议的都需要执行些相同的操作, 所以直接使用协议扩展统一完成,协议遵守者只需要提供titleview即可
+// 由于每个遵守这个协议的都需要执行些相同的操作, 所以直接使用协议扩展统一完成,协议遵守者只需要提供segmentView即可
 extension ContentViewDelegate {
     
     // 内容每次滚动完成时调用, 确定title和其他的控件的位置
     func contentViewDidEndMoveToIndex(currentIndex: Int) {
-        titleView.adjustTitleOffSetToCurrentIndex(currentIndex)
-        titleView.adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: currentIndex)
+        segmentView.adjustTitleOffSetToCurrentIndex(currentIndex)
+        segmentView.adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: currentIndex)
     }
     
     // 内容正在滚动的时候,同步滚动滑块的控件
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat) {
-        titleView.adjustUIWithProgress(progress, oldIndex: fromIndex, currentIndex: toIndex)
+        segmentView.adjustUIWithProgress(progress, oldIndex: fromIndex, currentIndex: toIndex)
     }
 }
