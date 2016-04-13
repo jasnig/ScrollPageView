@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    
+    var topView: TopScrollView!
+    var contentView: ContentView!
     override func viewDidLoad() {
         super.viewDidLoad()
         let titles = ["产不多", "国际要闻", "国际闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻", "国际要闻"]
@@ -21,10 +24,31 @@ class ViewController: UIViewController {
         var style = SegmentStyle()
         style.scrollLineColor = UIColor.redColor()
         style.coverBackgroundColor = UIColor.redColor()
+        style.scaleTitle = true
+        style.showLine = false
         
+        // 方式一
         let scroll = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childViewControllers)
         scroll.backgroundColor = UIColor.whiteColor()
         view.addSubview(scroll)
+        
+        
+        // 方式二
+        
+        topView = TopScrollView(frame: CGRect(x: 0, y: 0, width: 200, height: 44), segmentStyle: style, titles: titles)
+        contentView = ContentView(frame: CGRect(x: 0, y: 100, width: view.bounds.size.width, height: 300),childVcs: childViewControllers)
+        contentView.delegate = self // 必须实现代理方法, 并且实现的代码相同
+        topView.titleBtnOnClick = {(label: UILabel, index: Int) in
+            self.contentView.forbidTouchToAdjustPosition = true
+            self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: false)
+            
+        }
+        
+//        view.addSubview(topView)
+        navigationItem.titleView = topView
+        view.addSubview(contentView)
+        
+        
         
     }
     
@@ -83,5 +107,16 @@ class ViewController: UIViewController {
     }
 
 
+}
+
+extension ViewController: ContentViewDelegate {
+    func contentViewDidEndMoveToIndex(currentIndex: Int) {
+        topView.adjustTitleOffSetToCurrentIndex(currentIndex)
+        topView.adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: currentIndex)
+    }
+    
+    func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat) {
+        topView.adjustUIWithProgress(progress, oldIndex: fromIndex, currentIndex: toIndex)
+    }
 }
 
