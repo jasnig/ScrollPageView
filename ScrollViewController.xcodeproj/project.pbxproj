@@ -26,6 +26,7 @@
 		4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */; };
 		4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */; };
 		4B876A5C1CBEA18E004EB4CF /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A5B1CBEA18E004EB4CF /* TestController.swift */; };
+		4BE6540A1CBF605300D95E25 /* 2016-04-14 10_19_09.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4BE654091CBF605300D95E25 /* 2016-04-14 10_19_09.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
 		4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc6Controller.swift; sourceTree = "<group>"; };
 		4B876A5B1CBEA18E004EB4CF /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
+		4BE654091CBF605300D95E25 /* 2016-04-14 10_19_09.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "2016-04-14 10_19_09.gif"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				4BE654061CBF381700D95E25 /* 标题不滚动+遮盖+颜色渐变 效果 */,
 				4BE654071CBF381D00D95E25 /* 自定义segmentView和contentView位置的效果) */,
 				4B876A5B1CBEA18E004EB4CF /* TestController.swift */,
+				4BE654091CBF605300D95E25 /* 2016-04-14 10_19_09.gif */,
 				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
 				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
@@ -322,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B0DD7001CB49EEC00439631 /* LaunchScreen.storyboard in Resources */,
+				4BE6540A1CBF605300D95E25 /* 2016-04-14 10_19_09.gif in Resources */,
 				4B0DD6FD1CB49EEC00439631 /* Assets.xcassets in Resources */,
 				4B0DD6FB1CB49EEC00439631 /* Main.storyboard in Resources */,
 			);
