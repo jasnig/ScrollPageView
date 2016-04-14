@@ -15,7 +15,6 @@ class Vc6Controller: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let titles = ["国内头条", "国际要闻"]
         
         addChildVcs()
         
@@ -38,6 +37,7 @@ class Vc6Controller: UIViewController {
         // title选中状态颜色 使用RGB空间值
         style.selectedTitleColor = UIColor(red: 235.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
 
+        let titles = ["国内头条", "国际要闻"]
 
         topView = ScrollSegmentView(frame: CGRect(x: 0, y: 0, width: 150, height: 28), segmentStyle: style, titles: titles)
         topView.backgroundColor = UIColor.redColor()
