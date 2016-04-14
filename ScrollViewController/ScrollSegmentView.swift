@@ -248,8 +248,6 @@ class ScrollSegmentView: UIView {
             
             // 缩放, 设置初始的label的transform
             if segmentStyle.scaleTitle {
-                // 如果是在layoutSubview()里面设置使用的transform后label的frame不会改变
-                firstLabel.transform = CGAffineTransformMakeScale(segmentStyle.titleBigScale , segmentStyle.titleBigScale)
                 firstLabel.currentTransformSx = segmentStyle.titleBigScale
             }
             // 设置初始状态文字的颜色
@@ -304,10 +302,8 @@ class ScrollSegmentView: UIView {
 
             // 缩放文字
             if self.segmentStyle.scaleTitle {
-                oldLabel.transform = CGAffineTransformIdentity
                 oldLabel.currentTransformSx = self.segmentStyle.titleOriginalScale
                 
-                currentLabel.transform = CGAffineTransformMakeScale(self.segmentStyle.titleBigScale, self.segmentStyle.titleBigScale)
                 currentLabel.currentTransformSx = self.segmentStyle.titleBigScale
                 
             }
@@ -383,9 +379,6 @@ class ScrollSegmentView: UIView {
         oldLabel.currentTransformSx = segmentStyle.titleBigScale - deltaScale * progress
         currentLabel.currentTransformSx = segmentStyle.titleOriginalScale + deltaScale * progress
 
-        oldLabel.transform = CGAffineTransformMakeScale(oldLabel.currentTransformSx, oldLabel.currentTransformSx)
-        currentLabel.transform = CGAffineTransformMakeScale(currentLabel.currentTransformSx, currentLabel.currentTransformSx)
-
         
     }
     // 居中显示title
@@ -437,7 +430,11 @@ class ScrollSegmentView: UIView {
 
 class CustomLabel: UILabel {
     /// 用来记录当前label的缩放比例
-    var currentTransformSx:CGFloat = 1.0
+    var currentTransformSx:CGFloat = 1.0 {
+        didSet {
+            transform = CGAffineTransformMakeScale(currentTransformSx, currentTransformSx)
+        }
+    }
 }
 
 
