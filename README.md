@@ -14,6 +14,11 @@
 
 
 ---
+
+### 书写思路移步 [简书](http://www.jianshu.com/p/b84f4dd96d0c)
+
+---
+
 ### 使用方法
 
 ####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
