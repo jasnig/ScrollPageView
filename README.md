@@ -1,6 +1,11 @@
 #ScrollPageView
 
-![示例效果.gif](https://github.com/jasnig/ScrollPageView/blob/master/ScrollViewController/2016-04-14%2010_19_09.gif)
+![示例效果1.gif](http://upload-images.jianshu.io/upload_images/1271831-1cff5db09208a125.gif?imageMogr2/auto-orient/strip)  ![示例效果2.gif](http://upload-images.jianshu.io/upload_images/1271831-764800343e557870.gif?imageMogr2/auto-orient/strip)![示例效果3.gif](http://upload-images.jianshu.io/upload_images/1271831-b6ac95954eeb7c0e.gif?imageMogr2/auto-orient/strip)
+
+
+
+![示例效果4.gif](http://upload-images.jianshu.io/upload_images/1271831-da735b7044a45139.gif?imageMogr2/auto-orient/strip) ![示例效果5.gif](http://upload-images.jianshu.io/upload_images/1271831-b3e7792f49df5897.gif?imageMogr2/auto-orient/strip)![示例效果6.gif](http://upload-images.jianshu.io/upload_images/1271831-ce881bb9245932b1.gif?imageMogr2/auto-orient/strip)
+
 
 
 -----
