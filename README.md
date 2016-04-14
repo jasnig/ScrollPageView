@@ -1,6 +1,6 @@
 #ScrollPageView
 
-![示例效果.gif](http://upload-images.jianshu.io/upload_images/1271831-89ddc1a1780306e2.gif?imageMogr2/auto-orient/strip)
+![示例效果.gif](https://github.com/jasnig/ScrollPageView/blob/master/ScrollViewController/2016-04-14%2010_19_09.gif)
 
 
 -----
