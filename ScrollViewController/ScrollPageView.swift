@@ -47,7 +47,7 @@ class ScrollPageView: UIView {
         // 避免循环引用
         segView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
             
-            // 不要执行collectionView的scrollView的滚动代理方法
+            // 切换内容显示
             self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: false)
         }
 

@@ -9,16 +9,7 @@
 import UIKit
 
 class ScrollSegmentView: UIView {
-    
-    
-    /**
-     之前使用在titles的didSet里面添加label和计算label的文字宽度,
-     然后在layoutSubview()里面设置各个label和cover scrollline的frame,
-     但是总是导致,默认缩放的label的文字显示不完整,
-     修改未在初始化方法里面来设置frame并且设置transform后就可以正常显示了
-     
-     */
-    
+
     
     //    var selectedIndex = 0 {
     //        didSet {
@@ -33,7 +24,7 @@ class ScrollSegmentView: UIView {
     /// 所有的title设置
     var segmentStyle: SegmentStyle
     
-    /// 点击响应的blosure
+    /// 点击响应的closure
     var titleBtnOnClick:((label: UILabel, index: Int) -> Void)?
     
     /// self.bounds.size.width

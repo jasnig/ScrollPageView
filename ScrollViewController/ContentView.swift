@@ -51,7 +51,6 @@ class ContentView: UIView {
     init(frame:CGRect, childVcs:[UIViewController]) {
         self.childVcs = childVcs
         super.init(frame: frame)
-        // 初始化设置了frame后可以在以后的任何地方直接获取到frame了, 就不必重写layoutsubview()方法在里面设置各个控件的frame
         commonInit()
     }
     
