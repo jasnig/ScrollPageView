@@ -134,6 +134,7 @@ extension ContentView: UIScrollViewDelegate {
         oldOffSetX = scrollView.contentOffset.x
         
         forbidTouchToAdjustPosition = false
+        delegate?.contentViewDidBeginMove()
     }
     
     // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用
@@ -187,11 +188,17 @@ extension ContentView: UIScrollViewDelegate {
 protocol ContentViewDelegate: class {
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
     func contentViewDidEndMoveToIndex(currentIndex: Int)
+    func contentViewDidBeginMove()
     var segmentView: ScrollSegmentView { get }
 }
 
 // 由于每个遵守这个协议的都需要执行些相同的操作, 所以直接使用协议扩展统一完成,协议遵守者只需要提供segmentView即可
 extension ContentViewDelegate {
+    
+    // 默认什么都不做
+    func contentViewDidBeginMove() {
+        
+    }
     
     // 内容每次滚动完成时调用, 确定title和其他的控件的位置
     func contentViewDidEndMoveToIndex(currentIndex: Int) {
