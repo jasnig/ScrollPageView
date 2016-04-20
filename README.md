@@ -6,6 +6,8 @@
 
 ![示例效果4.gif](http://upload-images.jianshu.io/upload_images/1271831-da735b7044a45139.gif?imageMogr2/auto-orient/strip) ![示例效果5.gif](http://upload-images.jianshu.io/upload_images/1271831-b3e7792f49df5897.gif?imageMogr2/auto-orient/strip)![示例效果6.gif](http://upload-images.jianshu.io/upload_images/1271831-ce881bb9245932b1.gif?imageMogr2/auto-orient/strip)
 
+![示例效果7.gif](http://upload-images.jianshu.io/upload_images/1271831-d765bb375c887cd3.gif?imageMogr2/auto-orient/strip)
+
 
 
 -----
@@ -15,7 +17,9 @@
 
 ---
 
-### 书写思路移步 [简书](http://www.jianshu.com/p/b84f4dd96d0c)
+### 书写思路移步 [简书1](http://www.jianshu.com/p/b84f4dd96d0c)            [简书个人主页效果](http://www.jianshu.com/p/6be2597345e4)
+
+
 
 ---
 

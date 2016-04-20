@@ -186,9 +186,13 @@ extension ContentView: UIScrollViewDelegate {
 
 
 protocol ContentViewDelegate: class {
+    /// 有默认实现, 不推荐重写
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
+    /// 有默认实现, 不推荐重写
     func contentViewDidEndMoveToIndex(currentIndex: Int)
+    /// 无默认操作, 推荐重写
     func contentViewDidBeginMove()
+    /// 必须提供的属性
     var segmentView: ScrollSegmentView { get }
 }
 
