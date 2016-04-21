@@ -103,7 +103,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题不滚动的时候不要使用(缩放+遮盖)或(缩放+滚动条),其他效果之间可以组合!!,您可以大胆的去组合一下试试" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gS3-bf-eh7">
-                                <rect key="frame" x="15" y="351" width="570" height="41"/>
+                                <rect key="frame" x="15" y="401" width="570" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -120,7 +120,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p61-uB-NFY">
-                                <rect key="frame" x="15" y="407" width="570" height="82"/>
+                                <rect key="frame" x="15" y="457" width="570" height="82"/>
                                 <string key="text">如果对您有帮助,不妨给个star鼓励一下
 如果您在使用过程中发现问题,请联系qq:854136959或者发邮件到这个qq邮箱给我
 </string>
@@ -132,18 +132,31 @@
                                 <rect key="frame" x="0.0" y="307" width="600" height="34"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="简书个人主页效果">
+                                <state key="normal" title="简书个人主页效果(不使用TableView)">
                                     <color key="titleColor" red="0.66681522650000002" green="0.61430279570000001" blue="0.38850389390000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="eLm-KX-LRn" kind="show" id="t54-yY-tqK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5X-5q-Uq8">
+                                <rect key="frame" x="0.0" y="342" width="600" height="34"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="简书个人主页效果(使用TableView)">
+                                    <color key="titleColor" red="0.66681522650000002" green="0.61430279570000001" blue="0.38850389390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ZH5-0m-1pJ" kind="show" id="bGK-k6-B6I"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="top" secondItem="2F8-4z-rU3" secondAttribute="bottom" constant="1" id="0Nv-Mm-QIz"/>
-                            <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="10" id="6wa-22-kbe"/>
+                            <constraint firstItem="w5X-5q-Uq8" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="1" id="139-lk-fPi"/>
+                            <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="60" id="6wa-22-kbe"/>
+                            <constraint firstItem="w5X-5q-Uq8" firstAttribute="leading" secondItem="Zew-uf-zjU" secondAttribute="leading" id="CqZ-dF-dV8"/>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="leading" secondItem="2F8-4z-rU3" secondAttribute="leading" id="D06-pJ-3Sn"/>
                             <constraint firstItem="Zew-uf-zjU" firstAttribute="top" secondItem="Xtj-Re-0D2" secondAttribute="bottom" constant="1" id="D9N-kx-9eX"/>
                             <constraint firstItem="p61-uB-NFY" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" constant="15" id="HQY-jh-Zop"/>
@@ -165,6 +178,7 @@
                             <constraint firstItem="Xtj-Re-0D2" firstAttribute="trailing" secondItem="nYz-KC-G1m" secondAttribute="trailing" id="mNJ-jr-KcU"/>
                             <constraint firstAttribute="trailing" secondItem="gS3-bf-eh7" secondAttribute="trailing" constant="15" id="pIO-ly-WqO"/>
                             <constraint firstItem="2F8-4z-rU3" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="pOm-MO-oJX"/>
+                            <constraint firstItem="w5X-5q-Uq8" firstAttribute="trailing" secondItem="Zew-uf-zjU" secondAttribute="trailing" id="r1x-vK-dK8"/>
                             <constraint firstItem="nSE-QW-fa8" firstAttribute="top" secondItem="kX7-yn-wQM" secondAttribute="bottom" constant="33" id="rUA-U6-yfl"/>
                             <constraint firstItem="nYz-KC-G1m" firstAttribute="top" secondItem="I7r-Wi-FTV" secondAttribute="bottom" constant="1" id="rWH-iw-L60"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="t5O-fr-3kP"/>
@@ -366,6 +380,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaY-1A-MXR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1054" y="3183"/>
+        </scene>
+        <!--Vc8 Controller-->
+        <scene sceneID="iu9-UW-ubP">
+            <objects>
+                <viewController id="ZH5-0m-1pJ" customClass="Vc8Controller" customModule="ScrollViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AGF-9e-UDD"/>
+                        <viewControllerLayoutGuide type="bottom" id="oG5-hN-3R1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nlB-uy-v2q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Za7-qD-JGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="581" y="2376"/>
         </scene>
     </scenes>
     <resources>

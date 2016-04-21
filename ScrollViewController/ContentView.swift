@@ -22,7 +22,7 @@ class ContentView: UIView {
     
     weak var delegate: ContentViewDelegate?
     
-    private lazy var collectionView: UICollectionView = {[weak self] in
+    lazy var collectionView: UICollectionView = {[weak self] in
         let flowLayout = UICollectionViewFlowLayout()
         
         let collection = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
@@ -79,6 +79,13 @@ class ContentView: UIView {
         self.forbidTouchToAdjustPosition = true
         self.collectionView.setContentOffset(offSet, animated: animated)
     }
+    
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        collectionView.frame = bounds
+//
+//    }
     
     deinit {
         print("\(self.debugDescription) --- 销毁")

@@ -23,6 +23,8 @@
 		4B0DD7241CB4F0CA00439631 /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7231CB4F0CA00439631 /* ScrollSegmentView.swift */; };
 		4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */; };
 		4B3234171CC70583000E9326 /* Vc7Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3234161CC70583000E9326 /* Vc7Controller.swift */; };
+		4B32341C1CC79D77000E9326 /* PageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B32341B1CC79D77000E9326 /* PageTableViewController.swift */; };
+		4B32341E1CC7E2A0000E9326 /* Vc8Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B32341D1CC7E2A0000E9326 /* Vc8Controller.swift */; };
 		4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */; };
 		4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */; };
 		4B876A5C1CBEA18E004EB4CF /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A5B1CBEA18E004EB4CF /* TestController.swift */; };
@@ -68,6 +70,8 @@
 		4B0DD7231CB4F0CA00439631 /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
 		4B0DD7251CB4F3A300439631 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
 		4B3234161CC70583000E9326 /* Vc7Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc7Controller.swift; sourceTree = "<group>"; };
+		4B32341B1CC79D77000E9326 /* PageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTableViewController.swift; sourceTree = "<group>"; };
+		4B32341D1CC7E2A0000E9326 /* Vc8Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc8Controller.swift; sourceTree = "<group>"; };
 		4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
 		4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc6Controller.swift; sourceTree = "<group>"; };
 		4B876A5B1CBEA18E004EB4CF /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
@@ -98,6 +102,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B02A35A1CC8B62D0069FC01 /* 有headView的效果(简书个人页面,使用TableView) */ = {
+			isa = PBXGroup;
+			children = (
+				4B32341D1CC7E2A0000E9326 /* Vc8Controller.swift */,
+				4B32341B1CC79D77000E9326 /* PageTableViewController.swift */,
+			);
+			name = "有headView的效果(简书个人页面,使用TableView)";
+			sourceTree = "<group>";
+		};
 		4B0DD6E91CB49EEC00439631 = {
 			isa = PBXGroup;
 			children = (
@@ -129,10 +142,11 @@
 				4BE654051CBF380E00D95E25 /* 遮盖+缩放+没有颜色渐变 效果 */,
 				4BE654061CBF381700D95E25 /* 标题不滚动+遮盖+颜色渐变 效果 */,
 				4BE654071CBF381D00D95E25 /* 自定义segmentView和contentView位置的效果) */,
-				4B876A5B1CBEA18E004EB4CF /* TestController.swift */,
-				4B3234181CC70593000E9326 /* 有headView的效果(简书个人页面) */,
-				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
+				4B3234181CC70593000E9326 /* 有headView的效果(简书个人页面,不使用TableView) */,
+				4B02A35A1CC8B62D0069FC01 /* 有headView的效果(简书个人页面,使用TableView) */,
 				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
+				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
+				4B6A04B31CC8FC32002B8F73 /* Test */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
 				4B0DD7011CB49EEC00439631 /* Info.plist */,
 				4BE654081CBF382D00D95E25 /* ScrollPageView */,
@@ -158,12 +172,20 @@
 			path = ScrollViewControllerUITests;
 			sourceTree = "<group>";
 		};
-		4B3234181CC70593000E9326 /* 有headView的效果(简书个人页面) */ = {
+		4B3234181CC70593000E9326 /* 有headView的效果(简书个人页面,不使用TableView) */ = {
 			isa = PBXGroup;
 			children = (
 				4B3234161CC70583000E9326 /* Vc7Controller.swift */,
 			);
-			name = "有headView的效果(简书个人页面)";
+			name = "有headView的效果(简书个人页面,不使用TableView)";
+			sourceTree = "<group>";
+		};
+		4B6A04B31CC8FC32002B8F73 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				4B876A5B1CBEA18E004EB4CF /* TestController.swift */,
+			);
+			name = Test;
 			sourceTree = "<group>";
 		};
 		4BE654021CBF37F400D95E25 /* 缩放+颜色渐变 效果 */ = {
@@ -359,6 +381,7 @@
 				4B0B5D951CB77C080038FF7B /* Vc2Controller.swift in Sources */,
 				4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */,
 				4B0B5D931CB77BFA0038FF7B /* vc1Controller.swift in Sources */,
+				4B32341E1CC7E2A0000E9326 /* Vc8Controller.swift in Sources */,
 				4B0B5D991CB77C1B0038FF7B /* Vc4Controller.swift in Sources */,
 				4B0DD7241CB4F0CA00439631 /* ScrollSegmentView.swift in Sources */,
 				4B0DD6F81CB49EEC00439631 /* ViewController.swift in Sources */,
@@ -367,6 +390,7 @@
 				4B3234171CC70583000E9326 /* Vc7Controller.swift in Sources */,
 				4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */,
 				4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */,
+				4B32341C1CC79D77000E9326 /* PageTableViewController.swift in Sources */,
 				4B0B5D971CB77C120038FF7B /* Vc3Controller.swift in Sources */,
 				4B0DD6F61CB49EEC00439631 /* AppDelegate.swift in Sources */,
 				4B876A5C1CBEA18E004EB4CF /* TestController.swift in Sources */,

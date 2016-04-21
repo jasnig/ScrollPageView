@@ -65,12 +65,14 @@ class Vc7Controller: UIViewController {
         
     }()
     
+    
+    var test: ((scroll: UIScrollView) -> Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "简书个人主页"
-        
+
         addChildVcs()
-        
+
         // 这个是必要的设置
         automaticallyAdjustsScrollViewInsets = false
         
@@ -175,7 +177,7 @@ extension Vc7Controller: UITableViewDelegate, UITableViewDataSource {
 // MARK:- UIScrollViewDelegate 这里的代理可以监控tableView的滚动, 在滚动的时候就可以做一些事情, 比如使navigationBar渐变, 或者像简书一样改变头像的属性
 extension Vc7Controller: UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+        print("gundong --------")
     }
 }
 
