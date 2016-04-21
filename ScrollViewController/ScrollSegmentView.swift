@@ -93,6 +93,7 @@ class ScrollSegmentView: UIView {
         }
         
     }()
+    
     private lazy var selectedTitleColorRgb: (r: CGFloat, g: CGFloat, b: CGFloat) =  {
         
         if let selectedRgb = self.getColorRGB(self.segmentStyle.selectedTitleColor) {

@@ -81,11 +81,11 @@ class ContentView: UIView {
     }
     
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        collectionView.frame = bounds
-//
-//    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        collectionView.frame = bounds
+
+    }
     
     deinit {
         print("\(self.debugDescription) --- 销毁")

@@ -155,13 +155,19 @@ extension Vc8Controller: PageTableViewDelegate {
     // 设置将要显示的tableview的contentOffset.y
     func setupTableViewOffSetYWhenViewWillAppear(scrollView: UIScrollView) {
         
-        // 当子控制器的tableview向上滚动很多的时候, 重新设置offY
-        if offSetY > -(naviBarHeight + segmentViewHeight) {
-            offSetY = -(naviBarHeight + segmentViewHeight)
+        if offSetY < -(naviBarHeight + segmentViewHeight) {
+            scrollView.contentOffset.y = offSetY
+        } else {
+            if scrollView.contentOffset.y < -(naviBarHeight + segmentViewHeight) {
+                scrollView.contentOffset.y = -(naviBarHeight + segmentViewHeight)
+                // 使滑块停在navigationBar下面
+                headView.frame.origin.y = naviBarHeight - headViewHeight
+                topView.frame.origin.y = naviBarHeight
+            }
         }
+
         print("\(offSetY)--------------")
         
-        scrollView.contentOffset.y = offSetY
     }
     
     // 根据子控制器的scrolView的偏移量来调整UI
