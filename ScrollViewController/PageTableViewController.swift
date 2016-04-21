@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+// MARK: PageTableViewDelegate
 protocol PageTableViewDelegate: class {
     func scrollViewIsScrolling(scrollView: UIScrollView)
     func setupTableViewOffSetYWhenViewWillAppear(scrollView: UIScrollView)
@@ -20,6 +20,7 @@ class PageTableViewController: UIViewController {
     
     //
     var tableView: UITableView!
+    
     func setupTableView() {
         tableView = UITableView(frame: self.view.bounds, style: .Plain)
         tableView.delegate = self
@@ -53,7 +54,7 @@ class PageTableViewController: UIViewController {
         super.viewWillAppear(true)
         // 通知父控制器重新设置tableView的contentOffset.y
         delegate?.setupTableViewOffSetYWhenViewWillAppear(tableView)
-        print(tableView.contentOffset.y)
+//        print(tableView.contentOffset.y)
     }
 
     override func didReceiveMemoryWarning() {

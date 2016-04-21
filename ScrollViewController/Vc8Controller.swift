@@ -63,7 +63,7 @@ class Vc8Controller: UIViewController {
     }()
     
     // 响应子控制器的tableView滚动
-    //    var childVcScrollViewDidScrollClosure: ((scroll: UIScrollView, vc: PageTableViewController) -> Void)?
+    var childVcScrollViewDidScrollClosure: ((scroll: UIScrollView, vc: PageTableViewController) -> Void)?
     
     /// 用来实时记录子控制器的tableView的滚动的offSetY
     var offSetY: CGFloat = -defaultOffSetY
@@ -164,13 +164,13 @@ extension Vc8Controller: PageTableViewDelegate {
         scrollView.contentOffset.y = offSetY
     }
     
-    //
+    // 根据子控制器的scrolView的偏移量来调整UI
     func scrollViewIsScrolling(scrollView: UIScrollView) {
         let deltaY =  scrollView.contentOffset.y - offSetY
         offSetY = scrollView.contentOffset.y
         
         
-        print(offSetY)
+//        print(offSetY)
         
         if offSetY > -(defaultOffSetY - headViewHeight) {
             // 使滑块停在navigationBar下面
