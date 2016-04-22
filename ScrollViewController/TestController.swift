@@ -22,7 +22,7 @@ class TestController: UIViewController {
             // 或者通过navigationController 的stack 来获取到指定的控制器
             if let vc9Controller = self.parentViewController as? Vc9Controller {
                 // 返回的时候设置其他页为选中页
-                vc9Controller.scrollPageView.selectedIndex(6, animated: true)
+                vc9Controller.scrollPageView.selectedIndex(3, animated: true)
             }
             self.navigationController?.popViewControllerAnimated(true)
             

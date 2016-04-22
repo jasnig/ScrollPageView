@@ -147,9 +147,9 @@ class ScrollSegmentView: UIView {
 //                    // 调整UI
 //                    adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: selectedIndex)
         
-        oldIndex = currentIndex
         currentIndex = selectedIndex
         
+        print("\(oldIndex) ------- \(currentIndex)")
         // 可以改变设置下标滚动后是否有动画切换效果
         adjustUIWhenBtnOnClickWithAnimate(animated)
     }
@@ -394,7 +394,6 @@ class ScrollSegmentView: UIView {
     // 居中显示title
     func adjustTitleOffSetToCurrentIndex(currentIndex: Int) {
 
-        print(currentIndex)
         let currentLabel = labelsArray[currentIndex]
 
         var offSetX = currentLabel.center.x - currentWidth / 2
@@ -429,6 +428,8 @@ class ScrollSegmentView: UIView {
                 }
             }
         }
+        print("\(oldIndex) ------- \(currentIndex)")
+
 
     }
 

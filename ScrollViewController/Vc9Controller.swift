@@ -35,7 +35,7 @@ class Vc9Controller: UIViewController {
         
         scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childViewControllers)
         // 设置默认下标
-        scrollPageView.selectedIndex(2, animated: true)
+        scrollPageView.selectedIndex(2, animated: false)
         view.addSubview(scrollPageView)
     }
     

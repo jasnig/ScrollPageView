@@ -12,25 +12,11 @@ class ScrollPageView: UIView {
     static let cellId = "cellId"
     var segmentStyle = SegmentStyle()
     
-    var segView: ScrollSegmentView!
-    var contentView: ContentView!
-    /// 设置选中的下标
-    func selectedIndex(selectedIndex: Int, animated: Bool) {
-        
-        assert(!(selectedIndex < 0 || selectedIndex >= childVcs.count), "设置的下标不合法!!")
-        
-        if selectedIndex < 0 || selectedIndex >= childVcs.count {
-            return
-        }
-        // 移动滑块的位置
-        segView.selectedIndex(selectedIndex, animated: animated)
-        
-    }
-
-    
-    var titlesArray: [String] = []
+    private var segView: ScrollSegmentView!
+    private var contentView: ContentView!
+    private var titlesArray: [String] = []
     /// 所有的子控制器
-    var childVcs: [UIViewController] = []
+    private var childVcs: [UIViewController] = []
     
     init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController]) {
         self.childVcs = childVcs
@@ -47,7 +33,7 @@ class ScrollPageView: UIView {
     }
     
     
-    func commonInit() {
+    private func commonInit() {
         backgroundColor = UIColor.whiteColor()
         segView = ScrollSegmentView(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44), segmentStyle: segmentStyle, titles: titlesArray)
         
@@ -65,6 +51,19 @@ class ScrollPageView: UIView {
         }
 
 
+    }
+    
+    /// 设置选中的下标
+    func selectedIndex(selectedIndex: Int, animated: Bool) {
+        
+        assert(!(selectedIndex < 0 || selectedIndex >= childVcs.count), "设置的下标不合法!!")
+        
+        if selectedIndex < 0 || selectedIndex >= childVcs.count {
+            return
+        }
+        // 移动滑块的位置
+        segView.selectedIndex(selectedIndex, animated: animated)
+        
     }
  
 }

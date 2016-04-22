@@ -97,11 +97,11 @@ class ContentView: UIView {
 
 extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    final func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return childVcs.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    final func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ContentView.cellId, forIndexPath: indexPath)
         // 避免出现重用显示内容出错 ---- 也可以直接给每个cell用不同的reuseIdentifier实现
         for subview in cell.contentView.subviews {
@@ -125,7 +125,7 @@ extension ContentView: UIScrollViewDelegate {
      */
     // 滚动减速完成时再更新title的位置
     //
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    final func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
         
         delegate?.contentViewDidEndMoveToIndex(currentIndex)
@@ -136,7 +136,7 @@ extension ContentView: UIScrollViewDelegate {
     
     
     // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    final func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         /// 用来判断方向
         oldOffSetX = scrollView.contentOffset.x
         
@@ -145,7 +145,7 @@ extension ContentView: UIScrollViewDelegate {
     }
     
     // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    final func scrollViewDidScroll(scrollView: UIScrollView) {
         let offSetX = scrollView.contentOffset.x
         
         // 如果是点击了title, 就不要计算了, 直接在点击相应的方法里就已经处理了滚动
