@@ -6,7 +6,7 @@
 
 ![示例效果4.gif](http://upload-images.jianshu.io/upload_images/1271831-da735b7044a45139.gif?imageMogr2/auto-orient/strip) ![示例效果5.gif](http://upload-images.jianshu.io/upload_images/1271831-b3e7792f49df5897.gif?imageMogr2/auto-orient/strip)![示例效果6.gif](http://upload-images.jianshu.io/upload_images/1271831-ce881bb9245932b1.gif?imageMogr2/auto-orient/strip)
 
-![示例效果7.gif](http://upload-images.jianshu.io/upload_images/1271831-d765bb375c887cd3.gif?imageMogr2/auto-orient/strip) ![示例效果8.gif](http://upload-images.jianshu.io/upload_images/1271831-482997456d1f4578.gif?imageMogr2/auto-orient/strip)
+![示例效果7.gif](http://upload-images.jianshu.io/upload_images/1271831-d765bb375c887cd3.gif?imageMogr2/auto-orient/strip) ![示例效果8.gif](http://upload-images.jianshu.io/upload_images/1271831-482997456d1f4578.gif?imageMogr2/auto-orient/strip) ![自定义下标效果.gif](http://upload-images.jianshu.io/upload_images/1271831-d92a7cbf6737066e.gif?imageMogr2/auto-orient/strip)
 
 
 -----

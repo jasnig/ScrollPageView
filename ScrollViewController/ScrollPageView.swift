@@ -14,6 +14,19 @@ class ScrollPageView: UIView {
     
     var segView: ScrollSegmentView!
     var contentView: ContentView!
+    /// 设置选中的下标, 默认为0
+    var selectedIndex: Int = 0 {
+        didSet {
+            
+            assert(!(selectedIndex < 0 || selectedIndex >= childVcs.count), "设置的下标不合法!!")
+            
+            if selectedIndex < 0 || selectedIndex >= childVcs.count {
+                return
+            }
+            // 移动滑块的位置
+            segView.selectedIndex = selectedIndex
+        }
+    }
     
     var titlesArray: [String] = []
     /// 所有的子控制器

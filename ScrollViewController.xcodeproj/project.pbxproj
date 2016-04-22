@@ -28,6 +28,8 @@
 		4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */; };
 		4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */; };
 		4B876A5C1CBEA18E004EB4CF /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B876A5B1CBEA18E004EB4CF /* TestController.swift */; };
+		4BBF1C2A1CC9AE4A0060015F /* TestSelectedIndexController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF1C291CC9AE4A0060015F /* TestSelectedIndexController.swift */; };
+		4BBF1C2D1CC9B4BE0060015F /* Vc9Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF1C2C1CC9B4BE0060015F /* Vc9Controller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		4B876A571CBE6AB4004EB4CF /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
 		4B876A591CBE9C71004EB4CF /* Vc6Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc6Controller.swift; sourceTree = "<group>"; };
 		4B876A5B1CBEA18E004EB4CF /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
+		4BBF1C291CC9AE4A0060015F /* TestSelectedIndexController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSelectedIndexController.swift; sourceTree = "<group>"; };
+		4BBF1C2C1CC9B4BE0060015F /* Vc9Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc9Controller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,8 +148,9 @@
 				4BE654071CBF381D00D95E25 /* 自定义segmentView和contentView位置的效果) */,
 				4B3234181CC70593000E9326 /* 有headView的效果(简书个人页面,不使用TableView) */,
 				4B02A35A1CC8B62D0069FC01 /* 有headView的效果(简书个人页面,使用TableView) */,
-				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
+				4BBF1C2B1CC9B4690060015F /* 可以在初始化或者返回页面的时候设置当前页为其他页 */,
 				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
+				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
 				4B6A04B31CC8FC32002B8F73 /* Test */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
 				4B0DD7011CB49EEC00439631 /* Info.plist */,
@@ -184,8 +189,17 @@
 			isa = PBXGroup;
 			children = (
 				4B876A5B1CBEA18E004EB4CF /* TestController.swift */,
+				4BBF1C291CC9AE4A0060015F /* TestSelectedIndexController.swift */,
 			);
 			name = Test;
+			sourceTree = "<group>";
+		};
+		4BBF1C2B1CC9B4690060015F /* 可以在初始化或者返回页面的时候设置当前页为其他页 */ = {
+			isa = PBXGroup;
+			children = (
+				4BBF1C2C1CC9B4BE0060015F /* Vc9Controller.swift */,
+			);
+			name = "可以在初始化或者返回页面的时候设置当前页为其他页";
 			sourceTree = "<group>";
 		};
 		4BE654021CBF37F400D95E25 /* 缩放+颜色渐变 效果 */ = {
@@ -382,6 +396,7 @@
 				4B876A581CBE6AB4004EB4CF /* SegmentStyle.swift in Sources */,
 				4B0B5D931CB77BFA0038FF7B /* vc1Controller.swift in Sources */,
 				4B32341E1CC7E2A0000E9326 /* Vc8Controller.swift in Sources */,
+				4BBF1C2D1CC9B4BE0060015F /* Vc9Controller.swift in Sources */,
 				4B0B5D991CB77C1B0038FF7B /* Vc4Controller.swift in Sources */,
 				4B0DD7241CB4F0CA00439631 /* ScrollSegmentView.swift in Sources */,
 				4B0DD6F81CB49EEC00439631 /* ViewController.swift in Sources */,
@@ -390,6 +405,7 @@
 				4B3234171CC70583000E9326 /* Vc7Controller.swift in Sources */,
 				4B0DD7261CB4F3A300439631 /* ScrollPageView.swift in Sources */,
 				4B876A5A1CBE9C71004EB4CF /* Vc6Controller.swift in Sources */,
+				4BBF1C2A1CC9AE4A0060015F /* TestSelectedIndexController.swift in Sources */,
 				4B32341C1CC79D77000E9326 /* PageTableViewController.swift in Sources */,
 				4B0B5D971CB77C120038FF7B /* Vc3Controller.swift in Sources */,
 				4B0DD6F61CB49EEC00439631 /* AppDelegate.swift in Sources */,

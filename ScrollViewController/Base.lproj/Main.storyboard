@@ -103,7 +103,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题不滚动的时候不要使用(缩放+遮盖)或(缩放+滚动条),其他效果之间可以组合!!,您可以大胆的去组合一下试试" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gS3-bf-eh7">
-                                <rect key="frame" x="15" y="401" width="570" height="41"/>
+                                <rect key="frame" x="15" y="416" width="570" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -120,7 +120,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p61-uB-NFY">
-                                <rect key="frame" x="15" y="457" width="570" height="82"/>
+                                <rect key="frame" x="15" y="472" width="570" height="82"/>
                                 <string key="text">如果对您有帮助,不妨给个star鼓励一下
 如果您在使用过程中发现问题,请联系qq:854136959或者发邮件到这个qq邮箱给我
 </string>
@@ -150,21 +150,34 @@
                                     <segue destination="ZH5-0m-1pJ" kind="show" id="bGK-k6-B6I"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XX5-lA-oXQ">
+                                <rect key="frame" x="0.0" y="377" width="600" height="34"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="可以在初始化或者返回的时候设置当前页为其他页">
+                                    <color key="titleColor" red="0.66681522650000002" green="0.61430279570000001" blue="0.38850389390000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kO3-aU-v2d" kind="show" id="8a2-Bd-6Z8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="top" secondItem="2F8-4z-rU3" secondAttribute="bottom" constant="1" id="0Nv-Mm-QIz"/>
                             <constraint firstItem="w5X-5q-Uq8" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="1" id="139-lk-fPi"/>
-                            <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="60" id="6wa-22-kbe"/>
+                            <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="120" id="6wa-22-kbe"/>
                             <constraint firstItem="w5X-5q-Uq8" firstAttribute="leading" secondItem="Zew-uf-zjU" secondAttribute="leading" id="CqZ-dF-dV8"/>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="leading" secondItem="2F8-4z-rU3" secondAttribute="leading" id="D06-pJ-3Sn"/>
                             <constraint firstItem="Zew-uf-zjU" firstAttribute="top" secondItem="Xtj-Re-0D2" secondAttribute="bottom" constant="1" id="D9N-kx-9eX"/>
+                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="top" secondItem="w5X-5q-Uq8" secondAttribute="bottom" constant="1" id="E0N-iw-mSi"/>
                             <constraint firstItem="p61-uB-NFY" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" constant="15" id="HQY-jh-Zop"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="leading" secondItem="2F8-4z-rU3" secondAttribute="leading" id="LcW-ac-X7q"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" constant="15" id="PHH-cR-Vqr"/>
                             <constraint firstItem="p61-uB-NFY" firstAttribute="top" secondItem="gS3-bf-eh7" secondAttribute="bottom" constant="15" id="PaB-cC-V7a"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Xtj-Re-0D2" secondAttribute="bottom" constant="60" id="PaE-Lx-rfr"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="top" secondItem="JcS-29-cKC" secondAttribute="bottom" constant="1" id="RfG-6r-HqI"/>
+                            <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="XX5-lA-oXQ" secondAttribute="bottom" constant="5" id="Sj5-Pc-Nw4"/>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="WEv-4z-Fje"/>
                             <constraint firstItem="nSE-QW-fa8" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" id="WFJ-SW-mMl"/>
                             <constraint firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="aKL-U1-LnC"/>
@@ -179,14 +192,17 @@
                             <constraint firstAttribute="trailing" secondItem="gS3-bf-eh7" secondAttribute="trailing" constant="15" id="pIO-ly-WqO"/>
                             <constraint firstItem="2F8-4z-rU3" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="pOm-MO-oJX"/>
                             <constraint firstItem="w5X-5q-Uq8" firstAttribute="trailing" secondItem="Zew-uf-zjU" secondAttribute="trailing" id="r1x-vK-dK8"/>
+                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="trailing" secondItem="w5X-5q-Uq8" secondAttribute="trailing" id="rR8-eG-kI0"/>
                             <constraint firstItem="nSE-QW-fa8" firstAttribute="top" secondItem="kX7-yn-wQM" secondAttribute="bottom" constant="33" id="rUA-U6-yfl"/>
                             <constraint firstItem="nYz-KC-G1m" firstAttribute="top" secondItem="I7r-Wi-FTV" secondAttribute="bottom" constant="1" id="rWH-iw-L60"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="t5O-fr-3kP"/>
+                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="leading" secondItem="w5X-5q-Uq8" secondAttribute="leading" id="xSL-jD-5oS"/>
                             <constraint firstItem="Zew-uf-zjU" firstAttribute="leading" secondItem="Xtj-Re-0D2" secondAttribute="leading" id="xT8-Yv-gza"/>
                             <constraint firstItem="Xtj-Re-0D2" firstAttribute="top" secondItem="nYz-KC-G1m" secondAttribute="bottom" constant="1" id="zcB-dz-6wX"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="6wa-22-kbe"/>
                                 <exclude reference="PaE-Lx-rfr"/>
                             </mask>
                         </variation>
@@ -195,7 +211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pA8-tx-ia2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="279" y="1652"/>
+            <point key="canvasLocation" x="271" y="2436"/>
         </scene>
         <!--Vc7 Controller-->
         <scene sceneID="HsP-gl-68d">
@@ -231,7 +247,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaD-NS-tc0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-375" y="1695"/>
+            <point key="canvasLocation" x="-451" y="2436"/>
         </scene>
         <!--Vc5 Controller-->
         <scene sceneID="ZKl-oW-A84">
@@ -305,10 +321,10 @@
             </objects>
             <point key="canvasLocation" x="1054" y="1813"/>
         </scene>
-        <!--View Controller-->
+        <!--Vc9 Controller-->
         <scene sceneID="sob-Sv-cHD">
             <objects>
-                <viewController id="kO3-aU-v2d" sceneMemberID="viewController">
+                <viewController id="kO3-aU-v2d" customClass="Vc9Controller" customModule="ScrollViewController" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oMe-FJ-F7T"/>
                         <viewControllerLayoutGuide type="bottom" id="gMz-8H-y1j"/>
@@ -321,7 +337,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQw-ff-Ztb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-381" y="3131"/>
+            <point key="canvasLocation" x="1047" y="5294"/>
         </scene>
         <!--Test Controller-->
         <scene sceneID="Lvp-h7-ftW">
@@ -339,7 +355,7 @@
                                 <rect key="frame" x="69" y="84" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="kO3-aU-v2d" kind="show" id="qaM-9c-ZfR"/>
+                                    <action selector="btnOnClick:" destination="dCG-Ca-jcw" eventType="touchUpInside" id="7w3-30-bve"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test" translatesAutoresizingMaskIntoConstraints="NO" id="Gzk-uG-To3">
@@ -361,7 +377,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZWX-tl-Ac8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="316" y="3131"/>
+            <point key="canvasLocation" x="-182" y="3623"/>
         </scene>
         <!--Vc6 Controller-->
         <scene sceneID="D2t-FE-xZE">
@@ -397,7 +413,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Za7-qD-JGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="581" y="2376"/>
+            <point key="canvasLocation" x="1047" y="4584"/>
         </scene>
     </scenes>
     <resources>

@@ -10,16 +10,33 @@ import UIKit
 
 class ScrollSegmentView: UIView {
 
+    // 1. 实现颜色填充效果
+    // 2. 实现可以自定义下标跳转到指定页面
     
-    //    var selectedIndex = 0 {
-    //        didSet {
-    //            for (index, label) in labelsArray.enumerate() {
-    //                if index == selectedIndex {
-    //                    label.transform = CGAffineTransformMakeScale(1.3, 1.3)
-    //                }
-    //            }
-    //        }
-    //    }
+    ///  设置选中的下标
+    var selectedIndex = 0 {
+        didSet {
+            
+            assert(!(selectedIndex < 0 || selectedIndex >= titles.count), "设置的下标不合法!!")
+            
+            if selectedIndex < 0 || selectedIndex >= titles.count {
+                return
+            }
+
+            
+            for index in labelsArray.indices {
+                if index == selectedIndex {
+                    // 自动调整到相应的位置
+//                    adjustTitleOffSetToCurrentIndex(selectedIndex)
+//                    // 调整UI
+//                    adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: selectedIndex)
+                    oldIndex = currentIndex
+                    currentIndex = selectedIndex
+                    adjustUIWhenBtnOnClick()
+                }
+            }
+        }
+    }
     
     /// 所有的title设置
     var segmentStyle: SegmentStyle
@@ -280,18 +297,24 @@ class ScrollSegmentView: UIView {
     func titleLabelOnClick(tapGes: UITapGestureRecognizer) {
         guard let currentLabel = tapGes.view as? CustomLabel else { return }
         currentIndex = currentLabel.tag
+        
+        adjustUIWhenBtnOnClick()
+
+    }
+    // 自动或者手动点击按钮的时候调整UI
+    func adjustUIWhenBtnOnClick() {
         // 重复点击时的相应, 这里没有处理, 可以传递给外界来处理
         if currentIndex == oldIndex { return }
-        
+        let oldLabel = self.labelsArray[oldIndex] as! CustomLabel
+        let currentLabel = self.labelsArray[currentIndex] as! CustomLabel
         adjustTitleOffSetToCurrentIndex(currentIndex)
         
         UIView.animateWithDuration(0.3) {[unowned self] in
-            let oldLabel = self.labelsArray[self.oldIndex] as! CustomLabel
-            
+
             // 设置文字颜色
             oldLabel.textColor = self.segmentStyle.normalTitleColor
             currentLabel.textColor = self.segmentStyle.selectedTitleColor
-
+            
             // 缩放文字
             if self.segmentStyle.scaleTitle {
                 oldLabel.currentTransformSx = self.segmentStyle.titleOriginalScale

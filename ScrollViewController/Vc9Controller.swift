@@ -1,18 +1,18 @@
 //
-//  vc1Controller.swift
+//  Vc9Controller.swift
 //  ScrollViewController
 //
-//  Created by jasnig on 16/4/8.
+//  Created by jasnig on 16/4/22.
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
 import UIKit
 
-class vc1Controller: UIViewController {
-
+class Vc9Controller: UIViewController {
+    var scrollPageView: ScrollPageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         addChildVcs()
         
@@ -24,12 +24,18 @@ class vc1Controller: UIViewController {
         style.scaleTitle = true
         // 颜色渐变
         style.gradualChangeTitleColor = true
+        // 显示滚动条
+        style.showLine = true
+        // 天使遮盖
+        style.showCover = true
         // segment可以滚动
         style.scrollTitle = true
         
         let titles = ["国内头条", "国际要闻", "趣事", "囧图", "明星八卦", "爱车", "国防要事", "科技频道", "手机专页", "风景图", "段子"]
- 
-        let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childViewControllers)
+        
+        scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childViewControllers)
+        // 设置默认下标
+        scrollPageView.selectedIndex = 2
         view.addSubview(scrollPageView)
     }
     

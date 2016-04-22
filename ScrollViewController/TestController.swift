@@ -13,7 +13,23 @@ class TestController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func btnOnClick(sender: UIButton) {
+        let testSelectedVc = TestSelectedIndexController()
+        
+        testSelectedVc.backClosure = {
+            // 或者通过navigationController 的stack 来获取到指定的控制器
+            if let vc9Controller = self.parentViewController as? Vc9Controller {
+                // 返回的时候设置其他页为选中页
+                vc9Controller.scrollPageView.selectedIndex = 6
+            }
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        }
+        
+        showViewController(testSelectedVc, sender: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
