@@ -14,13 +14,7 @@ class ScrollPageView: UIView {
     
     var segView: ScrollSegmentView!
     var contentView: ContentView!
-    /// 设置选中的下标, 默认为0
-    var selectedIndex: Int = 0 {
-        didSet {
-
-        }
-    }
-    
+    /// 设置选中的下标
     func selectedIndex(selectedIndex: Int, animated: Bool) {
         
         assert(!(selectedIndex < 0 || selectedIndex >= childVcs.count), "设置的下标不合法!!")
