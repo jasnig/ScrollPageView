@@ -12,32 +12,6 @@ class ScrollSegmentView: UIView {
 
     // 1. 实现颜色填充效果
     
-    ///  设置选中的下标
-    var selectedIndex = 0 {
-        didSet {
-            
-            assert(!(selectedIndex < 0 || selectedIndex >= titles.count), "设置的下标不合法!!")
-            
-            if selectedIndex < 0 || selectedIndex >= titles.count {
-                return
-            }
-
-            
-            for index in labelsArray.indices {
-                if index == selectedIndex {
-                    // 自动调整到相应的位置
-//                    adjustTitleOffSetToCurrentIndex(selectedIndex)
-//                    // 调整UI
-//                    adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: selectedIndex)
-                    oldIndex = currentIndex
-                    currentIndex = selectedIndex
-                    
-                    // 修改这里的 true 或者false 可以改变设置下标滚动后是否有动画切换效果
-                    adjustUIWhenBtnOnClickWithAnimate(false)
-                }
-            }
-        }
-    }
     
     /// 所有的title设置
     var segmentStyle: SegmentStyle
@@ -159,6 +133,26 @@ class ScrollSegmentView: UIView {
         let imageView = UIImageView(frame: self.bounds)
         return imageView
     }()
+    
+    ///  对外界暴露设置选中的下标的方法 可以改变设置下标滚动后是否有动画切换效果
+    func selectedIndex(selectedIndex: Int, animated: Bool) {
+        assert(!(selectedIndex < 0 || selectedIndex >= titles.count), "设置的下标不合法!!")
+        
+        if selectedIndex < 0 || selectedIndex >= titles.count {
+            return
+        }
+        
+// 自动调整到相应的位置
+//                    adjustTitleOffSetToCurrentIndex(selectedIndex)
+//                    // 调整UI
+//                    adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: selectedIndex)
+        
+        oldIndex = currentIndex
+        currentIndex = selectedIndex
+        
+        // 可以改变设置下标滚动后是否有动画切换效果
+        adjustUIWhenBtnOnClickWithAnimate(animated)
+    }
     
     /// 初始化的过程中做了太多的事了 !!!!!!
     init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
