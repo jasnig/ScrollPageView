@@ -18,18 +18,18 @@ class TestSelectedIndexController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
         
-        navigationItem.titleView = setupBackBarItem()
+        navigationItem.leftBarButtonItem = setupBackBarItem()
 
     }
     
-    func setupBackBarItem() -> UIButton {
+    func setupBackBarItem() -> UIBarButtonItem {
         let backBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
         backBtn.setTitle("返回选中其他页", forState: .Normal)
         backBtn.titleLabel?.textAlignment = .Center
         backBtn.setTitleColor(UIColor.blueColor(), forState: .Normal)
         backBtn.addTarget(self, action: #selector(self.backBtnOnClick), forControlEvents: .TouchUpInside)
         
-        return backBtn
+        return UIBarButtonItem(customView: backBtn)
         
     }
 

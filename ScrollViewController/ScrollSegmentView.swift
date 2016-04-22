@@ -11,7 +11,6 @@ import UIKit
 class ScrollSegmentView: UIView {
 
     // 1. 实现颜色填充效果
-    // 2. 实现可以自定义下标跳转到指定页面
     
     ///  设置选中的下标
     var selectedIndex = 0 {
@@ -32,7 +31,9 @@ class ScrollSegmentView: UIView {
 //                    adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: selectedIndex)
                     oldIndex = currentIndex
                     currentIndex = selectedIndex
-                    adjustUIWhenBtnOnClick()
+                    
+                    // 修改这里的 true 或者false 可以改变设置下标滚动后是否有动画切换效果
+                    adjustUIWhenBtnOnClickWithAnimate(false)
                 }
             }
         }
@@ -298,18 +299,18 @@ class ScrollSegmentView: UIView {
         guard let currentLabel = tapGes.view as? CustomLabel else { return }
         currentIndex = currentLabel.tag
         
-        adjustUIWhenBtnOnClick()
+        adjustUIWhenBtnOnClickWithAnimate(true)
 
     }
     // 自动或者手动点击按钮的时候调整UI
-    func adjustUIWhenBtnOnClick() {
+    func adjustUIWhenBtnOnClickWithAnimate(animated: Bool) {
         // 重复点击时的相应, 这里没有处理, 可以传递给外界来处理
         if currentIndex == oldIndex { return }
         let oldLabel = self.labelsArray[oldIndex] as! CustomLabel
         let currentLabel = self.labelsArray[currentIndex] as! CustomLabel
         adjustTitleOffSetToCurrentIndex(currentIndex)
-        
-        UIView.animateWithDuration(0.3) {[unowned self] in
+        let animatedTime = animated ? 0.3 : 0.0
+        UIView.animateWithDuration(animatedTime) {[unowned self] in
 
             // 设置文字颜色
             oldLabel.textColor = self.segmentStyle.normalTitleColor
