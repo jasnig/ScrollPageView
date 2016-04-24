@@ -70,7 +70,7 @@ class Test1Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承1-----------------"
+        cell.textLabel?.text = "继承1-----------------\(indexPath.row)"
         
         
         return cell
@@ -110,7 +110,7 @@ class Test2Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承2--------------"
+        cell.textLabel?.text = "继承2--------------\(indexPath.row)"
         
         
         return cell
@@ -149,7 +149,7 @@ class Test3Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承2--------------"
+        cell.textLabel?.text = "继承3--------------\(indexPath.row)"
         
         
         return cell
@@ -188,7 +188,7 @@ class Test4Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承4--------------"
+        cell.textLabel?.text = "继承4--------------\(indexPath.row)"
         
         
         return cell
@@ -227,7 +227,7 @@ class Test5Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承5--------------"
+        cell.textLabel?.text = "继承5--------------\(indexPath.row)"
         
         
         return cell
@@ -266,7 +266,7 @@ class Test6Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承6--------------"
+        cell.textLabel?.text = "继承6--------------\(indexPath.row)"
         
         
         return cell
@@ -305,7 +305,7 @@ class Test7Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承7--------------"
+        cell.textLabel?.text = "继承7--------------\(indexPath.row)"
         
         
         return cell
@@ -344,7 +344,7 @@ class Test8Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承8--------------"
+        cell.textLabel?.text = "继承8--------------\(indexPath.row)"
         
         
         return cell
@@ -383,7 +383,7 @@ class Test9Controller: PageTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "继承9--------------"
+        cell.textLabel?.text = "继承9--------------\(indexPath.row)"
         
         
         return cell

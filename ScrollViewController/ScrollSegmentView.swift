@@ -6,6 +6,9 @@
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
+// github: https://github.com/jasnig
+// 简书: http://www.jianshu.com/p/b84f4dd96d0c
+
 import UIKit
 
 class ScrollSegmentView: UIView {
@@ -142,14 +145,10 @@ class ScrollSegmentView: UIView {
             return
         }
         
-// 自动调整到相应的位置
-//                    adjustTitleOffSetToCurrentIndex(selectedIndex)
-//                    // 调整UI
-//                    adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: selectedIndex)
-        
+        // 自动调整到相应的位置
         currentIndex = selectedIndex
         
-        print("\(oldIndex) ------- \(currentIndex)")
+//        print("\(oldIndex) ------- \(currentIndex)")
         // 可以改变设置下标滚动后是否有动画切换效果
         adjustUIWhenBtnOnClickWithAnimate(animated)
     }
@@ -172,6 +171,22 @@ class ScrollSegmentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func titleLabelOnClick(tapGes: UITapGestureRecognizer) {
+        guard let currentLabel = tapGes.view as? CustomLabel else { return }
+        currentIndex = currentLabel.tag
+        
+        adjustUIWhenBtnOnClickWithAnimate(true)
+
+    }
+
+
+    deinit {
+        print("\(self.debugDescription) --- 销毁")
+    }
+}
+
+
+extension ScrollSegmentView {
     func setupTitles() {
         for (index, title) in titles.enumerate() {
             
@@ -209,7 +224,7 @@ class ScrollSegmentView: UIView {
                 
             }
         }
-
+        
     }
     
     // 先设置label的位置
@@ -221,14 +236,14 @@ class ScrollSegmentView: UIView {
         
         if !segmentStyle.scrollTitle {// 标题不能滚动, 平分宽度
             titleW = currentWidth / CGFloat(titles.count)
-        
+            
             for (index, label) in labelsArray.enumerate() {
                 
                 titleX = CGFloat(index) * titleW
                 
                 label.frame = CGRect(x: titleX, y: titleY, width: titleW, height: titleH)
                 
-
+                
             }
             
         } else {
@@ -242,7 +257,7 @@ class ScrollSegmentView: UIView {
                     titleX = CGRectGetMaxX(lastLabel.frame) + segmentStyle.titleMargin
                 }
                 label.frame = CGRect(x: titleX, y: titleY, width: titleW, height: titleH)
-
+                
             }
             
         }
@@ -257,7 +272,7 @@ class ScrollSegmentView: UIView {
             // 设置初始状态文字的颜色
             firstLabel.textColor = segmentStyle.selectedTitleColor
         }
-
+        
         
     }
     
@@ -283,29 +298,27 @@ class ScrollSegmentView: UIView {
         } else {
             coverLayer?.frame = CGRect(x: coverX, y: coverY, width: coverW, height: coverH)
         }
-
+        
         scrollLine?.frame = CGRect(x: coverX, y: bounds.size.height - segmentStyle.scrollLineHeight, width: coverW, height: segmentStyle.scrollLineHeight)
-
+        
         
     }
-    // 点击时直接实现变化
-    func titleLabelOnClick(tapGes: UITapGestureRecognizer) {
-        guard let currentLabel = tapGes.view as? CustomLabel else { return }
-        currentIndex = currentLabel.tag
-        
-        adjustUIWhenBtnOnClickWithAnimate(true)
+}
 
-    }
+extension ScrollSegmentView {
     // 自动或者手动点击按钮的时候调整UI
     func adjustUIWhenBtnOnClickWithAnimate(animated: Bool) {
         // 重复点击时的相应, 这里没有处理, 可以传递给外界来处理
         if currentIndex == oldIndex { return }
-        let oldLabel = self.labelsArray[oldIndex] as! CustomLabel
-        let currentLabel = self.labelsArray[currentIndex] as! CustomLabel
+        
+        let oldLabel = labelsArray[oldIndex] as! CustomLabel
+        let currentLabel = labelsArray[currentIndex] as! CustomLabel
+        
         adjustTitleOffSetToCurrentIndex(currentIndex)
+        
         let animatedTime = animated ? 0.3 : 0.0
         UIView.animateWithDuration(animatedTime) {[unowned self] in
-
+            
             // 设置文字颜色
             oldLabel.textColor = self.segmentStyle.normalTitleColor
             currentLabel.textColor = self.segmentStyle.selectedTitleColor
@@ -338,14 +351,14 @@ class ScrollSegmentView: UIView {
         
         titleBtnOnClick?(label: currentLabel, index: currentIndex)
     }
-        
+    
     // 手动滚动时需要提供动画效果
     func adjustUIWithProgress(progress: CGFloat,  oldIndex: Int, currentIndex: Int) {
         // 记录当前的currentIndex以便于在点击的时候处理
         self.oldIndex = currentIndex
         
-//        print("\(currentIndex)------------currentIndex")
-
+        //        print("\(currentIndex)------------currentIndex")
+        
         let oldLabel = labelsArray[oldIndex] as! CustomLabel
         let currentLabel = labelsArray[currentIndex] as! CustomLabel
         
@@ -370,7 +383,7 @@ class ScrollSegmentView: UIView {
         if segmentStyle.gradualChangeTitleColor {
             
             oldLabel.textColor = UIColor(red:selectedTitleColorRgb.r + rgbDelta.deltaR * progress, green: selectedTitleColorRgb.g + rgbDelta.deltaG * progress, blue: selectedTitleColorRgb.b + rgbDelta.deltaB * progress, alpha: 1.0)
-
+            
             currentLabel.textColor = UIColor(red: normalColorRgb.r - rgbDelta.deltaR * progress, green: normalColorRgb.g - rgbDelta.deltaG * progress, blue: normalColorRgb.b - rgbDelta.deltaB * progress, alpha: 1.0)
             
             
@@ -388,14 +401,14 @@ class ScrollSegmentView: UIView {
         
         oldLabel.currentTransformSx = segmentStyle.titleBigScale - deltaScale * progress
         currentLabel.currentTransformSx = segmentStyle.titleOriginalScale + deltaScale * progress
-
+        
         
     }
     // 居中显示title
     func adjustTitleOffSetToCurrentIndex(currentIndex: Int) {
-
+        
         let currentLabel = labelsArray[currentIndex]
-
+        
         var offSetX = currentLabel.center.x - currentWidth / 2
         if offSetX < 0 {
             offSetX = 0
@@ -416,27 +429,25 @@ class ScrollSegmentView: UIView {
         
         // 没有渐变效果的时候设置切换title时的颜色
         if !segmentStyle.gradualChangeTitleColor {
-
-
+            
+            
             for (index, label) in labelsArray.enumerate() {
                 if index == currentIndex {
                     label.textColor = segmentStyle.selectedTitleColor
-
+                    
                 } else {
                     label.textColor = segmentStyle.normalTitleColor
-
+                    
                 }
             }
         }
         print("\(oldIndex) ------- \(currentIndex)")
-
-
-    }
-
-    deinit {
-        print("\(self.debugDescription) --- 销毁")
+        
+        
     }
 }
+
+
 
 
 class CustomLabel: UILabel {

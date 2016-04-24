@@ -6,6 +6,9 @@
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
+// github: https://github.com/jasnig
+// 简书: http://www.jianshu.com/p/b84f4dd96d0c
+
 import UIKit
 
 class ContentView: UIView {
@@ -55,7 +58,7 @@ class ContentView: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("不要使用storyboard中的view为contentView")
     }
     
     

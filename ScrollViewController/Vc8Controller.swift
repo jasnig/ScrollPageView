@@ -6,6 +6,9 @@
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
 
+// github: https://github.com/jasnig
+// 简书: http://www.jianshu.com/p/b84f4dd96d0c
+
 import UIKit
 
 /// 这些常量请根据项目需要修改
@@ -48,14 +51,14 @@ class Vc8Controller: UIViewController {
         
         }()
     
-    // 懒加载contentView
+    // 懒加载 contentView
     lazy var contentView: ContentView! = {[unowned self] in
         let contentView = ContentView(frame: self.view.bounds, childVcs: self.childViewControllers)
         contentView.delegate = self // 必须实现代理方法
         return contentView
         }()
     
-    // 懒加载heacView
+    // 懒加载 heacView
     lazy var headView: UIImageView! =  {
         let headView = UIImageView(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
         headView.image = UIImage(named: "fruit")

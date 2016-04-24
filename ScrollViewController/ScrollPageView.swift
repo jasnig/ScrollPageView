@@ -5,6 +5,8 @@
 //  Created by jasnig on 16/4/6.
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
+// github: https://github.com/jasnig
+// 简书: http://www.jianshu.com/p/b84f4dd96d0c
 
 import UIKit
 
@@ -18,6 +20,13 @@ class ScrollPageView: UIView {
     /// 所有的子控制器
     private var childVcs: [UIViewController] = []
     
+    /// 设置选中的下标
+    func selectedIndex(selectedIndex: Int, animated: Bool) {
+        
+        // 移动滑块的位置
+        segView.selectedIndex(selectedIndex, animated: animated)
+        
+    }
     init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController]) {
         self.childVcs = childVcs
         self.titlesArray = titles
@@ -31,7 +40,6 @@ class ScrollPageView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     private func commonInit() {
         backgroundColor = UIColor.whiteColor()
@@ -52,19 +60,7 @@ class ScrollPageView: UIView {
 
 
     }
-    
-    /// 设置选中的下标
-    func selectedIndex(selectedIndex: Int, animated: Bool) {
-        
-        assert(!(selectedIndex < 0 || selectedIndex >= childVcs.count), "设置的下标不合法!!")
-        
-        if selectedIndex < 0 || selectedIndex >= childVcs.count {
-            return
-        }
-        // 移动滑块的位置
-        segView.selectedIndex(selectedIndex, animated: animated)
-        
-    }
+
  
 }
 

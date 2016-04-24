@@ -119,9 +119,9 @@
                                     <segue destination="yG5-zu-UdU" kind="show" id="Buk-aL-LM9"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p61-uB-NFY">
-                                <rect key="frame" x="15" y="472" width="570" height="82"/>
-                                <string key="text">如果对您有帮助,不妨给个star鼓励一下
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p61-uB-NFY">
+                                <rect key="frame" x="-31" y="472" width="616" height="82"/>
+                                <string key="text">如果对您有帮助,不妨给个star鼓励一下 github: https://github.com/jasnig
 如果您在使用过程中发现问题,请联系qq:854136959或者发邮件到这个qq邮箱给我
 </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>

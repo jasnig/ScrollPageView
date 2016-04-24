@@ -5,6 +5,8 @@
 //  Created by jasnig on 16/4/13.
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 //
+// github: https://github.com/jasnig
+// 简书: http://www.jianshu.com/p/b84f4dd96d0c
 
 import UIKit
 
