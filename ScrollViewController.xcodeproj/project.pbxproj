@@ -12,6 +12,10 @@
 		4B0DD7001CB49EEC00439631 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */; };
 		4B0DD70B1CB49EEC00439631 /* ScrollViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD70A1CB49EEC00439631 /* ScrollViewControllerTests.swift */; };
 		4B0DD7161CB49EEC00439631 /* ScrollViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */; };
+		4B494B7A1CCF6C7D00B23680 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B761CCF6C7D00B23680 /* ContentView.swift */; };
+		4B494B7B1CCF6C7D00B23680 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B771CCF6C7D00B23680 /* ScrollPageView.swift */; };
+		4B494B7C1CCF6C7D00B23680 /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B781CCF6C7D00B23680 /* ScrollSegmentView.swift */; };
+		4B494B7D1CCF6C7D00B23680 /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B791CCF6C7D00B23680 /* SegmentStyle.swift */; };
 		4BF37F131CCE5110005FBCDC /* Vc5Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EF71CCE5110005FBCDC /* Vc5Controller.swift */; };
 		4BF37F141CCE5110005FBCDC /* Vc3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EF91CCE5110005FBCDC /* Vc3Controller.swift */; };
 		4BF37F151CCE5110005FBCDC /* Vc9Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EFB1CCE5110005FBCDC /* Vc9Controller.swift */; };
@@ -26,10 +30,6 @@
 		4BF37F1E1CCE5110005FBCDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F0B1CCE5110005FBCDC /* AppDelegate.swift */; };
 		4BF37F1F1CCE5110005FBCDC /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F0C1CCE5110005FBCDC /* TestController.swift */; };
 		4BF37F201CCE5110005FBCDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F0D1CCE5110005FBCDC /* ViewController.swift */; };
-		4BF37F211CCE5110005FBCDC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F0F1CCE5110005FBCDC /* ContentView.swift */; };
-		4BF37F221CCE5110005FBCDC /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F101CCE5110005FBCDC /* ScrollPageView.swift */; };
-		4BF37F231CCE5110005FBCDC /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F111CCE5110005FBCDC /* ScrollSegmentView.swift */; };
-		4BF37F241CCE5110005FBCDC /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37F121CCE5110005FBCDC /* SegmentStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +61,10 @@
 		4B0DD7111CB49EEC00439631 /* ScrollViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewControllerUITests.swift; sourceTree = "<group>"; };
 		4B0DD7171CB49EEC00439631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B494B761CCF6C7D00B23680 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4B494B771CCF6C7D00B23680 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
+		4B494B781CCF6C7D00B23680 /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
+		4B494B791CCF6C7D00B23680 /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
 		4BF37EF71CCE5110005FBCDC /* Vc5Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc5Controller.swift; sourceTree = "<group>"; };
 		4BF37EF91CCE5110005FBCDC /* Vc3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc3Controller.swift; sourceTree = "<group>"; };
 		4BF37EFB1CCE5110005FBCDC /* Vc9Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc9Controller.swift; sourceTree = "<group>"; };
@@ -75,10 +79,6 @@
 		4BF37F0B1CCE5110005FBCDC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BF37F0C1CCE5110005FBCDC /* TestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		4BF37F0D1CCE5110005FBCDC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4BF37F0F1CCE5110005FBCDC /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		4BF37F101CCE5110005FBCDC /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
-		4BF37F111CCE5110005FBCDC /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
-		4BF37F121CCE5110005FBCDC /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +131,6 @@
 			children = (
 				4BF37F251CCE52FA005FBCDC /* Example */,
 				4BF37F0A1CCE5110005FBCDC /* other */,
-				4BF37F0E1CCE5110005FBCDC /* ScrollPageView */,
 				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
 				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
@@ -156,6 +155,17 @@
 				4B0DD7171CB49EEC00439631 /* Info.plist */,
 			);
 			path = ScrollViewControllerUITests;
+			sourceTree = "<group>";
+		};
+		4B494B751CCF6C7D00B23680 /* ScrollPageView */ = {
+			isa = PBXGroup;
+			children = (
+				4B494B761CCF6C7D00B23680 /* ContentView.swift */,
+				4B494B771CCF6C7D00B23680 /* ScrollPageView.swift */,
+				4B494B781CCF6C7D00B23680 /* ScrollSegmentView.swift */,
+				4B494B791CCF6C7D00B23680 /* SegmentStyle.swift */,
+			);
+			path = ScrollPageView;
 			sourceTree = "<group>";
 		};
 		4BF37EF61CCE5110005FBCDC /* 标题不滚动+遮盖+颜色渐变 效果 */ = {
@@ -242,20 +252,10 @@
 			path = other;
 			sourceTree = "<group>";
 		};
-		4BF37F0E1CCE5110005FBCDC /* ScrollPageView */ = {
-			isa = PBXGroup;
-			children = (
-				4BF37F0F1CCE5110005FBCDC /* ContentView.swift */,
-				4BF37F101CCE5110005FBCDC /* ScrollPageView.swift */,
-				4BF37F111CCE5110005FBCDC /* ScrollSegmentView.swift */,
-				4BF37F121CCE5110005FBCDC /* SegmentStyle.swift */,
-			);
-			path = ScrollPageView;
-			sourceTree = "<group>";
-		};
 		4BF37F251CCE52FA005FBCDC /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				4B494B751CCF6C7D00B23680 /* ScrollPageView */,
 				4BF37EFC1CCE5110005FBCDC /* 缩放+颜色渐变 效果 */,
 				4BF37F061CCE5110005FBCDC /* 遮盖+颜色渐变 效果 */,
 				4BF37EF81CCE5110005FBCDC /* 滚动条+颜色渐变 效果 */,
@@ -402,20 +402,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BF37F1E1CCE5110005FBCDC /* AppDelegate.swift in Sources */,
-				4BF37F241CCE5110005FBCDC /* SegmentStyle.swift in Sources */,
+				4B494B7D1CCF6C7D00B23680 /* SegmentStyle.swift in Sources */,
 				4BF37F191CCE5110005FBCDC /* TestSelectedIndexController.swift in Sources */,
 				4BF37F161CCE5110005FBCDC /* vc1Controller.swift in Sources */,
 				4BF37F1B1CCE5110005FBCDC /* Vc4Controller.swift in Sources */,
 				4BF37F201CCE5110005FBCDC /* ViewController.swift in Sources */,
 				4BF37F141CCE5110005FBCDC /* Vc3Controller.swift in Sources */,
-				4BF37F221CCE5110005FBCDC /* ScrollPageView.swift in Sources */,
-				4BF37F231CCE5110005FBCDC /* ScrollSegmentView.swift in Sources */,
+				4B494B7B1CCF6C7D00B23680 /* ScrollPageView.swift in Sources */,
+				4B494B7C1CCF6C7D00B23680 /* ScrollSegmentView.swift in Sources */,
 				4BF37F1D1CCE5110005FBCDC /* Vc6Controller.swift in Sources */,
 				4BF37F1A1CCE5110005FBCDC /* Vc8Controller.swift in Sources */,
 				4BF37F181CCE5110005FBCDC /* PageTableViewController.swift in Sources */,
 				4BF37F1F1CCE5110005FBCDC /* TestController.swift in Sources */,
 				4BF37F151CCE5110005FBCDC /* Vc9Controller.swift in Sources */,
-				4BF37F211CCE5110005FBCDC /* ContentView.swift in Sources */,
+				4B494B7A1CCF6C7D00B23680 /* ContentView.swift in Sources */,
 				4BF37F1C1CCE5110005FBCDC /* Vc2Controller.swift in Sources */,
 				4BF37F171CCE5110005FBCDC /* Vc7Controller.swift in Sources */,
 				4BF37F131CCE5110005FBCDC /* Vc5Controller.swift in Sources */,

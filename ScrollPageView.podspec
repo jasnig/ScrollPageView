@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source   = { :git => "https://github.com/jasnig/ScrollPageView.git", :tag => s.version }
   s.framework  = "UIKit"
-  s.source_files = "ScrollViewController/ScrollPageView/*.swift"
-  s.public_header_files = s.source_files
+  s.source_files = "ScrollPageView/*.swift"
 
 end
