@@ -41,7 +41,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'ScrollPageView', '~> 0.0.5'
+pod 'ScrollPageView', '~> 0.0.9'
 
 ###2.终端中执行命令 pod install
 ###3. 使用{Project}.xcworkspace打开项目
@@ -51,7 +51,10 @@ pod 'ScrollPageView', '~> 0.0.5'
 ###或者直接下载将下载文件的ScrollPageView文件夹下的文件拖进您的项目中就可以使用了
 
 ###Usage
-
+---
+###如果是使用cocoapods安装的需要在使用的文件中
+###import ScrollPageView
+---
 
 ####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
 	
@@ -145,3 +148,7 @@ pod 'ScrollPageView', '~> 0.0.5'
 ###如果您在使用过程中遇到问题, 请联系我
 ####QQ:854136959 邮箱: 854136959@qq.com
 ####如果对您有帮助,请随手给个star鼓励一下 
+
+## License
+
+ScrollPageView is released under the MIT license. See LICENSE for details.
