@@ -30,9 +30,9 @@
 
 import UIKit
 
-class ScrollPageView: UIView {
+public class ScrollPageView: UIView {
     static let cellId = "cellId"
-    var segmentStyle = SegmentStyle()
+    public var segmentStyle = SegmentStyle()
     
     private var segView: ScrollSegmentView!
     private var contentView: ContentView!
@@ -41,13 +41,13 @@ class ScrollPageView: UIView {
     private var childVcs: [UIViewController] = []
     
     /// 设置选中的下标
-    func selectedIndex(selectedIndex: Int, animated: Bool) {
+    public func selectedIndex(selectedIndex: Int, animated: Bool) {
         
         // 移动滑块的位置
         segView.selectedIndex(selectedIndex, animated: animated)
         
     }
-    init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController]) {
+    public init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController]) {
         self.childVcs = childVcs
         self.titlesArray = titles
         self.segmentStyle = segmentStyle
@@ -57,7 +57,7 @@ class ScrollPageView: UIView {
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -87,7 +87,7 @@ class ScrollPageView: UIView {
 
 extension ScrollPageView: ContentViewDelegate {
 
-    var segmentView: ScrollSegmentView {
+    public var segmentView: ScrollSegmentView {
         return segView
     }
 

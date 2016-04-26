@@ -30,16 +30,16 @@
 
 import UIKit
 
-class ScrollSegmentView: UIView {
+public class ScrollSegmentView: UIView {
 
     // 1. 实现颜色填充效果
     
     
     /// 所有的title设置
-    var segmentStyle: SegmentStyle
+    public var segmentStyle: SegmentStyle
     
     /// 点击响应的closure
-    var titleBtnOnClick:((label: UILabel, index: Int) -> Void)?
+    public var titleBtnOnClick:((label: UILabel, index: Int) -> Void)?
     
     /// self.bounds.size.width
     private var currentWidth: CGFloat = 0
@@ -59,7 +59,7 @@ class ScrollSegmentView: UIView {
     /// 用来缓存所有标题的宽度, 达到根据文字的字数和font自适应控件的宽度
     private var titlesWidthArray: [CGFloat] = []
     /// 所有的标题
-    var titles:[String]
+    public var titles:[String]
     
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
@@ -141,7 +141,7 @@ class ScrollSegmentView: UIView {
         
     }
     /// 背景图片
-    var backgroundImage: UIImage? = nil {
+    public var backgroundImage: UIImage? = nil {
         didSet {
             // 在设置了背景图片的时候才添加imageView
             if let image = backgroundImage {
@@ -157,7 +157,7 @@ class ScrollSegmentView: UIView {
     }()
     
     ///  对外界暴露设置选中的下标的方法 可以改变设置下标滚动后是否有动画切换效果
-    func selectedIndex(selectedIndex: Int, animated: Bool) {
+    public func selectedIndex(selectedIndex: Int, animated: Bool) {
         assert(!(selectedIndex < 0 || selectedIndex >= titles.count), "设置的下标不合法!!")
         
         if selectedIndex < 0 || selectedIndex >= titles.count {
@@ -173,7 +173,7 @@ class ScrollSegmentView: UIView {
     }
     
     /// 初始化的过程中做了太多的事了 !!!!!!
-    init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
+    public init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
         self.segmentStyle = segmentStyle
         self.titles = titles
         super.init(frame: frame)
@@ -186,7 +186,7 @@ class ScrollSegmentView: UIView {
         setupUI()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -206,7 +206,7 @@ class ScrollSegmentView: UIView {
 
 
 extension ScrollSegmentView {
-    func setupTitles() {
+    private func setupTitles() {
         for (index, title) in titles.enumerate() {
             
             let label = CustomLabel(frame: CGRectZero)
@@ -228,7 +228,7 @@ extension ScrollSegmentView {
         }
     }
     
-    func setupUI() {
+    private func setupUI() {
         currentWidth = bounds.size.width
         scrollView.frame = bounds
         addSubview(scrollView)
@@ -326,7 +326,7 @@ extension ScrollSegmentView {
 
 extension ScrollSegmentView {
     // 自动或者手动点击按钮的时候调整UI
-    func adjustUIWhenBtnOnClickWithAnimate(animated: Bool) {
+    public func adjustUIWhenBtnOnClickWithAnimate(animated: Bool) {
         // 重复点击时的相应, 这里没有处理, 可以传递给外界来处理
         if currentIndex == oldIndex { return }
         
@@ -372,7 +372,7 @@ extension ScrollSegmentView {
     }
     
     // 手动滚动时需要提供动画效果
-    func adjustUIWithProgress(progress: CGFloat,  oldIndex: Int, currentIndex: Int) {
+    public func adjustUIWithProgress(progress: CGFloat,  oldIndex: Int, currentIndex: Int) {
         // 记录当前的currentIndex以便于在点击的时候处理
         self.oldIndex = currentIndex
         
@@ -424,7 +424,7 @@ extension ScrollSegmentView {
         
     }
     // 居中显示title
-    func adjustTitleOffSetToCurrentIndex(currentIndex: Int) {
+    public func adjustTitleOffSetToCurrentIndex(currentIndex: Int) {
         
         let currentLabel = labelsArray[currentIndex]
         
@@ -469,9 +469,9 @@ extension ScrollSegmentView {
 
 
 
-class CustomLabel: UILabel {
+public class CustomLabel: UILabel {
     /// 用来记录当前label的缩放比例
-    var currentTransformSx:CGFloat = 1.0 {
+    public var currentTransformSx:CGFloat = 1.0 {
         didSet {
             transform = CGAffineTransformMakeScale(currentTransformSx, currentTransformSx)
         }

@@ -30,7 +30,7 @@
 
 import UIKit
 
-class ContentView: UIView {
+public class ContentView: UIView {
     static let cellId = "cellId"
     
     /// 所有的子控制器
@@ -42,9 +42,9 @@ class ContentView: UIView {
     private var oldIndex = 0
     private var currentIndex = 1
     
-    weak var delegate: ContentViewDelegate?
+    public weak var delegate: ContentViewDelegate?
     
-    lazy var collectionView: UICollectionView = {[weak self] in
+    private lazy var collectionView: UICollectionView = {[weak self] in
         let flowLayout = UICollectionViewFlowLayout()
         
         let collection = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
@@ -70,13 +70,13 @@ class ContentView: UIView {
     }()
     
     
-    init(frame:CGRect, childVcs:[UIViewController]) {
+    public init(frame:CGRect, childVcs:[UIViewController]) {
         self.childVcs = childVcs
         super.init(frame: frame)
         commonInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("不要使用storyboard中的view为contentView")
     }
     
@@ -96,14 +96,14 @@ class ContentView: UIView {
         
     }
     
-    func setContentOffSet(offSet: CGPoint , animated: Bool) {
+    public func setContentOffSet(offSet: CGPoint , animated: Bool) {
         // 不要执行collectionView的scrollView的滚动代理方法
         self.forbidTouchToAdjustPosition = true
         self.collectionView.setContentOffset(offSet, animated: animated)
     }
     
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = bounds
 
@@ -119,11 +119,11 @@ class ContentView: UIView {
 
 extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    final func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    final public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return childVcs.count
     }
     
-    final func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    final public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ContentView.cellId, forIndexPath: indexPath)
         // 避免出现重用显示内容出错 ---- 也可以直接给每个cell用不同的reuseIdentifier实现
         for subview in cell.contentView.subviews {
@@ -147,7 +147,7 @@ extension ContentView: UIScrollViewDelegate {
      */
     // 滚动减速完成时再更新title的位置
     //
-    final func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    final public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
         
         delegate?.contentViewDidEndMoveToIndex(currentIndex)
@@ -158,7 +158,7 @@ extension ContentView: UIScrollViewDelegate {
     
     
     // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容
-    final func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    final public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         /// 用来判断方向
         oldOffSetX = scrollView.contentOffset.x
         
@@ -167,7 +167,7 @@ extension ContentView: UIScrollViewDelegate {
     }
     
     // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用
-    final func scrollViewDidScroll(scrollView: UIScrollView) {
+    final public func scrollViewDidScroll(scrollView: UIScrollView) {
         let offSetX = scrollView.contentOffset.x
         
         // 如果是点击了title, 就不要计算了, 直接在点击相应的方法里就已经处理了滚动
@@ -214,7 +214,7 @@ extension ContentView: UIScrollViewDelegate {
 }
 
 
-protocol ContentViewDelegate: class {
+public protocol ContentViewDelegate: class {
     /// 有默认实现, 不推荐重写
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
     /// 有默认实现, 不推荐重写
@@ -229,18 +229,18 @@ protocol ContentViewDelegate: class {
 extension ContentViewDelegate {
     
     // 默认什么都不做
-    func contentViewDidBeginMove() {
+    public func contentViewDidBeginMove() {
         
     }
     
     // 内容每次滚动完成时调用, 确定title和其他的控件的位置
-    func contentViewDidEndMoveToIndex(currentIndex: Int) {
+    public func contentViewDidEndMoveToIndex(currentIndex: Int) {
         segmentView.adjustTitleOffSetToCurrentIndex(currentIndex)
         segmentView.adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: currentIndex)
     }
     
     // 内容正在滚动的时候,同步滚动滑块的控件
-    func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat) {
+    public func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat) {
         segmentView.adjustUIWithProgress(progress, oldIndex: fromIndex, currentIndex: toIndex)
     }
 }
