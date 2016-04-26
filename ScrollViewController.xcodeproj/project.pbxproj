@@ -129,15 +129,7 @@
 		4B0DD6F41CB49EEC00439631 /* ScrollViewController */ = {
 			isa = PBXGroup;
 			children = (
-				4BF37EFC1CCE5110005FBCDC /* 缩放+颜色渐变 效果 */,
-				4BF37F061CCE5110005FBCDC /* 遮盖+颜色渐变 效果 */,
-				4BF37EF81CCE5110005FBCDC /* 滚动条+颜色渐变 效果 */,
-				4BF37F041CCE5110005FBCDC /* 遮盖+缩放+没有颜色渐变 效果 */,
-				4BF37EF61CCE5110005FBCDC /* 标题不滚动+遮盖+颜色渐变 效果 */,
-				4BF37F081CCE5110005FBCDC /* 自定义segmentView和contentView位置的效果) */,
-				4BF37EFE1CCE5110005FBCDC /* 有headView的效果(简书个人页面,不使用TableView) */,
-				4BF37F001CCE5110005FBCDC /* 有headView的效果(简书个人页面,使用TableView) */,
-				4BF37EFA1CCE5110005FBCDC /* 可以在初始化或者返回页面的时候设置当前页为其他页 */,
+				4BF37F251CCE52FA005FBCDC /* Example */,
 				4BF37F0A1CCE5110005FBCDC /* other */,
 				4BF37F0E1CCE5110005FBCDC /* ScrollPageView */,
 				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
@@ -259,6 +251,22 @@
 				4BF37F121CCE5110005FBCDC /* SegmentStyle.swift */,
 			);
 			path = ScrollPageView;
+			sourceTree = "<group>";
+		};
+		4BF37F251CCE52FA005FBCDC /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				4BF37EFC1CCE5110005FBCDC /* 缩放+颜色渐变 效果 */,
+				4BF37F061CCE5110005FBCDC /* 遮盖+颜色渐变 效果 */,
+				4BF37EF81CCE5110005FBCDC /* 滚动条+颜色渐变 效果 */,
+				4BF37F041CCE5110005FBCDC /* 遮盖+缩放+没有颜色渐变 效果 */,
+				4BF37EF61CCE5110005FBCDC /* 标题不滚动+遮盖+颜色渐变 效果 */,
+				4BF37F081CCE5110005FBCDC /* 自定义segmentView和contentView位置的效果) */,
+				4BF37EFE1CCE5110005FBCDC /* 有headView的效果(简书个人页面,不使用TableView) */,
+				4BF37F001CCE5110005FBCDC /* 有headView的效果(简书个人页面,使用TableView) */,
+				4BF37EFA1CCE5110005FBCDC /* 可以在初始化或者返回页面的时候设置当前页为其他页 */,
+			);
+			name = Example;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
