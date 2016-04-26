@@ -1,5 +1,7 @@
 #ScrollPageView
 
+##使用示例效果
+
 ![示例效果1.gif](http://upload-images.jianshu.io/upload_images/1271831-1cff5db09208a125.gif?imageMogr2/auto-orient/strip)  ![示例效果2.gif](http://upload-images.jianshu.io/upload_images/1271831-764800343e557870.gif?imageMogr2/auto-orient/strip)![示例效果3.gif](http://upload-images.jianshu.io/upload_images/1271831-b6ac95954eeb7c0e.gif?imageMogr2/auto-orient/strip)
 
 
@@ -25,7 +27,31 @@
 
 ---
 
-### 使用方法
+## Requirements
+
+* iOS 8.0+ 
+* Xcode 7.3 or above
+
+## Installation
+
+### CocoaPods
+####1.在你的项目Podfile里面添加下面的内容
+
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'ScrollPageView', '~> 0.0.5'
+
+###2.终端中执行命令 pod install
+###3. 使用{Project}.xcworkspace打开项目
+
+
+---
+###或者直接下载将下载文件的ScrollPageView文件夹下的文件拖进您的项目中就可以使用了
+
+###Usage
+
 
 ####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
 	
