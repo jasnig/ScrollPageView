@@ -70,4 +70,7 @@ public struct SegmentStyle {
     /// 文字选中状态颜色 请使用RGB空间的颜色值!! 如果提供的不是RGB空间的颜色值就可能crash
     public var selectedTitleColor = UIColor(red: 255.0/255.0, green: 0.0/255.0, blue: 121/255.0, alpha: 1.0)
     
+    public init() {
+        
+    }
 }
