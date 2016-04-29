@@ -41,7 +41,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'ScrollPageView', '~> 0.0.9'
+pod 'ScrollPageView', '~> 0.1.0'
 
 ###2.终端中执行命令 pod install
 ###3. 使用{Project}.xcworkspace打开项目
@@ -56,15 +56,50 @@ pod 'ScrollPageView', '~> 0.0.9'
 ###import ScrollPageView
 ---
 
+
+###Update (更新说明) -- 2016/04/29
+ * 废弃了前面版本的使用方法(前面使用过的朋友请修改为新的使用方法), 提供了更合理的使用方法, 不需要addChildViewController, 只需要提供一个addChildViewControllers的数组即可
+ * 添加了更新titles和childViewControllers的方法, 使用更灵活
+
 ####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
-	
-	```
-		//1. 添加子控制器,类似
-		//let vc2 = UIViewController()
-        //vc2.view.backgroundColor = UIColor.greenColor()
-        //addChildViewController(vc2)
+
+
+		//1. 设置子控制器,类似
+	func setChildVcs() -> [UIViewController] {
+        let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
         
-	     addChildVcs()
+        let vc2 = UIViewController()
+        vc2.view.backgroundColor = UIColor.greenColor()
+        
+        let vc3 = UIViewController()
+        vc3.view.backgroundColor = UIColor.redColor()
+        
+        let vc4 = UIViewController()
+        vc4.view.backgroundColor = UIColor.yellowColor()
+        
+        let vc5 = UIViewController()
+        vc5.view.backgroundColor = UIColor.lightGrayColor()
+        
+        let vc6 = UIViewController()
+        vc6.view.backgroundColor = UIColor.brownColor()
+        
+        let vc7 = UIViewController()
+        vc7.view.backgroundColor = UIColor.orangeColor()
+        
+        let vc8 = UIViewController()
+        vc8.view.backgroundColor = UIColor.blueColor()
+        
+        let vc9 = UIViewController()
+        vc9.view.backgroundColor = UIColor.brownColor()
+        
+        let vc10 = UIViewController()
+        vc10.view.backgroundColor = UIColor.orangeColor()
+        
+        let vc11 = UIViewController()
+        vc11.view.backgroundColor = UIColor.blueColor()
+        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
+    }
+        
         
         // 2.这个是必要的设置
         automaticallyAdjustsScrollViewInsets = false
@@ -79,18 +114,28 @@ pod 'ScrollPageView', '~> 0.0.9'
         style.scrollTitle = true
         // 4. 注意: 标题个数和子控制器的个数要相同
         let titles = ["国内头条", "国际要闻", "趣事", "囧图", "明星八卦", "爱车", "国防要事", "科技频道", "手机专页", "风景图", "段子"]
- 		// 5.
-        let scroll = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childViewControllers)
+ 		// 5. 这里的childVcs 需要传入一个包含childVcs的数组, parentViewController 传入self
+        let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: setChildVcs(), parentViewController: self)
         // 6.
         view.addSubview(scroll) 
 	
-	```
+
 	
 	
 ####二 使用 ScrollSegmentView 和 ContentView, 提供相同的效果组合, 但是同时可以分离开segmentView和contentView,可以单独设置他们的frame, 使用更灵活
 
-		// 1. 添加子控制器
-		addChildVcs()
+
+			// 1. 添加子控制器
+			    // 设置childVcs
+   		 func setChildVcs()  -> [UIViewController]{
+        	let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
+        	vc1.view.backgroundColor = UIColor.whiteColor()
+        
+        	let vc2 = UIViewController()
+        	vc2.view.backgroundColor = UIColor.greenColor()
+        
+       		 return [vc1, vc2]
+   		 }
         
         //2. 这个是必要的设置
         automaticallyAdjustsScrollViewInsets = false
@@ -123,7 +168,7 @@ pod 'ScrollPageView', '~> 0.0.9'
         //        topView.backgroundImage = UIImage(named: "test")
 		
 		// 6. 初始化 contentView 
-        contentView = ContentView(frame: view.bounds, childVcs: childViewControllers)
+        contentView = ContentView(frame: view.bounds, childVcs: setChildVcs(), parentViewController: self)
         // 7. 设置代理 必要的设置
         contentView.delegate = self // 必须实现代理方法
         
