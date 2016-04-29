@@ -39,15 +39,11 @@ public class ScrollPageView: UIView {
     private var titlesArray: [String] = []
     /// 所有的子控制器
     private var childVcs: [UIViewController] = []
-    
-    /// 设置选中的下标
-    public func selectedIndex(selectedIndex: Int, animated: Bool) {
-        
-        // 移动滑块的位置
-        segView.selectedIndex(selectedIndex, animated: animated)
-        
-    }
-    public init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController]) {
+    // 这里使用weak避免循环引用
+    private weak var parentViewController: UIViewController?
+
+    public init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController], parentViewController: UIViewController) {
+        self.parentViewController = parentViewController
         self.childVcs = childVcs
         self.titlesArray = titles
         self.segmentStyle = segmentStyle
@@ -65,7 +61,9 @@ public class ScrollPageView: UIView {
         backgroundColor = UIColor.whiteColor()
         segView = ScrollSegmentView(frame: CGRect(x: 0, y: 0, width: bounds.size.width, height: 44), segmentStyle: segmentStyle, titles: titlesArray)
         
-        contentView = ContentView(frame: CGRect(x: 0, y: CGRectGetMaxY(segView.frame), width: bounds.size.width, height: bounds.size.height - 44), childVcs: childVcs)
+        guard let parentVc = parentViewController else { return }
+        
+        contentView = ContentView(frame: CGRect(x: 0, y: CGRectGetMaxY(segView.frame), width: bounds.size.width, height: bounds.size.height - 44), childVcs: childVcs, parentViewController: parentVc)
         contentView.delegate = self
         
         addSubview(contentView)
@@ -80,10 +78,37 @@ public class ScrollPageView: UIView {
 
 
     }
+    
+    deinit {
+        parentViewController = nil
+        print("\(self.debugDescription) --- 销毁")
+    }
 
  
 }
 
+//MARK: - public helper
+extension ScrollPageView {
+    
+    /// 给外界设置选中的下标的方法
+    public func selectedIndex(selectedIndex: Int, animated: Bool) {
+        // 移动滑块的位置
+        segView.selectedIndex(selectedIndex, animated: animated)
+        
+    }
+
+    ///   给外界重新设置视图内容的标题的方法, 在设置之前需要先移除childViewControllers, 然后添加新的childViewControllers
+    ///
+    ///  - parameter titles:      newTitles
+    ///  - parameter newChildVcs: newChildVcs
+    public func reloadChildVcsWithNewTitles(titles: [String], andNewChildVcs newChildVcs: [UIViewController]) {
+        self.childVcs = newChildVcs
+        self.titlesArray = titles
+        
+        segView.reloadTitlesWithNewTitles(titlesArray)
+        contentView.reloadAllViewsWithNewChildVcs(childVcs)
+    }
+}
 
 extension ScrollPageView: ContentViewDelegate {
 

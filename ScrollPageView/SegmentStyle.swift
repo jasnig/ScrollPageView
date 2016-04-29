@@ -73,4 +73,5 @@ public struct SegmentStyle {
     public init() {
         
     }
+    
 }
