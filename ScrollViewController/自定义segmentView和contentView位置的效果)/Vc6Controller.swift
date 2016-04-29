@@ -38,8 +38,6 @@ class Vc6Controller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChildVcs()
-        
         // 这个是必要的设置
         automaticallyAdjustsScrollViewInsets = false
         
@@ -67,7 +65,7 @@ class Vc6Controller: UIViewController {
         // 可以直接设置背景色
         //        topView.backgroundImage = UIImage(named: "test")
 
-        contentView = ContentView(frame: view.bounds, childVcs: childViewControllers)
+        contentView = ContentView(frame: view.bounds, childVcs: setChildVcs(), parentViewController: self)
         contentView.delegate = self // 必须实现代理方法
         
         topView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
@@ -77,18 +75,40 @@ class Vc6Controller: UIViewController {
         
         navigationItem.titleView = topView
         view.addSubview(contentView)
+        
+        // 用于测试刷新视图
+        let btn = UIButton(frame: CGRect(x: 100, y: 300, width: 100, height: 44))
+        btn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        btn.setTitle("测试刷新", forState: .Normal)
+        btn.addTarget(self, action: #selector(self.reloadChildVcs), forControlEvents: .TouchUpInside)
+        view.addSubview(btn)
     }
     
-    func addChildVcs() {
+    func reloadChildVcs() {
+        
+        // 设置新的childVcs
+        let vc1 = UIViewController()
+        vc1.view.backgroundColor = UIColor.redColor()
+        let vc2 = UIViewController()
+        vc2.view.backgroundColor = UIColor.greenColor()
+        
+        let childVcs = [vc1, vc2]
+        // 设置新的标题
+        let titles = ["test1", "test2"]
+        topView.reloadTitlesWithNewTitles(titles)
+        contentView.reloadAllViewsWithNewChildVcs(childVcs)
+//        topView.selectedIndex(1, animated: true)
+    }
+    
+    // 设置childVcs
+    func setChildVcs()  -> [UIViewController]{
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
         vc1.view.backgroundColor = UIColor.whiteColor()
-        addChildViewController(vc1)
         
         let vc2 = UIViewController()
         vc2.view.backgroundColor = UIColor.greenColor()
-        addChildViewController(vc2)
         
-
+        return [vc1, vc2]
     }
 
     override func didReceiveMemoryWarning() {

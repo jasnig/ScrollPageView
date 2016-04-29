@@ -40,13 +40,22 @@ class TestController: UIViewController {
     @IBAction func btnOnClick(sender: UIButton) {
         let testSelectedVc = TestSelectedIndexController()
         
-        testSelectedVc.backClosure = {
+        testSelectedVc.backClosure = {[weak self] in
+            guard let strongSelf = self else { return }
             // 或者通过navigationController 的stack 来获取到指定的控制器
-            if let vc9Controller = self.parentViewController as? Vc9Controller {
+            if let vc9Controller = strongSelf.parentViewController as? Vc9Controller {
                 // 返回的时候设置其他页为选中页
                 vc9Controller.scrollPageView.selectedIndex(3, animated: true)
             }
-            self.navigationController?.popViewControllerAnimated(true)
+            
+            if let vc6Controller = strongSelf.parentViewController as? Vc6Controller {
+                // 返回的时候设置其他页为选中页
+                vc6Controller.reloadChildVcs()
+
+            }
+            let rootNav = UIApplication.sharedApplication().keyWindow?.rootViewController as? UINavigationController
+            
+            rootNav?.popViewControllerAnimated(true)
             
         }
         

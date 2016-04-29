@@ -42,6 +42,8 @@ public class ContentView: UIView {
     private var oldIndex = 0
     private var currentIndex = 1
     
+    // 这里使用weak 避免循环引用
+    private weak var parentViewController: UIViewController?
     public weak var delegate: ContentViewDelegate?
     
     private lazy var collectionView: UICollectionView = {[weak self] in
@@ -70,7 +72,8 @@ public class ContentView: UIView {
     }()
     
     
-    public init(frame:CGRect, childVcs:[UIViewController]) {
+    public init(frame:CGRect, childVcs:[UIViewController], parentViewController: UIViewController) {
+        self.parentViewController = parentViewController
         self.childVcs = childVcs
         super.init(frame: frame)
         commonInit()
@@ -87,6 +90,7 @@ public class ContentView: UIView {
             if childVc.isKindOfClass(UINavigationController.self) {
                 fatalError("不要添加UINavigationController包装后的子控制器")
             }
+            parentViewController?.addChildViewController(childVc)
         }
         
         collectionView.frame = bounds
@@ -96,13 +100,6 @@ public class ContentView: UIView {
         
     }
     
-    public func setContentOffSet(offSet: CGPoint , animated: Bool) {
-        // 不要执行collectionView的scrollView的滚动代理方法
-        self.forbidTouchToAdjustPosition = true
-        self.collectionView.setContentOffset(offSet, animated: animated)
-    }
-    
-    
     override public func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = bounds
@@ -110,11 +107,48 @@ public class ContentView: UIView {
     }
     
     deinit {
+        parentViewController = nil
         print("\(self.debugDescription) --- 销毁")
     }
+    
+
 }
 
-
+//MARK: - public helper
+extension ContentView {
+    
+    // 给外界可以设置ContentOffSet的方法
+    public func setContentOffSet(offSet: CGPoint , animated: Bool) {
+        // 不要执行collectionView的scrollView的滚动代理方法
+        self.forbidTouchToAdjustPosition = true
+        self.collectionView.setContentOffset(offSet, animated: animated)
+    }
+    
+    // 给外界刷新视图的方法
+    public func reloadAllViewsWithNewChildVcs(newChildVcs: [UIViewController] ) {
+        
+        // removing the old childVcs
+        childVcs.forEach { (childVc) in
+            childVc.willMoveToParentViewController(nil)
+            childVc.view.removeFromSuperview()
+            childVc.removeFromParentViewController()
+        }
+        // setting the new childVcs
+        childVcs = newChildVcs
+        
+        // don't add the childVc that wrapped by the navigationController
+        // 不要添加navigationController包装后的子控制器
+        for childVc in childVcs {
+            if childVc.isKindOfClass(UINavigationController.self) {
+                fatalError("不要添加UINavigationController包装后的子控制器")
+            }
+        }
+        
+        // 刷新视图
+        collectionView.reloadData()
+        
+    }
+}
 
 
 extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -126,6 +160,7 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
     final public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ContentView.cellId, forIndexPath: indexPath)
         // 避免出现重用显示内容出错 ---- 也可以直接给每个cell用不同的reuseIdentifier实现
+        // avoid to the case that shows the wrong thing due to the collectionViewCell's reuse
         for subview in cell.contentView.subviews {
             subview.removeFromSuperview()
         }
@@ -133,11 +168,14 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
         let  vc = childVcs[indexPath.row]
         vc.view.frame = bounds
         cell.contentView.addSubview(vc.view)
-        
+        // finish buildding the parent-child relationship
+        vc.didMoveToParentViewController(parentViewController)
         return cell
     }
  
 }
+
+
 
 extension ContentView: UIScrollViewDelegate {
     

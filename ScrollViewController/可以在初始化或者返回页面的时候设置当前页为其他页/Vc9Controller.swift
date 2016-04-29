@@ -35,9 +35,7 @@ class Vc9Controller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        addChildVcs()
-        
+    
         // 这个是必要的设置
         automaticallyAdjustsScrollViewInsets = false
         
@@ -55,56 +53,45 @@ class Vc9Controller: UIViewController {
         
         let titles = ["国内头条", "国际要闻", "趣事", "囧图", "明星八卦", "爱车", "国防要事", "科技频道", "手机专页", "风景图", "段子"]
         
-        scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childViewControllers)
+        scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: setChildVcs(), parentViewController: self)
         // 设置默认下标
         scrollPageView.selectedIndex(2, animated: false)
         view.addSubview(scrollPageView)
     }
     
-    func addChildVcs() {
+    func setChildVcs() -> [UIViewController] {
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
-        addChildViewController(vc1)
         
         let vc2 = UIViewController()
         vc2.view.backgroundColor = UIColor.greenColor()
-        addChildViewController(vc2)
         
         let vc3 = UIViewController()
         vc3.view.backgroundColor = UIColor.redColor()
-        addChildViewController(vc3)
         
         let vc4 = UIViewController()
         vc4.view.backgroundColor = UIColor.yellowColor()
-        addChildViewController(vc4)
         
         let vc5 = UIViewController()
         vc5.view.backgroundColor = UIColor.lightGrayColor()
-        addChildViewController(vc5)
         
         let vc6 = UIViewController()
         vc6.view.backgroundColor = UIColor.brownColor()
-        addChildViewController(vc6)
         
         let vc7 = UIViewController()
         vc7.view.backgroundColor = UIColor.orangeColor()
-        addChildViewController(vc7)
         
         let vc8 = UIViewController()
         vc8.view.backgroundColor = UIColor.blueColor()
-        addChildViewController(vc8)
-        
         
         let vc9 = UIViewController()
         vc9.view.backgroundColor = UIColor.brownColor()
-        addChildViewController(vc9)
         
         let vc10 = UIViewController()
         vc10.view.backgroundColor = UIColor.orangeColor()
-        addChildViewController(vc10)
         
         let vc11 = UIViewController()
         vc11.view.backgroundColor = UIColor.blueColor()
-        addChildViewController(vc11)
+        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

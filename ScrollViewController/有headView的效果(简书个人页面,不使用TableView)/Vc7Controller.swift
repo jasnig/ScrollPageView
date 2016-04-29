@@ -72,7 +72,7 @@ class Vc7Controller: UIViewController {
     // 懒加载contentView
     lazy var contentView: ContentView! = {[unowned self] in
         // 注意, 如果tableview是在storyboard中来的, 设置contentView的高度和这里不一样
-        let contentView = ContentView(frame: CGRect(x: 0.0, y: 0.0, width: Double(self.view.bounds.size.width), height: Double(self.view.bounds.size.height) - self.naviBarHeight - self.segmentViewHeight), childVcs: self.childViewControllers)
+        let contentView = ContentView(frame: CGRect(x: 0.0, y: 0.0, width: Double(self.view.bounds.size.width), height: Double(self.view.bounds.size.height) - self.naviBarHeight - self.segmentViewHeight), childVcs: self.setChildVcs(), parentViewController: self)
         contentView.delegate = self // 必须实现代理方法
         return contentView
     }()
@@ -92,8 +92,6 @@ class Vc7Controller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "简书个人主页"
-
-        addChildVcs()
 
         // 这个是必要的设置
         automaticallyAdjustsScrollViewInsets = false
@@ -115,50 +113,39 @@ class Vc7Controller: UIViewController {
         return headView
     }
     
-    func addChildVcs() {
+    func setChildVcs() -> [UIViewController] {
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
-        addChildViewController(vc1)
         
         let vc2 = UIViewController()
         vc2.view.backgroundColor = UIColor.greenColor()
-        addChildViewController(vc2)
         
         let vc3 = UIViewController()
         vc3.view.backgroundColor = UIColor.redColor()
-        addChildViewController(vc3)
         
         let vc4 = UIViewController()
         vc4.view.backgroundColor = UIColor.yellowColor()
-        addChildViewController(vc4)
         
         let vc5 = UIViewController()
         vc5.view.backgroundColor = UIColor.lightGrayColor()
-        addChildViewController(vc5)
         
         let vc6 = UIViewController()
         vc6.view.backgroundColor = UIColor.brownColor()
-        addChildViewController(vc6)
         
         let vc7 = UIViewController()
         vc7.view.backgroundColor = UIColor.orangeColor()
-        addChildViewController(vc7)
         
         let vc8 = UIViewController()
         vc8.view.backgroundColor = UIColor.blueColor()
-        addChildViewController(vc8)
-        
         
         let vc9 = UIViewController()
         vc9.view.backgroundColor = UIColor.brownColor()
-        addChildViewController(vc9)
         
         let vc10 = UIViewController()
         vc10.view.backgroundColor = UIColor.orangeColor()
-        addChildViewController(vc10)
         
         let vc11 = UIViewController()
         vc11.view.backgroundColor = UIColor.blueColor()
-        addChildViewController(vc11)
+        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
     }
 
     override func didReceiveMemoryWarning() {

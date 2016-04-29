@@ -156,21 +156,7 @@ public class ScrollSegmentView: UIView {
         return imageView
     }()
     
-    ///  对外界暴露设置选中的下标的方法 可以改变设置下标滚动后是否有动画切换效果
-    public func selectedIndex(selectedIndex: Int, animated: Bool) {
-        assert(!(selectedIndex < 0 || selectedIndex >= titles.count), "设置的下标不合法!!")
-        
-        if selectedIndex < 0 || selectedIndex >= titles.count {
-            return
-        }
-        
-        // 自动调整到相应的位置
-        currentIndex = selectedIndex
-        
-//        print("\(oldIndex) ------- \(currentIndex)")
-        // 可以改变设置下标滚动后是否有动画切换效果
-        adjustUIWhenBtnOnClickWithAnimate(animated)
-    }
+
     
     /// 初始化的过程中做了太多的事了 !!!!!!
     public init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
@@ -181,6 +167,9 @@ public class ScrollSegmentView: UIView {
 
             self.segmentStyle.scaleTitle = !(self.segmentStyle.showCover || self.segmentStyle.showLine)
         }
+        
+        addSubview(scrollView)
+        
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         setupTitles()
         setupUI()
@@ -201,6 +190,45 @@ public class ScrollSegmentView: UIView {
 
     deinit {
         print("\(self.debugDescription) --- 销毁")
+    }
+    
+
+}
+
+//MARK: - public helper
+extension ScrollSegmentView {
+    ///  对外界暴露设置选中的下标的方法 可以改变设置下标滚动后是否有动画切换效果
+    public func selectedIndex(selectedIndex: Int, animated: Bool) {
+        assert(!(selectedIndex < 0 || selectedIndex >= titles.count), "设置的下标不合法!!")
+        
+        if selectedIndex < 0 || selectedIndex >= titles.count {
+            return
+        }
+        
+        // 自动调整到相应的位置
+        currentIndex = selectedIndex
+        
+        //        print("\(oldIndex) ------- \(currentIndex)")
+        // 可以改变设置下标滚动后是否有动画切换效果
+        adjustUIWhenBtnOnClickWithAnimate(animated)
+    }
+    
+    // 暴露给外界来刷新标题的显示
+    public func reloadTitlesWithNewTitles(titles: [String]) {
+        // 移除所有的scrollView子视图
+        scrollView.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
+        // 移除所有的label相关
+        titlesWidthArray.removeAll()
+        labelsArray.removeAll()
+        
+        // 重新设置UI
+        self.titles = titles
+        setupTitles()
+        setupUI()
+        // default selecte the first tag
+        selectedIndex(0, animated: true)
     }
 }
 
@@ -231,7 +259,7 @@ extension ScrollSegmentView {
     private func setupUI() {
         currentWidth = bounds.size.width
         scrollView.frame = bounds
-        addSubview(scrollView)
+//        addSubview(scrollView)
         // 先设置label的位置
         setUpLabelsPosition()
         // 再设置滚动条和cover的位置
@@ -281,7 +309,6 @@ extension ScrollSegmentView {
             
         }
         
-        // FIXME: 这里目前只是默认设置第一个label为初始的label, 修改为可指定为任意的...
         if let firstLabel = labelsArray[0] as? CustomLabel {
             
             // 缩放, 设置初始的label的transform

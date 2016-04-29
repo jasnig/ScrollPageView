@@ -71,7 +71,7 @@ class Vc8Controller: UIViewController {
     
     // 懒加载 contentView
     lazy var contentView: ContentView! = {[unowned self] in
-        let contentView = ContentView(frame: self.view.bounds, childVcs: self.childViewControllers)
+        let contentView = ContentView(frame: self.view.bounds, childVcs: self.setChildVcs(), parentViewController: self)
         contentView.delegate = self // 必须实现代理方法
         return contentView
         }()
@@ -96,70 +96,54 @@ class Vc8Controller: UIViewController {
         // 这个是必要的设置, 如果没有设置导致显示内容不正常, 请尝试设置这个属性
         automaticallyAdjustsScrollViewInsets = false
         
-        
-        //1. 添加子控制器为PageTableViewController或者继承自他的Controller,
-        //   或者你可以参考PageTableViewController他里面的实现自行实现(可以使用UICollectionView)相关的代理和属性 并且设置delegate为self
-        
-        addChildVcs()
-        
-        // 2. 先添加contentView
+        // 1. 先添加contentView
         view.addSubview(contentView)
-        // 3. 再添加headView
+        // 2. 再添加headView
         view.addSubview(headView)
-        // 4. 再添加topView
+        // 3. 再添加topView
         view.addSubview(topView)
         
         
     }
     
-    
-    func addChildVcs() {
+    //1. 添加子控制器为PageTableViewController或者继承自他的Controller,
+    //   或者你可以参考PageTableViewController他里面的实现自行实现(可以使用UICollectionView)相关的代理和属性 并且设置delegate为self
+    func setChildVcs() -> [UIViewController] {
         let vc1 = PageTableViewController()
         
         vc1.delegate = self
-        addChildViewController(vc1)
         
         let vc2 = Test1Controller()
         vc2.delegate = self
-        addChildViewController(vc2)
         
         let vc3 = Test2Controller()
         vc3.delegate = self
-        addChildViewController(vc3)
         
         let vc4 = Test3Controller()
         vc4.delegate = self
-        addChildViewController(vc4)
         
         let vc5 = Test4Controller()
         vc5.delegate = self
-        addChildViewController(vc5)
         
         let vc6 = Test5Controller()
         vc6.delegate = self
-        addChildViewController(vc6)
-        
         
         let vc7 = Test6Controller()
         vc7.delegate = self
-        addChildViewController(vc7)
         
         let vc8 = Test7Controller()
         vc8.delegate = self
-        addChildViewController(vc8)
         
         let vc9 = Test8Controller()
         vc9.delegate = self
-        addChildViewController(vc9)
         
         let vc10 = Test9Controller()
         vc10.delegate = self
-        addChildViewController(vc10)
-        
         
         let vc11 = Test10Controller()
         vc11.delegate = self
-        addChildViewController(vc11)
+        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
+
     }
     
     override func didReceiveMemoryWarning() {
