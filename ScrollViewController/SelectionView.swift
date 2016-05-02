@@ -254,7 +254,6 @@ class SelectionView: UIView {
                     }
 
                     collectionView.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
-                    // 更新dataSource
                     
 
                     let cell = collectionView.cellForItemAtIndexPath(newIndexPath)
