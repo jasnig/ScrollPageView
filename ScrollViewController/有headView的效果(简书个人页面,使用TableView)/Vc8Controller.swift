@@ -108,6 +108,8 @@ class Vc8Controller: UIViewController {
     
     //1. 添加子控制器为PageTableViewController或者继承自他的Controller,
     //   或者你可以参考PageTableViewController他里面的实现自行实现(可以使用UICollectionView)相关的代理和属性 并且设置delegate为self
+    
+    
     func setChildVcs() -> [UIViewController] {
         let vc1 = PageTableViewController()
         

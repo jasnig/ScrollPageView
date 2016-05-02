@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="S3i-Jn-Egs" customClass="ExtraView" customModule="ScrollViewController" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="切换栏目" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wsi-U0-DZc">
+                    <rect key="frame" x="15" y="0.0" width="100" height="46"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="RVe-6l-Uds"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0p-l4-coR">
+                    <rect key="frame" x="557" y="9" width="28" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="28" id="Rxc-5Y-YAN"/>
+                        <constraint firstAttribute="height" constant="28" id="jIk-xJ-7mF"/>
+                    </constraints>
+                    <state key="normal" title="完成" image="delete"/>
+                    <connections>
+                        <action selector="finishBtnOnClick:" destination="S3i-Jn-Egs" eventType="touchUpInside" id="c19-Tx-LfG"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5sg-F1-Rkd">
+                    <rect key="frame" x="464" y="8" width="64" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="排序删除">
+                        <color key="titleColor" red="1" green="0.52739887211548175" blue="0.3900131336943965" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="selected" title="完成"/>
+                    <connections>
+                        <action selector="editBtnOnClick:" destination="S3i-Jn-Egs" eventType="touchUpInside" id="fUy-xi-XfX"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Wsi-U0-DZc" firstAttribute="leading" secondItem="S3i-Jn-Egs" secondAttribute="leading" constant="15" id="AoS-3j-7he"/>
+                <constraint firstAttribute="bottom" secondItem="Wsi-U0-DZc" secondAttribute="bottom" id="EDD-E1-E0G"/>
+                <constraint firstItem="Z0p-l4-coR" firstAttribute="centerY" secondItem="S3i-Jn-Egs" secondAttribute="centerY" id="HDi-MQ-Lqp"/>
+                <constraint firstItem="5sg-F1-Rkd" firstAttribute="top" secondItem="S3i-Jn-Egs" secondAttribute="top" constant="8" id="KdR-0f-FoY"/>
+                <constraint firstAttribute="bottom" secondItem="5sg-F1-Rkd" secondAttribute="bottom" constant="8" id="YjJ-jS-JL1"/>
+                <constraint firstItem="Z0p-l4-coR" firstAttribute="leading" secondItem="5sg-F1-Rkd" secondAttribute="trailing" constant="29" id="pki-tb-x4X"/>
+                <constraint firstAttribute="trailing" secondItem="Z0p-l4-coR" secondAttribute="trailing" constant="15" id="t5m-ts-HbV"/>
+                <constraint firstItem="Wsi-U0-DZc" firstAttribute="top" secondItem="S3i-Jn-Egs" secondAttribute="top" id="xOh-6z-ua2"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="316" y="-28"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="delete" width="128" height="128"/>
+    </resources>
+</document>

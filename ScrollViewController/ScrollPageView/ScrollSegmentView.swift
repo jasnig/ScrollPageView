@@ -40,7 +40,8 @@ public class ScrollSegmentView: UIView {
     
     /// 点击响应的closure
     public var titleBtnOnClick:((label: UILabel, index: Int) -> Void)?
-    
+    /// 附加按钮点击响应
+    public var extraBtnOnClick: ((extraBtn: UIButton) -> Void)?
     /// self.bounds.size.width
     private var currentWidth: CGFloat = 0
     /// 遮盖x和文字x的间隙
@@ -59,7 +60,7 @@ public class ScrollSegmentView: UIView {
     /// 用来缓存所有标题的宽度, 达到根据文字的字数和font自适应控件的宽度
     private var titlesWidthArray: [CGFloat] = []
     /// 所有的标题
-    public var titles:[String]
+    private var titles:[String]
     
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
@@ -77,14 +78,37 @@ public class ScrollSegmentView: UIView {
     }()
     /// 遮盖
     private lazy var coverLayer: UIView? = {[unowned self] in
+        
+        if !self.segmentStyle.showCover {
+            return nil
+        }
         let cover = UIView()
         cover.layer.cornerRadius = CGFloat(self.segmentStyle.coverCornerRadius)
         // 这里只有一个cover 需要设置圆角, 故不用考虑离屏渲染的消耗, 直接设置 masksToBounds 来设置圆角
         cover.layer.masksToBounds = true
         
-        return self.segmentStyle.showCover ? cover : nil
+        return cover
     
     }()
+    
+    /// 附加的按钮
+    private lazy var extraButton: UIButton? = {[unowned self] in
+        if !self.segmentStyle.showExtraButton {
+            return nil
+        }
+        let btn = UIButton()
+        btn.addTarget(self, action: #selector(self.extraBtnOnClick(_:)), forControlEvents: .TouchUpInside)
+        // 默认 图片名字
+        let imageName = self.segmentStyle.extraBtnBackgroundImageName ?? ""
+        btn.setImage(UIImage(named:imageName), forState: .Normal)
+        btn.backgroundColor = UIColor.whiteColor()
+        // 设置边缘的阴影效果
+        btn.layer.shadowColor = UIColor.whiteColor().CGColor
+        btn.layer.shadowOffset = CGSize(width: -5, height: 0)
+        btn.layer.shadowOpacity = 1
+        return btn
+    }()
+    
     
     /// 懒加载颜色的rgb变化值, 不要每次滚动时都计算
     private lazy var rgbDelta: (deltaR: CGFloat, deltaG: CGFloat, deltaB: CGFloat) = {[unowned self] in
@@ -169,7 +193,10 @@ public class ScrollSegmentView: UIView {
         }
         
         addSubview(scrollView)
-        
+        // 添加附加按钮
+        if let extraBtn = extraButton {
+            addSubview(extraBtn)
+        }
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         setupTitles()
         setupUI()
@@ -187,6 +214,9 @@ public class ScrollSegmentView: UIView {
 
     }
 
+    func extraBtnOnClick(btn: UIButton) {
+        extraBtnOnClick?(extraBtn: btn)
+    }
 
     deinit {
         print("\(self.debugDescription) --- 销毁")
@@ -257,9 +287,10 @@ extension ScrollSegmentView {
     }
     
     private func setupUI() {
-        currentWidth = bounds.size.width
-        scrollView.frame = bounds
-//        addSubview(scrollView)
+        
+        // 设置extra按钮
+        setupScrollViewAndExtraBtn()
+        
         // 先设置label的位置
         setUpLabelsPosition()
         // 再设置滚动条和cover的位置
@@ -274,6 +305,14 @@ extension ScrollSegmentView {
         
     }
     
+    private func setupScrollViewAndExtraBtn() {
+        currentWidth = bounds.size.width
+        let extraBtnW: CGFloat = 44.0
+        let extraBtnY: CGFloat = 5.0
+        let scrollW = extraButton == nil ? currentWidth : currentWidth - extraBtnW
+        scrollView.frame = CGRect(x: 0.0, y: 0.0, width: scrollW, height: bounds.size.height)
+        extraButton?.frame = CGRect(x: scrollW, y: extraBtnY, width: extraBtnW, height: bounds.size.height - 2*extraBtnY)
+    }
     // 先设置label的位置
     private func setUpLabelsPosition() {
         var titleX: CGFloat = 0.0
@@ -349,6 +388,8 @@ extension ScrollSegmentView {
         
         
     }
+    
+
 }
 
 extension ScrollSegmentView {
@@ -459,8 +500,9 @@ extension ScrollSegmentView {
         if offSetX < 0 {
             offSetX = 0
         }
-        
-        var maxOffSetX = scrollView.contentSize.width - currentWidth
+        // considering the exist of extraButton
+        let extraBtnW = extraButton?.frame.size.width ?? 0.0
+        var maxOffSetX = scrollView.contentSize.width - (currentWidth - extraBtnW)
         
         // 可以滚动的区域小余屏幕宽度
         if maxOffSetX < 0 {

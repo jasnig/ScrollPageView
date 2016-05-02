@@ -51,13 +51,15 @@ class Vc6Controller: UIViewController {
         style.showCover = true
         // 遮盖颜色
         style.coverBackgroundColor = UIColor.whiteColor()
-        
+                
         // title正常状态颜色 使用RGB空间值
         style.normalTitleColor = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
         // title选中状态颜色 使用RGB空间值
         style.selectedTitleColor = UIColor(red: 235.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0)
 
-        let titles = ["国内头条", "国际要闻"]
+        let titles = setChildVcs().map { (childVc) -> String in
+            childVc.title!
+        }
 
         topView = ScrollSegmentView(frame: CGRect(x: 0, y: 0, width: 150, height: 28), segmentStyle: style, titles: titles)
         topView.backgroundColor = UIColor.redColor()
@@ -73,6 +75,7 @@ class Vc6Controller: UIViewController {
             
         }
         
+        
         navigationItem.titleView = topView
         view.addSubview(contentView)
         
@@ -87,14 +90,19 @@ class Vc6Controller: UIViewController {
     func reloadChildVcs() {
         
         // 设置新的childVcs
-        let vc1 = UIViewController()
+        let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
         vc1.view.backgroundColor = UIColor.redColor()
+        vc1.title = "更换标题"
+
         let vc2 = UIViewController()
         vc2.view.backgroundColor = UIColor.greenColor()
-        
+        vc2.title = "换标题2"
+
         let childVcs = [vc1, vc2]
         // 设置新的标题
-        let titles = ["test1", "test2"]
+        let titles = childVcs.map {
+            $0.title!
+        }
         topView.reloadTitlesWithNewTitles(titles)
         contentView.reloadAllViewsWithNewChildVcs(childVcs)
 //        topView.selectedIndex(1, animated: true)
@@ -104,10 +112,12 @@ class Vc6Controller: UIViewController {
     func setChildVcs()  -> [UIViewController]{
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
         vc1.view.backgroundColor = UIColor.whiteColor()
+        vc1.title = "国内头条"
         
         let vc2 = UIViewController()
         vc2.view.backgroundColor = UIColor.greenColor()
-        
+        vc2.title = "国际头条"
+
         return [vc1, vc2]
     }
 

@@ -42,7 +42,10 @@ public struct SegmentStyle {
     public var scrollTitle = true
     /// 是否颜色渐变
     public var gradualChangeTitleColor = false
+    /// 是否显示附加的按钮
+    public var showExtraButton = false
     
+    public var extraBtnBackgroundImageName: String?
     /// 下面的滚动条的高度 默认2
     public var scrollLineHeight: CGFloat = 2
     /// 下面的滚动条的颜色

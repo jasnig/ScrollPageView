@@ -66,28 +66,8 @@ class Vc5Controller: UIViewController {
         
         let vc4 = UIViewController()
         vc4.view.backgroundColor = UIColor.yellowColor()
-        
-        let vc5 = UIViewController()
-        vc5.view.backgroundColor = UIColor.lightGrayColor()
-        
-        let vc6 = UIViewController()
-        vc6.view.backgroundColor = UIColor.brownColor()
-        
-        let vc7 = UIViewController()
-        vc7.view.backgroundColor = UIColor.orangeColor()
-        
-        let vc8 = UIViewController()
-        vc8.view.backgroundColor = UIColor.blueColor()
-        
-        let vc9 = UIViewController()
-        vc9.view.backgroundColor = UIColor.brownColor()
-        
-        let vc10 = UIViewController()
-        vc10.view.backgroundColor = UIColor.orangeColor()
-        
-        let vc11 = UIViewController()
-        vc11.view.backgroundColor = UIColor.blueColor()
-        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
+
+        return [vc1, vc2, vc3,vc4]
     }
 
 

@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0C48511CD3000300B47FE3 /* Vc10Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C48501CD3000300B47FE3 /* Vc10Controller.swift */; };
+		4B0C48541CD31AB000B47FE3 /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C48531CD31AB000B47FE3 /* SelectionView.swift */; };
 		4B0DD6FB1CB49EEC00439631 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0DD6F91CB49EEC00439631 /* Main.storyboard */; };
-		4B0DD6FD1CB49EEC00439631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */; };
 		4B0DD7001CB49EEC00439631 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */; };
 		4B0DD70B1CB49EEC00439631 /* ScrollViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD70A1CB49EEC00439631 /* ScrollViewControllerTests.swift */; };
 		4B0DD7161CB49EEC00439631 /* ScrollViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */; };
+		4B0F5B411CD5B3BF00960670 /* SelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0F5B3F1CD5B3BF00960670 /* SelectionCollectionViewCell.swift */; };
+		4B0F5B421CD5B3BF00960670 /* SelectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0F5B401CD5B3BF00960670 /* SelectionCollectionViewCell.xib */; };
+		4B0F5B441CD6126200960670 /* ExtraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0F5B431CD6126200960670 /* ExtraView.swift */; };
+		4B0F5B461CD6127300960670 /* ExtraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0F5B451CD6127300960670 /* ExtraView.xib */; };
+		4B0F5B481CD71E8300960670 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B0F5B471CD71E8300960670 /* Assets.xcassets */; };
 		4B494B831CCF760A00B23680 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B7F1CCF760A00B23680 /* ContentView.swift */; };
 		4B494B841CCF760A00B23680 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B801CCF760A00B23680 /* ScrollPageView.swift */; };
 		4B494B851CCF760A00B23680 /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */; };
@@ -50,9 +56,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B0C48501CD3000300B47FE3 /* Vc10Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc10Controller.swift; sourceTree = "<group>"; };
+		4B0C48531CD31AB000B47FE3 /* SelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		4B0DD6F21CB49EEC00439631 /* ScrollViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0DD6FA1CB49EEC00439631 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B0DD6FF1CB49EEC00439631 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B0DD7011CB49EEC00439631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B0DD7061CB49EEC00439631 /* ScrollViewControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +68,11 @@
 		4B0DD7111CB49EEC00439631 /* ScrollViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrollViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B0DD7151CB49EEC00439631 /* ScrollViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewControllerUITests.swift; sourceTree = "<group>"; };
 		4B0DD7171CB49EEC00439631 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B0F5B3F1CD5B3BF00960670 /* SelectionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		4B0F5B401CD5B3BF00960670 /* SelectionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectionCollectionViewCell.xib; sourceTree = "<group>"; };
+		4B0F5B431CD6126200960670 /* ExtraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtraView.swift; sourceTree = "<group>"; };
+		4B0F5B451CD6127300960670 /* ExtraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExtraView.xib; sourceTree = "<group>"; };
+		4B0F5B471CD71E8300960670 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B494B7F1CCF760A00B23680 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4B494B801CCF760A00B23680 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
 		4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
@@ -106,6 +118,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B0C48521CD3001300B47FE3 /* 类似网易新闻的动态修改tag和内容 */ = {
+			isa = PBXGroup;
+			children = (
+				4B0C48501CD3000300B47FE3 /* Vc10Controller.swift */,
+				4B0C48531CD31AB000B47FE3 /* SelectionView.swift */,
+				4B0F5B3F1CD5B3BF00960670 /* SelectionCollectionViewCell.swift */,
+				4B0F5B401CD5B3BF00960670 /* SelectionCollectionViewCell.xib */,
+				4B0F5B431CD6126200960670 /* ExtraView.swift */,
+				4B0F5B451CD6127300960670 /* ExtraView.xib */,
+			);
+			name = "类似网易新闻的动态修改tag和内容";
+			sourceTree = "<group>";
+		};
 		4B0DD6E91CB49EEC00439631 = {
 			isa = PBXGroup;
 			children = (
@@ -132,8 +157,8 @@
 				4BF37F251CCE52FA005FBCDC /* Example */,
 				4BF37F0A1CCE5110005FBCDC /* other */,
 				4B0DD6F91CB49EEC00439631 /* Main.storyboard */,
-				4B0DD6FC1CB49EEC00439631 /* Assets.xcassets */,
 				4B0DD6FE1CB49EEC00439631 /* LaunchScreen.storyboard */,
+				4B0F5B471CD71E8300960670 /* Assets.xcassets */,
 				4B0DD7011CB49EEC00439631 /* Info.plist */,
 			);
 			path = ScrollViewController;
@@ -265,6 +290,7 @@
 				4BF37EFE1CCE5110005FBCDC /* 有headView的效果(简书个人页面,不使用TableView) */,
 				4BF37F001CCE5110005FBCDC /* 有headView的效果(简书个人页面,使用TableView) */,
 				4BF37EFA1CCE5110005FBCDC /* 可以在初始化或者返回页面的时候设置当前页为其他页 */,
+				4B0C48521CD3001300B47FE3 /* 类似网易新闻的动态修改tag和内容 */,
 			);
 			name = Example;
 			sourceTree = "<group>";
@@ -375,8 +401,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B0DD7001CB49EEC00439631 /* LaunchScreen.storyboard in Resources */,
-				4B0DD6FD1CB49EEC00439631 /* Assets.xcassets in Resources */,
+				4B0F5B421CD5B3BF00960670 /* SelectionCollectionViewCell.xib in Resources */,
+				4B0F5B461CD6127300960670 /* ExtraView.xib in Resources */,
 				4B0DD6FB1CB49EEC00439631 /* Main.storyboard in Resources */,
+				4B0F5B481CD71E8300960670 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BF37F1E1CCE5110005FBCDC /* AppDelegate.swift in Sources */,
+				4B0F5B411CD5B3BF00960670 /* SelectionCollectionViewCell.swift in Sources */,
 				4B494B861CCF760A00B23680 /* SegmentStyle.swift in Sources */,
 				4BF37F191CCE5110005FBCDC /* TestSelectedIndexController.swift in Sources */,
 				4BF37F161CCE5110005FBCDC /* vc1Controller.swift in Sources */,
@@ -411,10 +440,13 @@
 				4B494B841CCF760A00B23680 /* ScrollPageView.swift in Sources */,
 				4B494B851CCF760A00B23680 /* ScrollSegmentView.swift in Sources */,
 				4BF37F1D1CCE5110005FBCDC /* Vc6Controller.swift in Sources */,
+				4B0C48541CD31AB000B47FE3 /* SelectionView.swift in Sources */,
+				4B0F5B441CD6126200960670 /* ExtraView.swift in Sources */,
 				4BF37F1A1CCE5110005FBCDC /* Vc8Controller.swift in Sources */,
 				4BF37F181CCE5110005FBCDC /* PageTableViewController.swift in Sources */,
 				4BF37F1F1CCE5110005FBCDC /* TestController.swift in Sources */,
 				4BF37F151CCE5110005FBCDC /* Vc9Controller.swift in Sources */,
+				4B0C48511CD3000300B47FE3 /* Vc10Controller.swift in Sources */,
 				4B494B831CCF760A00B23680 /* ContentView.swift in Sources */,
 				4BF37F1C1CCE5110005FBCDC /* Vc2Controller.swift in Sources */,
 				4BF37F171CCE5110005FBCDC /* Vc7Controller.swift in Sources */,

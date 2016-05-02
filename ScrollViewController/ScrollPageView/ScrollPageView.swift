@@ -33,6 +33,12 @@ import UIKit
 public class ScrollPageView: UIView {
     static let cellId = "cellId"
     public var segmentStyle = SegmentStyle()
+    /// 附加按钮点击响应
+    public var extraBtnOnClick: ((extraBtn: UIButton) -> Void)? {
+        didSet {
+            segView.extraBtnOnClick = extraBtnOnClick
+        }
+    }
     
     private var segView: ScrollSegmentView!
     private var contentView: ContentView!
@@ -42,6 +48,7 @@ public class ScrollPageView: UIView {
     // 这里使用weak避免循环引用
     private weak var parentViewController: UIViewController?
 
+    
     public init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController], parentViewController: UIViewController) {
         self.parentViewController = parentViewController
         self.childVcs = childVcs

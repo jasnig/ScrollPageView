@@ -142,6 +142,9 @@ extension ContentView {
             if childVc.isKindOfClass(UINavigationController.self) {
                 fatalError("不要添加UINavigationController包装后的子控制器")
             }
+            // 添加子控制器
+            parentViewController?.addChildViewController(childVc)
+
         }
         
         // 刷新视图
@@ -164,7 +167,6 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
         for subview in cell.contentView.subviews {
             subview.removeFromSuperview()
         }
-        
         let  vc = childVcs[indexPath.row]
         vc.view.frame = bounds
         cell.contentView.addSubview(vc.view)
