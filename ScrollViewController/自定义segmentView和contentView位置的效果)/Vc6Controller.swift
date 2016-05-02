@@ -98,13 +98,13 @@ class Vc6Controller: UIViewController {
         vc2.view.backgroundColor = UIColor.greenColor()
         vc2.title = "换标题2"
 
-        let childVcs = [vc1, vc2]
+        let newChildVcs = [vc1, vc2]
         // 设置新的标题
-        let titles = childVcs.map {
+        let newTitles = newChildVcs.map {
             $0.title!
         }
-        topView.reloadTitlesWithNewTitles(titles)
-        contentView.reloadAllViewsWithNewChildVcs(childVcs)
+        topView.reloadTitlesWithNewTitles(newTitles)
+        contentView.reloadAllViewsWithNewChildVcs(newChildVcs)
 //        topView.selectedIndex(1, animated: true)
     }
     

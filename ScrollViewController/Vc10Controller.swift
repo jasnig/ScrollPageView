@@ -181,10 +181,10 @@ class Vc10Controller: UIViewController {
     
     // 刷新视图
     func reloadChildVcs() {
-        
+        let newChildVcs = currentChildVcs
         let newTitles = currentChildVcs.map { $0.title! }
         // 调用public方法刷新视图
-        scrollPageView.reloadChildVcsWithNewTitles(newTitles, andNewChildVcs: currentChildVcs)
+        scrollPageView.reloadChildVcsWithNewTitles(newTitles, andNewChildVcs: newChildVcs)
     }
     
     // 重新设置ChildVcs

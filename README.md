@@ -41,7 +41,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'ScrollPageView', '~> 0.1.0'
+pod 'ScrollPageView', '~> 0.1.1'
 
 ###2.终端中执行命令 pod install
 ###3. 使用{Project}.xcworkspace打开项目
@@ -59,7 +59,7 @@ pod 'ScrollPageView', '~> 0.1.0'
 
 ###Update (更新说明) -- 2016/04/29
  * 废弃了前面版本的使用方法(前面使用过的朋友请修改为新的使用方法), 提供了更合理的使用方法, 不需要addChildViewController, 只需要提供一个addChildViewControllers的数组即可
- * 添加了更新titles和childViewControllers的方法, 使用更灵活
+ * 添加了更新titles和childViewControllers的方法, 可以动态的修改和更新显示的内容
 
 ####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
 
@@ -67,38 +67,50 @@ pod 'ScrollPageView', '~> 0.1.0'
 		//1. 设置子控制器,类似
 	func setChildVcs() -> [UIViewController] {
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
-        
+        vc1.title = "国内头条"
         let vc2 = UIViewController()
         vc2.view.backgroundColor = UIColor.greenColor()
+        vc2.title = "国际要闻"
         
         let vc3 = UIViewController()
         vc3.view.backgroundColor = UIColor.redColor()
+        vc3.title = "趣事"
         
         let vc4 = UIViewController()
         vc4.view.backgroundColor = UIColor.yellowColor()
+        vc4.title = "囧图"
         
         let vc5 = UIViewController()
         vc5.view.backgroundColor = UIColor.lightGrayColor()
+        vc5.title = "明星八卦"
         
         let vc6 = UIViewController()
         vc6.view.backgroundColor = UIColor.brownColor()
+        vc6.title = "爱车"
         
         let vc7 = UIViewController()
         vc7.view.backgroundColor = UIColor.orangeColor()
+        vc7.title = "国防要事"
         
         let vc8 = UIViewController()
         vc8.view.backgroundColor = UIColor.blueColor()
+        vc8.title = "科技频道"
         
         let vc9 = UIViewController()
         vc9.view.backgroundColor = UIColor.brownColor()
+        vc9.title = "手机专页"
         
         let vc10 = UIViewController()
         vc10.view.backgroundColor = UIColor.orangeColor()
+        vc10.title = "风景图"
         
         let vc11 = UIViewController()
         vc11.view.backgroundColor = UIColor.blueColor()
+        vc11.title = "段子"
+        
         return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
     }
+
         
         
         // 2.这个是必要的设置
@@ -112,10 +124,13 @@ pod 'ScrollPageView', '~> 0.1.0'
         style.gradualChangeTitleColor = true
         // segment可以滚动
         style.scrollTitle = true
+        
+        let childVcs = setChildVcs()
         // 4. 注意: 标题个数和子控制器的个数要相同
-        let titles = ["国内头条", "国际要闻", "趣事", "囧图", "明星八卦", "爱车", "国防要事", "科技频道", "手机专页", "风景图", "段子"]
+        let titles = childVcs.map { $0.title! }
+
  		// 5. 这里的childVcs 需要传入一个包含childVcs的数组, parentViewController 传入self
-        let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: setChildVcs(), parentViewController: self)
+        let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childVcs, parentViewController: self)
         // 6.
         view.addSubview(scroll) 
 	
@@ -188,6 +203,35 @@ pod 'ScrollPageView', '~> 0.1.0'
        		 return topView
    		 	}
 		}
+		
+		
+三. 更新方法的使用:
+
+* 
+	        // 设置新的childVcs
+        let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
+        vc1.view.backgroundColor = UIColor.redColor()
+        vc1.title = "更换标题"
+
+        let vc2 = UIViewController()
+        vc2.view.backgroundColor = UIColor.greenColor()
+        vc2.title = "换标题2"
+
+        let newChildVcs = [vc1, vc2]
+        // 设置新的标题
+        let newTitles = newChildVcs.map {
+            $0.title!
+        }
+        topView.reloadTitlesWithNewTitles(newTitles)
+        contentView.reloadAllViewsWithNewChildVcs(newChildVcs)
+		//        topView.selectedIndex(1, animated: true)
+
+* 
+
+	    let newChildVcs = currentChildVcs
+        let newTitles = currentChildVcs.map { $0.title! }
+        // 调用public方法刷新视图
+        scrollPageView.reloadChildVcsWithNewTitles(newTitles, andNewChildVcs: newChildVcs)
 
 
 ###如果您在使用过程中遇到问题, 请联系我

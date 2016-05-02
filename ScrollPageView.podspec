@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "ScrollPageView"
-  s.version     = "0.1.0"
+  s.version     = "0.1.1"
   s.summary     = "ScrollPageView is written in Swift and it is useful."
   s.homepage    = "https://github.com/jasnig/ScrollPageView"
   s.license     = { :type => "MIT" }
