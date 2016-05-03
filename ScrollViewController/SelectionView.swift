@@ -73,7 +73,8 @@ extension SelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellID", forIndexPath: indexPath) as! SelectionCollectionViewCell
         
         cell.state = onlyShowTheFirstSection ? .Selected : .Normal
-
+        cell.deleteAction = nil
+        cell.selectedAction = nil
         if indexPath.section == 0 {
             cell.title = selectedTitles[indexPath.row]
             cell.deleteAction = {[unowned self](btn: UIButton) in
