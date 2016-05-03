@@ -42,7 +42,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'ScrollPageView', '~> 0.1.1'
+pod 'ScrollPageView', '~> 0.1.2'
 
 ###2.终端中执行命令 pod install
 ###3. 使用{Project}.xcworkspace打开项目
