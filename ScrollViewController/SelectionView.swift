@@ -54,7 +54,6 @@ class HeadView: UICollectionReusableView {
     }
 }
 
-
 extension SelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return onlyShowTheFirstSection ? 1 : 2
@@ -73,8 +72,10 @@ extension SelectionView: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cellID", forIndexPath: indexPath) as! SelectionCollectionViewCell
         
         cell.state = onlyShowTheFirstSection ? .Selected : .Normal
+        // 避免重用cell出现action出错
         cell.deleteAction = nil
         cell.selectedAction = nil
+        
         if indexPath.section == 0 {
             cell.title = selectedTitles[indexPath.row]
             cell.deleteAction = {[unowned self](btn: UIButton) in
@@ -241,7 +242,7 @@ class SelectionView: UIView {
                     // 更新数据源
                     if newIndexPath.row > oldIndexPath.row {
                         for index in oldIndexPath.row..<newIndexPath.row {
-                            selectedTitles.exchangeObjectAtIndex(index, withObjectAtIndex: index + 1)
+                            selectedTitles.zj_exchangeObjectAtIndex(index, withObjectAtIndex: index + 1)
                         }
                     }
                     
@@ -249,7 +250,7 @@ class SelectionView: UIView {
                         var index = oldIndexPath.row
                         for _ in newIndexPath.row..<oldIndexPath.row {
 
-                            selectedTitles.exchangeObjectAtIndex(index, withObjectAtIndex: index - 1)
+                            selectedTitles.zj_exchangeObjectAtIndex(index, withObjectAtIndex: index - 1)
                             index -= 1
                         }
                     }
@@ -337,7 +338,7 @@ class SelectionView: UIView {
 }
 
 extension Array {
-    mutating func exchangeObjectAtIndex(index: Int, withObjectAtIndex newIndex: Int) {
+    mutating func zj_exchangeObjectAtIndex(index: Int, withObjectAtIndex newIndex: Int) {
         let temp = self[index]
         self[index] = self[newIndex]
         self[newIndex] = temp
