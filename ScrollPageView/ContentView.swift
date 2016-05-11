@@ -30,6 +30,7 @@
 
 import UIKit
 
+
 public class ContentView: UIView {
     static let cellId = "cellId"
     
@@ -77,6 +78,8 @@ public class ContentView: UIView {
         self.childVcs = childVcs
         super.init(frame: frame)
         commonInit()
+        
+
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -85,6 +88,7 @@ public class ContentView: UIView {
     
     
     private func commonInit() {
+        
         // 不要添加navigationController包装后的子控制器
         for childVc in childVcs {
             if childVc.isKindOfClass(UINavigationController.self) {
@@ -92,12 +96,21 @@ public class ContentView: UIView {
             }
             parentViewController?.addChildViewController(childVc)
         }
-        
+
         collectionView.frame = bounds
         
         // 在这里调用了懒加载的collectionView, 那么之前设置的self.frame将会用于collectionView,如果在layoutsubviews()里面没有相关的处理frame的操作, 那么将导致内容显示不正常
         addSubview(collectionView)
         
+        // 设置naviVVc手势代理, 处理pop手势
+        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController, let popGesture = naviParentViewController.interactivePopGestureRecognizer {
+            
+            naviParentViewController.interactivePopGestureRecognizer?.delegate = self
+            // 优先执行naviParentViewController.interactivePopGestureRecognizer的手势
+            // 在代理方法中会判断是否真的执行, 不执行的时候就执行scrollView的滚动手势
+            collectionView.panGestureRecognizer.requireGestureRecognizerToFail(popGesture)
+            
+        }
     }
     
     override public func layoutSubviews() {
@@ -110,7 +123,6 @@ public class ContentView: UIView {
         parentViewController = nil
         print("\(self.debugDescription) --- 销毁")
     }
-    
 
 }
 
@@ -172,13 +184,16 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.contentView.addSubview(vc.view)
         // finish buildding the parent-child relationship
         vc.didMoveToParentViewController(parentViewController)
+        
         return cell
     }
+    
+ 
  
 }
 
 
-
+// MARK: - UIScrollViewDelegate
 extension ContentView: UIScrollViewDelegate {
     
     /**
@@ -193,8 +208,14 @@ extension ContentView: UIScrollViewDelegate {
         delegate?.contentViewDidEndMoveToIndex(currentIndex)
         // 保证如果滚动没有到下一页就返回了上一页, 那么在didScroll的代理里面执行之后, currentIndex和oldIndex不对
         // 通过这种方式再次正确设置 index
-        
+
+
+
     }
+    
+    // 代码调整contentOffSet但是没有动画的时候不会调用这个
+//    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+//    }
     
     
     // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容
@@ -253,6 +274,16 @@ extension ContentView: UIScrollViewDelegate {
     
 }
 
+// MARK: - UIGestureRecognizerDelegate
+extension ContentView: UIGestureRecognizerDelegate {
+    public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController where naviParentViewController.visibleViewController == parentViewController { // 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
+            return collectionView.contentOffset.x == 0
+        }
+        return true
+    }
+}
 
 public protocol ContentViewDelegate: class {
     /// 有默认实现, 不推荐重写
@@ -284,3 +315,4 @@ extension ContentViewDelegate {
         segmentView.adjustUIWithProgress(progress, oldIndex: fromIndex, currentIndex: toIndex)
     }
 }
+

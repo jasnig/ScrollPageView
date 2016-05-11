@@ -40,7 +40,7 @@ class TestSelectedIndexController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
         
-        navigationItem.leftBarButtonItem = setupBackBarItem()
+//        navigationItem.leftBarButtonItem = setupBackBarItem()
 
     }
     

@@ -37,6 +37,10 @@ class TestController: UIViewController {
 
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     @IBAction func btnOnClick(sender: UIButton) {
         let testSelectedVc = TestSelectedIndexController()
         

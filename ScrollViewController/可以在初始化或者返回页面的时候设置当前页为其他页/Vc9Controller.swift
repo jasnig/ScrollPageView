@@ -55,8 +55,20 @@ class Vc9Controller: UIViewController {
         
         scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: setChildVcs(), parentViewController: self)
         // 设置默认下标
-        scrollPageView.selectedIndex(2, animated: false)
+        scrollPageView.selectedIndex(2, animated: true)
         view.addSubview(scrollPageView)
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        print(navigationController?.interactivePopGestureRecognizer)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        print(navigationController?.interactivePopGestureRecognizer)
+
     }
     
     func setChildVcs() -> [UIViewController] {
@@ -68,7 +80,7 @@ class Vc9Controller: UIViewController {
         let vc3 = UIViewController()
         vc3.view.backgroundColor = UIColor.redColor()
         
-        let vc4 = UIViewController()
+        let vc4 = storyboard!.instantiateViewControllerWithIdentifier("test")
         vc4.view.backgroundColor = UIColor.yellowColor()
         
         let vc5 = UIViewController()
