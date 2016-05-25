@@ -41,6 +41,12 @@ class TestController: UIViewController {
         super.viewDidAppear(animated)
     }
     
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
+    
     @IBAction func btnOnClick(sender: UIButton) {
         let testSelectedVc = TestSelectedIndexController()
         

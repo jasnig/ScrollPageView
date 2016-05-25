@@ -47,13 +47,14 @@ class vc1Controller: UIViewController {
         // segment可以滚动
         style.scrollTitle = true
         style.showExtraButton = true
-        
-        let titles = setChildVcs().map { $0.title! }
+        let childVcs = setChildVcs()
+        let titles = childVcs.map { $0.title! }
  
-        let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: setChildVcs(), parentViewController: self)
+        let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childVcs, parentViewController: self)
         view.addSubview(scrollPageView)
     }
     
+
     func setChildVcs() -> [UIViewController] {
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
         vc1.title = "国内头条"

@@ -104,7 +104,7 @@ public class ContentView: UIView {
         
         // 设置naviVVc手势代理, 处理pop手势
         if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController, let popGesture = naviParentViewController.interactivePopGestureRecognizer {
-            
+            if naviParentViewController.viewControllers.count == 1 { return }
             naviParentViewController.interactivePopGestureRecognizer?.delegate = self
             // 优先执行naviParentViewController.interactivePopGestureRecognizer的手势
             // 在代理方法中会判断是否真的执行, 不执行的时候就执行scrollView的滚动手势

@@ -59,6 +59,10 @@ class Vc9Controller: UIViewController {
         view.addSubview(scrollPageView)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        scrollPageView.frame = CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64)
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
