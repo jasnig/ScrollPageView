@@ -60,6 +60,10 @@ pod 'ScrollPageView', '~> 0.1.2'
 ###import ScrollPageView
 ---
 
+###特别说明
+因为大家可能会复用同一个controller来显示内容, 这里提供两种方法
+* 在对应的controller的viewWillAppear()等生命周期里面可以根据不同的title来显示不同的内容或者刷新视图
+* 新增了一个通知ScrollPageViewDidShowThePageNotification, 你可以监听这个通知来获取到正在显示的页数, 使用的示例可以参照 SegmentStyle里面的说明
 
 ###Update (更新说明) -- 2016/04/29
  * 废弃了前面版本的使用方法(前面使用过的朋友请修改为新的使用方法), 提供了更合理的使用方法, 不需要addChildViewController, 只需要提供一个addChildViewControllers的数组即可

@@ -104,7 +104,7 @@ public class ContentView: UIView {
         
         // 设置naviVVc手势代理, 处理pop手势
         if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController, let popGesture = naviParentViewController.interactivePopGestureRecognizer {
-            if naviParentViewController.viewControllers.count == 1 { return }
+            if naviParentViewController.viewControllers.count == 1 { return }// 如果是第一个不要设置代理
             naviParentViewController.interactivePopGestureRecognizer?.delegate = self
             // 优先执行naviParentViewController.interactivePopGestureRecognizer的手势
             // 在代理方法中会判断是否真的执行, 不执行的时候就执行scrollView的滚动手势
@@ -205,9 +205,11 @@ extension ContentView: UIScrollViewDelegate {
     final public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
         
-        delegate?.contentViewDidEndMoveToIndex(currentIndex)
         // 保证如果滚动没有到下一页就返回了上一页, 那么在didScroll的代理里面执行之后, currentIndex和oldIndex不对
         // 通过这种方式再次正确设置 index
+        delegate?.contentViewDidEndMoveToIndex(currentIndex)
+        // 发布显示的index
+        NSNotificationCenter.defaultCenter().postNotificationName(ScrollPageViewDidShowThePageNotification, object: nil, userInfo: ["currentIndex": currentIndex])
 
 
 

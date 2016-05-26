@@ -34,7 +34,14 @@ class TestController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NSNotificationCenter.defaultCenter().addObserver(self
+            , selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+    }
+    
+    func didSelectIndex(noti: NSNotification) {
+        let userInfo = noti.userInfo!
+        //注意键名是currentIndex
+        print(userInfo["currentIndex"])
     }
     
     override func viewDidAppear(animated: Bool) {

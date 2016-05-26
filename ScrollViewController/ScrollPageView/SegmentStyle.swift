@@ -30,8 +30,25 @@
 
 import UIKit
 
+/// 通知使用示例
+/**
+ override func viewDidLoad() {
+ super.viewDidLoad()
+ NSNotificationCenter.defaultCenter().addObserver(self
+ , selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+ }
+ 
+ func didSelectIndex(noti: NSNotification) {
+ let userInfo = noti.userInfo!
+ //注意键名是currentIndex
+ print(userInfo["currentIndex"])
+ }
+ */
+/// 这个是发布当前显示的index的下标, 从 0 开始  注意, 通知的字典中的键名是 currentIndex
+public let ScrollPageViewDidShowThePageNotification = "ScrollPageViewDidShowThePageNotification"
 
 public struct SegmentStyle {
+
     /// 是否显示遮盖
     public var showCover = false
     /// 是否显示下划线
