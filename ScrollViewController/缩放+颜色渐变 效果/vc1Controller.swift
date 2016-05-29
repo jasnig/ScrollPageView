@@ -53,9 +53,10 @@ class vc1Controller: UIViewController {
         let scrollPageView = ScrollPageView(frame: CGRect(x: 0, y: 64, width: view.bounds.size.width, height: view.bounds.size.height - 64), segmentStyle: style, titles: titles, childVcs: childVcs, parentViewController: self)
         view.addSubview(scrollPageView)
     }
-    
 
     func setChildVcs() -> [UIViewController] {
+        // 特别注意的是如果你的控制器是使用的storyBoard初始化, 务必重写这个初始化方法中注册通知监听者, 如果在viewDidLoad中注册,在第一次的时候将不会接受到通知
+        // 例如vc1  ---> 进入TestController中查看示例
         let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
         vc1.title = "国内头条"
         let vc2 = UIViewController()

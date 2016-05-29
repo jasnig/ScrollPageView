@@ -32,7 +32,7 @@ import UIKit
 
 public class ScrollPageView: UIView {
     static let cellId = "cellId"
-    public var segmentStyle = SegmentStyle()
+    private var segmentStyle = SegmentStyle()
     /// 附加按钮点击响应
     public var extraBtnOnClick: ((extraBtn: UIButton) -> Void)? {
         didSet {
@@ -48,7 +48,6 @@ public class ScrollPageView: UIView {
     // 这里使用weak避免循环引用
     private weak var parentViewController: UIViewController?
 
-    
     public init(frame:CGRect, segmentStyle: SegmentStyle, titles: [String], childVcs:[UIViewController], parentViewController: UIViewController) {
         self.parentViewController = parentViewController
         self.childVcs = childVcs
@@ -73,8 +72,8 @@ public class ScrollPageView: UIView {
         contentView = ContentView(frame: CGRect(x: 0, y: CGRectGetMaxY(segView.frame), width: bounds.size.width, height: bounds.size.height - 44), childVcs: childVcs, parentViewController: parentVc)
         contentView.delegate = self
         
-        addSubview(contentView)
         addSubview(segView)
+        addSubview(contentView)
         // 在这里调用了懒加载的collectionView, 那么之前设置的self.frame将会用于collectionView,如果在layoutsubviews()里面没有相关的处理frame的操作, 那么将导致内容显示不正常
         // 避免循环引用
         segView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in

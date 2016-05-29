@@ -72,7 +72,7 @@ public class ContentView: UIView {
         return collection
     }()
     
-    
+//MARK:- life cycle
     public init(frame:CGRect, childVcs:[UIViewController], parentViewController: UIViewController) {
         self.parentViewController = parentViewController
         self.childVcs = childVcs
@@ -111,6 +111,12 @@ public class ContentView: UIView {
             collectionView.panGestureRecognizer.requireGestureRecognizerToFail(popGesture)
             
         }
+    }
+    
+    // 发布通知
+    private func addCurrentShowIndexNotification(index: Int) {
+        NSNotificationCenter.defaultCenter().postNotificationName(ScrollPageViewDidShowThePageNotification, object: nil, userInfo: ["currentIndex": index])
+        
     }
     
     override public func layoutSubviews() {
@@ -166,6 +172,8 @@ extension ContentView {
 }
 
 
+
+//MARK:- UICollectionViewDelegate, UICollectionViewDataSource
 extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     final public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -184,7 +192,8 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.contentView.addSubview(vc.view)
         // finish buildding the parent-child relationship
         vc.didMoveToParentViewController(parentViewController)
-        
+        // 发布将要显示的index
+        addCurrentShowIndexNotification(indexPath.row)
         return cell
     }
     
@@ -208,9 +217,6 @@ extension ContentView: UIScrollViewDelegate {
         // 保证如果滚动没有到下一页就返回了上一页, 那么在didScroll的代理里面执行之后, currentIndex和oldIndex不对
         // 通过这种方式再次正确设置 index
         delegate?.contentViewDidEndMoveToIndex(currentIndex)
-        // 发布显示的index
-        NSNotificationCenter.defaultCenter().postNotificationName(ScrollPageViewDidShowThePageNotification, object: nil, userInfo: ["currentIndex": currentIndex])
-
 
 
     }

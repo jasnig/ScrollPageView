@@ -66,16 +66,10 @@ class PageTableViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-    }
-    
 
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        // 通知父控制器重新设置tableView的contentOffset.y
-        delegate?.setupTableViewOffSetYWhenViewWillAppear(tableView)
+        super.viewWillAppear(animated)
 //        print(tableView.contentOffset.y)
     }
 

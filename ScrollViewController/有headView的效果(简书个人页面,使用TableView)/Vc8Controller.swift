@@ -38,6 +38,7 @@ let defaultOffSetY: CGFloat = segmentViewHeight + naviBarHeight + headViewHeight
 
 class Vc8Controller: UIViewController {
     
+    var childVcs:[PageTableViewController] = []
     
     // 懒加载 topView
     lazy var topView: ScrollSegmentView! = {[unowned self] in
@@ -67,14 +68,14 @@ class Vc8Controller: UIViewController {
         topView.backgroundColor = UIColor.lightGrayColor()
         return topView
         
-        }()
+    }()
     
     // 懒加载 contentView
     lazy var contentView: ContentView! = {[unowned self] in
-        let contentView = ContentView(frame: self.view.bounds, childVcs: self.setChildVcs(), parentViewController: self)
+        let contentView = ContentView(frame: self.view.bounds, childVcs: self.childVcs, parentViewController: self)
         contentView.delegate = self // 必须实现代理方法
         return contentView
-        }()
+    }()
     
     // 懒加载 heacView
     lazy var headView: UIImageView! =  {
@@ -96,21 +97,39 @@ class Vc8Controller: UIViewController {
         // 这个是必要的设置, 如果没有设置导致显示内容不正常, 请尝试设置这个属性
         automaticallyAdjustsScrollViewInsets = false
         
+        setChildVcs()
         // 1. 先添加contentView
         view.addSubview(contentView)
         // 2. 再添加headView
         view.addSubview(headView)
         // 3. 再添加topView
         view.addSubview(topView)
-        
+        // 4. 添加通知监听每个页面的出现
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+
         
     }
     
+
+    func didSelectIndex(noti: NSNotification) {
+        let userInfo = noti.userInfo!
+        //注意键名是currentIndex
+        // 通知父控制器重新设置tableView的contentOffset.y
+        let currentIndex = userInfo["currentIndex"] as! Int
+        let childVc = childVcs[currentIndex]
+        childVc.delegate?.setupTableViewOffSetYWhenViewWillAppear(childVc.tableView)
+
+        print(userInfo["currentIndex"])
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     //1. 添加子控制器为PageTableViewController或者继承自他的Controller,
     //   或者你可以参考PageTableViewController他里面的实现自行实现(可以使用UICollectionView)相关的代理和属性 并且设置delegate为self
     
     
-    func setChildVcs() -> [UIViewController] {
+    func setChildVcs() {
         let vc1 = PageTableViewController()
         
         vc1.delegate = self
@@ -144,7 +163,7 @@ class Vc8Controller: UIViewController {
         
         let vc11 = Test10Controller()
         vc11.delegate = self
-        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
+        childVcs = [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
 
     }
     
@@ -162,18 +181,26 @@ extension Vc8Controller: PageTableViewDelegate {
     // 设置将要显示的tableview的contentOffset.y
     func setupTableViewOffSetYWhenViewWillAppear(scrollView: UIScrollView) {
         
+        defer {
+            offSetY = scrollView.contentOffset.y
+        }
+//        print("\(offSetY) -------*\(scrollView.contentOffset.y)-----*\(-(naviBarHeight + segmentViewHeight)))")
         if offSetY < -(naviBarHeight + segmentViewHeight) {
             scrollView.contentOffset.y = offSetY
+            return
         } else {
             if scrollView.contentOffset.y < -(naviBarHeight + segmentViewHeight) {
+
                 scrollView.contentOffset.y = -(naviBarHeight + segmentViewHeight)
                 // 使滑块停在navigationBar下面
                 headView.frame.origin.y = naviBarHeight - headViewHeight
                 topView.frame.origin.y = naviBarHeight
+                return
             }
+            return
+
         }
 
-        print("\(offSetY)--------------")
         
     }
     

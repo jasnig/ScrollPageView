@@ -43,6 +43,18 @@ import UIKit
  //注意键名是currentIndex
  print(userInfo["currentIndex"])
  }
+ 
+ 特别注意的是如果你的控制器是使用的storyBoard初始化, 务必重写这个初始化方法中注册通知监听者, 如果在viewDidLoad中注册,在第一次的时候将不会接受到通知
+ required init?(coder aDecoder: NSCoder) {
+ super.init(coder: aDecoder)
+ NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+ 
+ }
+ func didSelectIndex(noti: NSNotification) {
+ let userInfo = noti.userInfo!
+ //注意键名是currentIndex
+ print(userInfo["currentIndex"])
+ }
  */
 /// 这个是发布当前显示的index的下标, 从 0 开始  注意, 通知的字典中的键名是 currentIndex
 public let ScrollPageViewDidShowThePageNotification = "ScrollPageViewDidShowThePageNotification"

@@ -181,7 +181,7 @@ public class ScrollSegmentView: UIView {
     }()
     
 
-    
+//MARK:- life cycle
     /// 初始化的过程中做了太多的事了 !!!!!!
     public init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
         self.segmentStyle = segmentStyle
@@ -200,8 +200,6 @@ public class ScrollSegmentView: UIView {
         // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
         setupTitles()
         setupUI()
-        // 发布显示的index的通知
-        addCurrentShowIndexNotification()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -439,8 +437,6 @@ extension ScrollSegmentView {
         oldIndex = currentIndex
         
         titleBtnOnClick?(label: currentLabel, index: currentIndex)
-        // 发布通知
-        addCurrentShowIndexNotification()
     }
     
     // 手动滚动时需要提供动画效果
@@ -536,11 +532,6 @@ extension ScrollSegmentView {
 //        print("\(oldIndex) ------- \(currentIndex)")
         
         
-    }
-    // 发布通知
-    func addCurrentShowIndexNotification() {
-        NSNotificationCenter.defaultCenter().postNotificationName(ScrollPageViewDidShowThePageNotification, object: nil, userInfo: ["currentIndex": currentIndex])
-    
     }
 }
 

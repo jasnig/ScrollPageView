@@ -32,16 +32,28 @@ import UIKit
 
 class TestController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self
-            , selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+
+    // storyBoard中的controller初始化会调用这个初始化方法, 在这里面注册通知监听者
+    // 如果在viewDidLoad()里面注册第一次出现的时候接受不到通知, 这个在oc里面是没有问题的, 很无奈
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+
     }
-    
     func didSelectIndex(noti: NSNotification) {
         let userInfo = noti.userInfo!
         //注意键名是currentIndex
         print(userInfo["currentIndex"])
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        print("\(self.debugDescription) --- 销毁")
+
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -85,27 +97,13 @@ class TestController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-
 }
 
 
 
 class Test1Controller: PageTableViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    
+
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
