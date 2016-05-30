@@ -77,10 +77,12 @@ class Vc8Controller: UIViewController {
         return contentView
     }()
     
-    // 懒加载 heacView
+    // 懒加载 headView
     lazy var headView: UIImageView! =  {
         let headView = UIImageView(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
         headView.image = UIImage(named: "fruit")
+        headView.userInteractionEnabled = true
+
         return headView
     }()
     
@@ -91,22 +93,24 @@ class Vc8Controller: UIViewController {
     var offSetY: CGFloat = -defaultOffSetY
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         title = "简书个人主页"
-        
         // 这个是必要的设置, 如果没有设置导致显示内容不正常, 请尝试设置这个属性
         automaticallyAdjustsScrollViewInsets = false
-        
         setChildVcs()
-        // 1. 先添加contentView
-        view.addSubview(contentView)
-        // 2. 再添加headView
+
+        /** 注意下面的添加顺序, 如果最先添加contentView, 那么当
+         headView.userInteractionEnabled = true的时候, 拖动图片是不能使tableView滚动的, 因为headView的superView不是ContentView中的CollectionView,所以触摸事件不能传递给collectionView
+         所以这里就先添加了headView, 让contentView首先响应滚动事件
+         */
+        // 1. 先添加headView
         view.addSubview(headView)
-        // 3. 再添加topView
+        // 2. 再添加contentView
+        view.addSubview(contentView)
+        // 3. 再添加topView(topView必须添加在contentView的下面才可以实现悬浮效果)
         view.addSubview(topView)
         // 4. 添加通知监听每个页面的出现
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
-
+        
         
     }
     
@@ -118,7 +122,6 @@ class Vc8Controller: UIViewController {
         let currentIndex = userInfo["currentIndex"] as! Int
         let childVc = childVcs[currentIndex]
         childVc.delegate?.setupTableViewOffSetYWhenViewWillAppear(childVc.tableView)
-
         print(userInfo["currentIndex"])
     }
     
@@ -127,7 +130,6 @@ class Vc8Controller: UIViewController {
     }
     //1. 添加子控制器为PageTableViewController或者继承自他的Controller,
     //   或者你可以参考PageTableViewController他里面的实现自行实现(可以使用UICollectionView)相关的代理和属性 并且设置delegate为self
-    
     
     func setChildVcs() {
         let vc1 = PageTableViewController()
@@ -170,14 +172,14 @@ class Vc8Controller: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     
 }
 
 
 // MARK:- PageTableViewDelegate - 监控子控制器中的tableview的滚动和更新相关的UI
 extension Vc8Controller: PageTableViewDelegate {
-    
+
     // 设置将要显示的tableview的contentOffset.y
     func setupTableViewOffSetYWhenViewWillAppear(scrollView: UIScrollView) {
         
@@ -206,28 +208,39 @@ extension Vc8Controller: PageTableViewDelegate {
     
     // 根据子控制器的scrolView的偏移量来调整UI
     func scrollViewIsScrolling(scrollView: UIScrollView) {
-        let deltaY =  scrollView.contentOffset.y - offSetY
         offSetY = scrollView.contentOffset.y
-        
         
 //        print(offSetY)
         
         if offSetY > -(defaultOffSetY - headViewHeight) {
+            if topView.frame.origin.y == naviBarHeight {
+                return
+            }
             // 使滑块停在navigationBar下面
             headView.frame.origin.y = naviBarHeight - headViewHeight
             topView.frame.origin.y = naviBarHeight
             return
         } else if offSetY < -defaultOffSetY {
-            
+            if headView.frame.origin.y == naviBarHeight {
+                return
+            }
             // 使headView停在navigationBar下面
             headView.frame.origin.y = naviBarHeight
             topView.frame.origin.y = naviBarHeight + headViewHeight
             return
+        } else {
+            
+            // 这里是让滑块和headView随着上下滚动
+            //这种方式可能会出现同步的偏差问题
+//            headView.frame.origin.y -= deltaY
+//            topView.frame.origin.y -= deltaY
+            // 这种方式会准确的同步位置
+            topView.frame.origin.y = -offSetY - segmentViewHeight
+            headView.frame.origin.y = topView.frame.origin.y - headViewHeight
+            
+            
         }
         
-        // 这里是让滑块和headView随着上下滚动
-        headView.frame.origin.y -= deltaY
-        topView.frame.origin.y -= deltaY
     }
     
 }

@@ -47,10 +47,11 @@ class PageTableViewController: UIViewController {
         tableView = UITableView(frame: self.view.bounds, style: .Plain)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.bounces = false
+        // 设置背景色
+        tableView.backgroundColor = UIColor.clearColor()
         // 设置tableview的内容偏移量
-
         tableView.contentInset = UIEdgeInsets(top: defaultOffSetY, left: 0, bottom: 0, right: 0)
-        
         self.view.addSubview(tableView)
     }
     
@@ -103,6 +104,8 @@ extension PageTableViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
+
 
 // MARK: UIScrollViewDelegate - 监控tableview的滚动, 将改变通知给通知父控制器
 extension PageTableViewController: UIScrollViewDelegate {

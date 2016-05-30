@@ -47,7 +47,7 @@ public class ContentView: UIView {
     private weak var parentViewController: UIViewController?
     public weak var delegate: ContentViewDelegate?
     
-    private lazy var collectionView: UICollectionView = {[weak self] in
+    private(set) lazy var collectionView: UICollectionView = {[weak self] in
         let flowLayout = UICollectionViewFlowLayout()
         
         let collection = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
@@ -96,7 +96,7 @@ public class ContentView: UIView {
             }
             parentViewController?.addChildViewController(childVc)
         }
-
+        collectionView.backgroundColor = UIColor.clearColor()
         collectionView.frame = bounds
         
         // 在这里调用了懒加载的collectionView, 那么之前设置的self.frame将会用于collectionView,如果在layoutsubviews()里面没有相关的处理frame的操作, 那么将导致内容显示不正常
