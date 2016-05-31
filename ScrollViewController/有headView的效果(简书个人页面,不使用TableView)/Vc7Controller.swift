@@ -32,10 +32,11 @@ import UIKit
 
 class Vc7Controller: UIViewController {
 
-    let segmentViewHeight = 44.0
-    let naviBarHeight = 64.0
-    let headViewHeight = 200.0
-    
+//    let segmentViewHeight = 44.0
+//    let naviBarHeight = 64.0
+//    let headViewHeight = 200.0
+    var offSetY: CGFloat = -defaultOffSetY
+
     // 懒加载 topView
     lazy var topView: ScrollSegmentView! = {[unowned self] in
         
@@ -55,7 +56,7 @@ class Vc7Controller: UIViewController {
         
         let titles = self.setChildVcs().map { $0.title! }
         
-        let topView = ScrollSegmentView(frame: CGRect(x: 0.0, y: 0.0, width: Double(self.view.bounds.size.width), height: self.segmentViewHeight), segmentStyle: style, titles: titles)
+        let topView = ScrollSegmentView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.bounds.size.width, height: segmentViewHeight), segmentStyle: style, titles: titles)
         
         topView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
             self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: false)
@@ -72,7 +73,7 @@ class Vc7Controller: UIViewController {
     // 懒加载contentView
     lazy var contentView: ContentView! = {[unowned self] in
         // 注意, 如果tableview是在storyboard中来的, 设置contentView的高度和这里不一样
-        let contentView = ContentView(frame: CGRect(x: 0.0, y: 0.0, width: Double(self.view.bounds.size.width), height: Double(self.view.bounds.size.height) - self.naviBarHeight - self.segmentViewHeight), childVcs: self.setChildVcs(), parentViewController: self)
+        let contentView = ContentView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.bounds.size.width, height: self.view.bounds.size.height - naviBarHeight - segmentViewHeight), childVcs: self.setChildVcs(), parentViewController: self)
         contentView.delegate = self // 必须实现代理方法
         return contentView
     }()
@@ -80,7 +81,7 @@ class Vc7Controller: UIViewController {
     // 懒加载tableView, 注意如果是从storyBoard中连线过来的,那么注意设置contentView的高度有点不一样
     // 或者在滚动的时候需要渐变navigationBar的时候,需要注意相关的tableView的frame设置和contentInset的设置
     lazy var tableView: UITableView = {[unowned self] in
-        let table = UITableView(frame: CGRect(x: 0.0, y: self.naviBarHeight, width: Double(self.view.bounds.size.width), height: Double(self.view.bounds.size.height) - self.naviBarHeight), style: .Plain)
+        let table = UITableView(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: self.view.bounds.size.height - naviBarHeight), style: .Plain)
         table.delegate = self
         table.dataSource = self
         return table
@@ -108,7 +109,7 @@ class Vc7Controller: UIViewController {
     
     
     func setTableViewHeadView() -> UIImageView {
-        let headView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: Double(view.bounds.size.width), height: headViewHeight))
+        let headView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.size.width, height: headViewHeight))
         headView.image = UIImage(named: "fruit")
         return headView
     }
@@ -192,7 +193,6 @@ extension Vc7Controller: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-
 
 // MARK:- UIScrollViewDelegate 这里的代理可以监控tableView的滚动, 在滚动的时候就可以做一些事情, 比如使navigationBar渐变, 或者像简书一样改变头像的属性
 extension Vc7Controller: UIScrollViewDelegate {

@@ -47,7 +47,7 @@ class PageTableViewController: UIViewController {
         tableView = UITableView(frame: self.view.bounds, style: .Plain)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.bounces = false
+//        tableView.bounces = false
         // 设置背景色
         tableView.backgroundColor = UIColor.clearColor()
         // 设置tableview的内容偏移量
@@ -77,8 +77,6 @@ class PageTableViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-
 
 
 }

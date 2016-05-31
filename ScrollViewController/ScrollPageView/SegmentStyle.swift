@@ -73,6 +73,8 @@ public struct SegmentStyle {
     public var gradualChangeTitleColor = false
     /// 是否显示附加的按钮
     public var showExtraButton = false
+    /// 点击title切换内容的时候是否有动画
+    public var changeContentAnimated = true
     
     public var extraBtnBackgroundImageName: String?
     /// 下面的滚动条的高度 默认2

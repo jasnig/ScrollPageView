@@ -39,7 +39,8 @@ let defaultOffSetY: CGFloat = segmentViewHeight + naviBarHeight + headViewHeight
 class Vc8Controller: UIViewController {
     
     var childVcs:[PageTableViewController] = []
-    
+    var currentChildVc: PageTableViewController!
+    var testOffset: CGFloat = 0
     // 懒加载 topView
     lazy var topView: ScrollSegmentView! = {[unowned self] in
         
@@ -78,13 +79,17 @@ class Vc8Controller: UIViewController {
     }()
     
     // 懒加载 headView
-    lazy var headView: UIImageView! =  {
-        let headView = UIImageView(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
-        headView.image = UIImage(named: "fruit")
+    lazy var headView: UIButton! =  {
+        let headView = UIButton(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
+        headView.setImage(UIImage(named: "fruit"), forState: .Normal)
+//        headView.image = UIImage(named: "fruit")
         headView.userInteractionEnabled = true
+        
 
         return headView
     }()
+    
+    lazy var scrollView: UIScrollView = UIScrollView(frame: CGRect(x: 0.0, y: 0, width: self.view.bounds.size.width, height: headViewHeight + segmentViewHeight))
     
     // 响应子控制器的tableView滚动
     var childVcScrollViewDidScrollClosure: ((scroll: UIScrollView, vc: PageTableViewController) -> Void)?
@@ -98,14 +103,11 @@ class Vc8Controller: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
         setChildVcs()
 
-        /** 注意下面的添加顺序, 如果最先添加contentView, 那么当
-         headView.userInteractionEnabled = true的时候, 拖动图片是不能使tableView滚动的, 因为headView的superView不是ContentView中的CollectionView,所以触摸事件不能传递给collectionView
-         所以这里就先添加了headView, 让contentView首先响应滚动事件
-         */
         // 1. 先添加headView
         view.addSubview(headView)
         // 2. 再添加contentView
         view.addSubview(contentView)
+
         // 3. 再添加topView(topView必须添加在contentView的下面才可以实现悬浮效果)
         view.addSubview(topView)
         // 4. 添加通知监听每个页面的出现
@@ -121,6 +123,7 @@ class Vc8Controller: UIViewController {
         // 通知父控制器重新设置tableView的contentOffset.y
         let currentIndex = userInfo["currentIndex"] as! Int
         let childVc = childVcs[currentIndex]
+        currentChildVc = childVc
         childVc.delegate?.setupTableViewOffSetYWhenViewWillAppear(childVc.tableView)
         print(userInfo["currentIndex"])
     }
@@ -173,7 +176,6 @@ class Vc8Controller: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    
 }
 
 
@@ -221,7 +223,7 @@ extension Vc8Controller: PageTableViewDelegate {
             topView.frame.origin.y = naviBarHeight
             return
         } else if offSetY < -defaultOffSetY {
-            if headView.frame.origin.y == naviBarHeight {
+            if scrollView.frame.origin.y == naviBarHeight {
                 return
             }
             // 使headView停在navigationBar下面
@@ -243,6 +245,15 @@ extension Vc8Controller: PageTableViewDelegate {
         
     }
     
+}
+
+extension Vc8Controller: UIScrollViewDelegate {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let delta = scrollView.contentOffset.y - testOffset
+        testOffset = scrollView.contentOffset.y
+        contentView.frame.origin.y -= delta
+//        currentChildVc.tableView.contentOffset.y += delta
+    }
 }
 
 

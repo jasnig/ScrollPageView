@@ -79,7 +79,7 @@ public class ScrollPageView: UIView {
         segView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
             
             // 切换内容显示
-            self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: false)
+            self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: self.segmentStyle.changeContentAnimated)
         }
 
 
