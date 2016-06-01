@@ -49,7 +49,10 @@ class PageTableViewController: UIViewController {
         tableView.dataSource = self
 //        tableView.bounces = false
         // 设置背景色
-        tableView.backgroundColor = UIColor.clearColor()
+//        tableView.backgroundColor = UIColor.clearColor()
+//        let headView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.size.width, height: defaultOffSetY))
+//        tableView.tableHeaderView = headView
+
         // 设置tableview的内容偏移量
         tableView.contentInset = UIEdgeInsets(top: defaultOffSetY, left: 0, bottom: 0, right: 0)
         self.view.addSubview(tableView)

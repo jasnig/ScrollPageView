@@ -139,7 +139,10 @@ extension ContentView {
     public func setContentOffSet(offSet: CGPoint , animated: Bool) {
         // 不要执行collectionView的scrollView的滚动代理方法
         self.forbidTouchToAdjustPosition = true
+        //这里开始滚动
+        delegate?.contentViewDidBeginMove(collectionView)
         self.collectionView.setContentOffset(offSet, animated: animated)
+
     }
     
     // 给外界刷新视图的方法
@@ -196,8 +199,6 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
         addCurrentShowIndexNotification(indexPath.row)
         return cell
     }
-    
- 
  
 }
 
@@ -213,32 +214,44 @@ extension ContentView: UIScrollViewDelegate {
     //
     final public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
-        
+        if self.currentIndex != currentIndex {
+            
+            addCurrentShowIndexNotification(currentIndex)
+
+        }
+        delegate?.contentViewDidEndDisPlay(collectionView)
+
+//        delegate?.contentViewDidEndDisPlay()
         // 保证如果滚动没有到下一页就返回了上一页, 那么在didScroll的代理里面执行之后, currentIndex和oldIndex不对
         // 通过这种方式再次正确设置 index
+        
         delegate?.contentViewDidEndMoveToIndex(currentIndex)
 
 
     }
     
     // 代码调整contentOffSet但是没有动画的时候不会调用这个
-//    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-//    }
+    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        delegate?.contentViewDidEndDisPlay(collectionView)
+
+    }
     
+    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        delegate?.contentViewDidEndDrag(scrollView)
+    }
     
     // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容
     final public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         /// 用来判断方向
         oldOffSetX = scrollView.contentOffset.x
-        
+        delegate?.contentViewDidBeginMove(collectionView)
+
         forbidTouchToAdjustPosition = false
-        delegate?.contentViewDidBeginMove()
     }
     
     // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用
     final public func scrollViewDidScroll(scrollView: UIScrollView) {
         let offSetX = scrollView.contentOffset.x
-        
         // 如果是点击了title, 就不要计算了, 直接在点击相应的方法里就已经处理了滚动
         if forbidTouchToAdjustPosition {
             return
@@ -299,16 +312,29 @@ public protocol ContentViewDelegate: class {
     /// 有默认实现, 不推荐重写
     func contentViewDidEndMoveToIndex(currentIndex: Int)
     /// 无默认操作, 推荐重写
-    func contentViewDidBeginMove()
+    func contentViewDidBeginMove(scrollView: UIScrollView)
+    
+    func contentViewIsScrolling(scrollView: UIScrollView)
+    func contentViewDidEndDisPlay(scrollView: UIScrollView)
+    
+    func contentViewDidEndDrag(scrollView: UIScrollView)
     /// 必须提供的属性
     var segmentView: ScrollSegmentView { get }
 }
 
 // 由于每个遵守这个协议的都需要执行些相同的操作, 所以直接使用协议扩展统一完成,协议遵守者只需要提供segmentView即可
 extension ContentViewDelegate {
-    
+    public func contentViewDidEndDrag(scrollView: UIScrollView) {
+        
+    }
+    public func contentViewDidEndDisPlay(scrollView: UIScrollView) {
+        
+    }
+    public func contentViewIsScrolling(scrollView: UIScrollView) {
+        
+    }
     // 默认什么都不做
-    public func contentViewDidBeginMove() {
+    public func contentViewDidBeginMove(scrollView: UIScrollView) {
         
     }
     

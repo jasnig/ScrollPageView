@@ -1,8 +1,8 @@
 //
-//  Vc8Controller.swift
+//  Vc11Controller.swift
 //  ScrollViewController
 //
-//  Created by jasnig on 16/4/21.
+//  Created by jasnig on 16/6/1.
 //  Copyright © 2016年 ZeroJ. All rights reserved.
 // github: https://github.com/jasnig
 // 简书: http://www.jianshu.com/users/fb31a3d1ec30/latest_articles
@@ -27,21 +27,15 @@
 // THE SOFTWARE.
 
 //
+
 import UIKit
 
-/// 这些常量请根据项目需要修改
-let segmentViewHeight: CGFloat = 44.0
-let naviBarHeight: CGFloat = 64.0
-let headViewHeight: CGFloat = 200.0
-let defaultOffSetY: CGFloat = segmentViewHeight + naviBarHeight + headViewHeight
-
-
-class Vc8Controller: UIViewController {
+class Vc11Controller: UIViewController {
     
     var childVcs:[PageTableViewController] = []
     var currentChildVc: PageTableViewController!
-    var testOffset: CGFloat = 0
-    var headS = false
+    var parentScrollIsScrolling = false
+    var parentOffSet: CGFloat = 0
     // 懒加载 topView
     lazy var topView: ScrollSegmentView! = {[unowned self] in
         
@@ -64,7 +58,7 @@ class Vc8Controller: UIViewController {
         let topView = ScrollSegmentView(frame: CGRect(x: CGFloat(0.0), y: naviBarHeight + headViewHeight, width: self.view.bounds.size.width, height: segmentViewHeight), segmentStyle: style, titles: titles)
         
         topView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
-            self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: false)
+            self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: true)
             
         }
         topView.backgroundColor = UIColor.lightGrayColor()
@@ -79,52 +73,40 @@ class Vc8Controller: UIViewController {
         return contentView
     }()
     
+    lazy var headerContainerView: UIView! = {
+        let headerContainerView = UIView(frame: CGRect(x: 0.0, y: 200.0, width: self.view.bounds.width, height: defaultOffSetY))
+        headerContainerView.backgroundColor = UIColor.redColor()
+        headerContainerView.addSubview(self.headView)
+        headerContainerView.addSubview(self.topView)
+        return headerContainerView
+    }()
+
+    
     // 懒加载 headView
     lazy var headView: UIButton! =  {
-        let headView = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: self.view.bounds.size.width, height: headViewHeight))
+        let headView = UIButton(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
         headView.setImage(UIImage(named: "fruit"), forState: .Normal)
-//        headView.image = UIImage(named: "fruit")
-        headView.userInteractionEnabled = true
+        //        headView.image = UIImage(named: "fruit")
         
-
         return headView
     }()
     
-    lazy var scrollView: UIScrollView = UIScrollView(frame:  CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
     
-    // 响应子控制器的tableView滚动
-    var childVcScrollViewDidScrollClosure: ((scroll: UIScrollView, vc: PageTableViewController) -> Void)?
     
     /// 用来实时记录子控制器的tableView的滚动的offSetY
-    var offSetY: CGFloat = -defaultOffSetY
+    var offSetY: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "简书个人主页"
         // 这个是必要的设置, 如果没有设置导致显示内容不正常, 请尝试设置这个属性
         automaticallyAdjustsScrollViewInsets = false
         setChildVcs()
-        /** 注意下面的添加顺序, 如果最先添加contentView, 那么当
-         headView.userInteractionEnabled = true的时候, 拖动图片是不能使tableView滚动的, 因为headView的superView不是ContentView中的CollectionView,所以触摸事件不能传递给collectionView
-         所以添加了scrollView来处理滚动
-         */
-        
-        // 2. 再添加contentView
         view.addSubview(contentView)
-        // 1. 先添加headView
-        scrollView.delegate = self
-        scrollView.addSubview(headView)
-        scrollView.contentSize = CGSize(width: 0.0, height: headViewHeight*2)
-        view.addSubview(scrollView)
-
-        // 3. 再添加topView(topView必须添加在contentView的下面才可以实现悬浮效果)
-        view.addSubview(topView)
-        // 4. 添加通知监听每个页面的出现
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
         
-        
     }
+ 
     
-
     func didSelectIndex(noti: NSNotification) {
         let userInfo = noti.userInfo!
         //注意键名是currentIndex
@@ -177,86 +159,81 @@ class Vc8Controller: UIViewController {
         let vc11 = Test10Controller()
         vc11.delegate = self
         childVcs = [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
-
+        
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }
 
-// MARK:- UIScrollViewDelegate
-extension Vc8Controller: UIScrollViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        headView.frame.origin.y = scrollView.contentOffset.y
-        currentChildVc.tableView.contentOffset.y = scrollView.contentOffset.y - defaultOffSetY
-    }
-}
 
 // MARK:- PageTableViewDelegate - 监控子控制器中的tableview的滚动和更新相关的UI
-extension Vc8Controller: PageTableViewDelegate {
-
+extension Vc11Controller: PageTableViewDelegate {
+    
     // 设置将要显示的tableview的contentOffset.y
     func setupTableViewOffSetYWhenViewWillAppear(scrollView: UIScrollView) {
         
         defer {
             offSetY = scrollView.contentOffset.y
         }
-//        print("\(offSetY) -------*\(scrollView.contentOffset.y)-----*\(-(naviBarHeight + segmentViewHeight)))")
-        if offSetY < -(naviBarHeight + segmentViewHeight) {
+        print("\(offSetY) -------*\(scrollView.contentOffset.y)-----*")
+        if offSetY >= 0 && offSetY < headViewHeight {// 滚动 过程中切换页面
             scrollView.contentOffset.y = offSetY
             return
         } else {
-            if scrollView.contentOffset.y < -(naviBarHeight + segmentViewHeight) {
-
-                scrollView.contentOffset.y = -(naviBarHeight + segmentViewHeight)
-                // 使滑块停在navigationBar下面
-                headView.frame.origin.y = naviBarHeight - headViewHeight
-                topView.frame.origin.y = naviBarHeight
+            if scrollView.contentOffset.y <= headViewHeight  {
+                
+                scrollView.contentOffset.y = headViewHeight
                 return
             }
             return
-
+            
         }
-
+        
         
     }
+    func setHeadContainerViewToCell() {
+        if headerContainerView.superview != currentChildVc.tableView.tableHeaderView {
+            //在这之前必须要保证headerContainerView的高度正确
+            currentChildVc.tableView.tableHeaderView?.addSubview(headerContainerView)
+        }
+        headerContainerView.frame.origin.y  = 0.0
+    }
     
+    func setHeadContainerViewToVcWithY(y: CGFloat) {
+        if headerContainerView.superview != view {
+            headerContainerView.frame.origin.y = y
+
+            view.addSubview(headerContainerView)
+        }
+
+    }
     // 根据子控制器的scrolView的偏移量来调整UI
     func scrollViewIsScrolling(scrollView: UIScrollView) {
         offSetY = scrollView.contentOffset.y
-
-//        print(offSetY)
         
-        if offSetY > -(defaultOffSetY - headViewHeight) {
-            if topView.frame.origin.y == naviBarHeight {
-                return
-            }
-            // 使滑块停在navigationBar下面
-            self.scrollView.frame.origin.y = naviBarHeight - headViewHeight
-            topView.frame.origin.y = naviBarHeight
-            return
-        } else if offSetY < -defaultOffSetY {
-            if self.scrollView.frame.origin.y == naviBarHeight {
-                return
-            }
-            // 使headView停在navigationBar下面
-            self.scrollView.frame.origin.y = naviBarHeight
-            topView.frame.origin.y = naviBarHeight + headViewHeight
-            return
+        //        print(offSetY)
+        if parentScrollIsScrolling { return }
+        
+        if offSetY > headViewHeight {
+            setHeadContainerViewToVcWithY(-headViewHeight)
         } else {
-            
-            // 这里是让滑块和headView随着上下滚动
-            //这种方式可能会出现同步的偏差问题
-//            headView.frame.origin.y -= deltaY
-//            topView.frame.origin.y -= deltaY
-            // 这种方式会准确的同步位置
-            topView.frame.origin.y = -offSetY - segmentViewHeight
-            self.scrollView.frame.origin.y = topView.frame.origin.y - headViewHeight
-            
-            
+            setHeadContainerViewToCell()
         }
+
         
     }
     
@@ -264,10 +241,34 @@ extension Vc8Controller: PageTableViewDelegate {
 
 
 // MARK:- ContentViewDelegate
-extension Vc8Controller: ContentViewDelegate {
+extension Vc11Controller: ContentViewDelegate {
     var segmentView: ScrollSegmentView {
         return topView
     }
     
-}
+    
+    func contentViewDidBeginMove(scrollView: UIScrollView) {
+        parentOffSet = scrollView.contentOffset.x
+        print("begin==========")
+        if offSetY >= 0 && offSetY <= headViewHeight {// 滚动 过程中切换页面
+            parentScrollIsScrolling = true
+            setHeadContainerViewToVcWithY(-offSetY)
+        }
+    }
+    // 用于第一页和最后一页反方向没有拖动的时候更新view
+    func contentViewDidEndDrag(scrollView: UIScrollView) {
 
+        if parentOffSet == scrollView.contentOffset.x {
+            parentScrollIsScrolling = false
+            setHeadContainerViewToCell()
+
+        }
+    }
+    
+    func contentViewDidEndDisPlay(scrollView: UIScrollView) {
+        print("end")
+
+        parentScrollIsScrolling = false
+        setHeadContainerViewToCell()
+    }
+}

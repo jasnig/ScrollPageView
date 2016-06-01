@@ -22,6 +22,7 @@
 		4B494B841CCF760A00B23680 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B801CCF760A00B23680 /* ScrollPageView.swift */; };
 		4B494B851CCF760A00B23680 /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */; };
 		4B494B861CCF760A00B23680 /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B821CCF760A00B23680 /* SegmentStyle.swift */; };
+		4BEB43491CFE817700F1B6F7 /* Vc11Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB43481CFE817700F1B6F7 /* Vc11Controller.swift */; };
 		4BF37F131CCE5110005FBCDC /* Vc5Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EF71CCE5110005FBCDC /* Vc5Controller.swift */; };
 		4BF37F141CCE5110005FBCDC /* Vc3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EF91CCE5110005FBCDC /* Vc3Controller.swift */; };
 		4BF37F151CCE5110005FBCDC /* Vc9Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EFB1CCE5110005FBCDC /* Vc9Controller.swift */; };
@@ -77,6 +78,7 @@
 		4B494B801CCF760A00B23680 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
 		4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
 		4B494B821CCF760A00B23680 /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
+		4BEB43481CFE817700F1B6F7 /* Vc11Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc11Controller.swift; sourceTree = "<group>"; };
 		4BF37EF71CCE5110005FBCDC /* Vc5Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc5Controller.swift; sourceTree = "<group>"; };
 		4BF37EF91CCE5110005FBCDC /* Vc3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc3Controller.swift; sourceTree = "<group>"; };
 		4BF37EFB1CCE5110005FBCDC /* Vc9Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc9Controller.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				4BF37F001CCE5110005FBCDC /* 有headView的效果(简书个人页面,使用TableView) */,
 				4BF37EFA1CCE5110005FBCDC /* 可以在初始化或者返回页面的时候设置当前页为其他页 */,
 				4B0C48521CD3001300B47FE3 /* 类似网易新闻的动态修改tag和内容 */,
+				4BEB43481CFE817700F1B6F7 /* Vc11Controller.swift */,
 			);
 			name = Example;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				4B494B841CCF760A00B23680 /* ScrollPageView.swift in Sources */,
 				4B494B851CCF760A00B23680 /* ScrollSegmentView.swift in Sources */,
 				4BF37F1D1CCE5110005FBCDC /* Vc6Controller.swift in Sources */,
+				4BEB43491CFE817700F1B6F7 /* Vc11Controller.swift in Sources */,
 				4B0C48541CD31AB000B47FE3 /* SelectionView.swift in Sources */,
 				4B0F5B441CD6126200960670 /* ExtraView.swift in Sources */,
 				4BF37F1A1CCE5110005FBCDC /* Vc8Controller.swift in Sources */,
