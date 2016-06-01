@@ -103,14 +103,11 @@ class Vc8Controller: UIViewController {
         // 这个是必要的设置, 如果没有设置导致显示内容不正常, 请尝试设置这个属性
         automaticallyAdjustsScrollViewInsets = false
         setChildVcs()
-        /** 注意下面的添加顺序, 如果最先添加contentView, 那么当
-         headView.userInteractionEnabled = true的时候, 拖动图片是不能使tableView滚动的, 因为headView的superView不是ContentView中的CollectionView,所以触摸事件不能传递给collectionView
-         所以添加了scrollView来处理滚动
-         */
+
         
-        // 2. 再添加contentView
+        // 1. 先添加contentView
         view.addSubview(contentView)
-        // 1. 先添加headView
+        // 2. 再添加scrollView
         scrollView.delegate = self
         scrollView.addSubview(headView)
         scrollView.contentSize = CGSize(width: 0.0, height: headViewHeight*2)
