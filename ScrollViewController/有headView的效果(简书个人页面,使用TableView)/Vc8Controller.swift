@@ -209,7 +209,7 @@ extension Vc8Controller: PageTableViewDelegate {
 
                 scrollView.contentOffset.y = -(naviBarHeight + segmentViewHeight)
                 // 使滑块停在navigationBar下面
-                headView.frame.origin.y = naviBarHeight - headViewHeight
+                self.scrollView.frame.origin.y = naviBarHeight - headViewHeight
                 topView.frame.origin.y = naviBarHeight
                 return
             }
