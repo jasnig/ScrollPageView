@@ -186,6 +186,7 @@ class Vc8Controller: UIViewController {
 // MARK:- UIScrollViewDelegate
 extension Vc8Controller: UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y)
         headView.frame.origin.y = scrollView.contentOffset.y
         currentChildVc.tableView.contentOffset.y = scrollView.contentOffset.y - defaultOffSetY
     }
@@ -223,7 +224,8 @@ extension Vc8Controller: PageTableViewDelegate {
     // 根据子控制器的scrolView的偏移量来调整UI
     func scrollViewIsScrolling(scrollView: UIScrollView) {
         offSetY = scrollView.contentOffset.y
-
+        let deltaOffsetY = offSetY + defaultOffSetY
+        
 //        print(offSetY)
         
         if offSetY > -(defaultOffSetY - headViewHeight) {
@@ -251,7 +253,9 @@ extension Vc8Controller: PageTableViewDelegate {
             // 这种方式会准确的同步位置
             topView.frame.origin.y = -offSetY - segmentViewHeight
             self.scrollView.frame.origin.y = topView.frame.origin.y - headViewHeight
-            
+            // 会触发self.scrollView的代理 相当于"递归"
+            self.scrollView.contentOffset.y = deltaOffsetY
+            headView.frame.origin.y = deltaOffsetY
             
         }
         
