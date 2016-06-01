@@ -255,7 +255,6 @@ extension Vc8Controller: PageTableViewDelegate {
             self.scrollView.frame.origin.y = topView.frame.origin.y - headViewHeight
             // 会触发self.scrollView的代理 相当于"递归"
             self.scrollView.contentOffset.y = deltaOffsetY
-            headView.frame.origin.y = deltaOffsetY
             
         }
         
