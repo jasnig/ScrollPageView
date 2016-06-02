@@ -40,8 +40,23 @@ class Vc8Controller: UIViewController {
     
     var childVcs:[PageTableViewController] = []
     var currentChildVc: PageTableViewController!
-    var testOffset: CGFloat = 0
-    var headS = false
+    
+    /// 用来实时记录子控制器的tableView的滚动的offSetY
+    var offSetY: CGFloat = -defaultOffSetY
+    
+    /// 当前的偏移量, 用于处理下拉刷新 或者其他需要和偏移量同步的动画效果
+    var currentOffsetY: CGFloat = 0 {
+        didSet {
+            print(currentOffsetY)
+        }
+    }
+    // 懒加载 containerView 所有view的容器
+    lazy var containerView: UIView = {
+       let containerView = UIView(frame: self.view.bounds)
+        containerView.backgroundColor = UIColor.whiteColor()
+        return containerView
+    }()
+    
     // 懒加载 topView
     lazy var topView: ScrollSegmentView! = {[unowned self] in
         
@@ -90,37 +105,46 @@ class Vc8Controller: UIViewController {
         return headView
     }()
     
-    lazy var scrollView: UIScrollView = UIScrollView(frame:  CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
+    // 懒加载 scrollView headView的容器
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame:  CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
+        scrollView.delegate = self
+        scrollView.contentSize = CGSize(width: 0.0, height: headViewHeight*2)
+        return scrollView
+    }()
     
-    // 响应子控制器的tableView滚动
-    var childVcScrollViewDidScrollClosure: ((scroll: UIScrollView, vc: PageTableViewController) -> Void)?
     
-    /// 用来实时记录子控制器的tableView的滚动的offSetY
-    var offSetY: CGFloat = -defaultOffSetY
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "简书个人主页"
+        view.backgroundColor = UIColor.whiteColor()
         // 这个是必要的设置, 如果没有设置导致显示内容不正常, 请尝试设置这个属性
         automaticallyAdjustsScrollViewInsets = false
         setChildVcs()
 
-        
-        // 1. 先添加contentView
-        view.addSubview(contentView)
-        // 2. 再添加scrollView
-        scrollView.delegate = self
-        scrollView.addSubview(headView)
-        scrollView.contentSize = CGSize(width: 0.0, height: headViewHeight*2)
-        view.addSubview(scrollView)
+        addSubviews()
 
-        // 3. 再添加topView(topView必须添加在contentView的下面才可以实现悬浮效果)
-        view.addSubview(topView)
-        // 4. 添加通知监听每个页面的出现
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
-        
+        // 添加通知监听每个页面的出现
+        addNotificationObserver()
         
     }
     
+    func addSubviews() {
+        view.addSubview(containerView)
+        // 1. 先添加contentView
+        containerView.addSubview(contentView)
+        scrollView.addSubview(headView)
+        // 2. 再添加scrollView
+        containerView.addSubview(scrollView)
+        
+        // 3. 再添加topView(topView必须添加在contentView的下面才可以实现悬浮效果)
+        containerView.addSubview(topView)
+    }
+    
+    func addNotificationObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+
+    }
 
     func didSelectIndex(noti: NSNotification) {
         let userInfo = noti.userInfo!
@@ -186,10 +210,16 @@ class Vc8Controller: UIViewController {
 // MARK:- UIScrollViewDelegate
 extension Vc8Controller: UIScrollViewDelegate {
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        currentOffsetY = scrollView.contentOffset.y
 //        print(scrollView.contentOffset.y)
-        headView.frame.origin.y = scrollView.contentOffset.y
-        if currentChildVc.tableView.contentOffset.y == scrollView.contentOffset.y - defaultOffSetY { return }
-        currentChildVc.tableView.contentOffset.y = scrollView.contentOffset.y - defaultOffSetY
+        headView.frame.origin.y = currentOffsetY
+        if currentOffsetY < 0 {
+            containerView.frame.origin.y = -currentOffsetY
+            return
+        }
+        
+        if currentChildVc.tableView.contentOffset.y == currentOffsetY - defaultOffSetY { return }
+        currentChildVc.tableView.contentOffset.y = currentOffsetY - defaultOffSetY
     }
 }
 
@@ -225,8 +255,7 @@ extension Vc8Controller: PageTableViewDelegate {
     // 根据子控制器的scrolView的偏移量来调整UI
     func scrollViewIsScrolling(scrollView: UIScrollView) {
         offSetY = scrollView.contentOffset.y
-        let deltaOffsetY = offSetY + defaultOffSetY
-        
+        currentOffsetY = offSetY + defaultOffSetY
 //        print(offSetY)
         
         if offSetY > -(defaultOffSetY - headViewHeight) {
@@ -238,12 +267,16 @@ extension Vc8Controller: PageTableViewDelegate {
             topView.frame.origin.y = naviBarHeight
             return
         } else if offSetY < -defaultOffSetY {
-            if self.scrollView.frame.origin.y == naviBarHeight {
-                return
-            }
-            // 使headView停在navigationBar下面
-            self.scrollView.frame.origin.y = naviBarHeight
-            topView.frame.origin.y = naviBarHeight + headViewHeight
+            
+            topView.frame.origin.y = -offSetY - segmentViewHeight
+            self.scrollView.frame.origin.y = topView.frame.origin.y - headViewHeight
+            
+//            // 使headView停在navigationBar下面
+//            if self.scrollView.frame.origin.y == naviBarHeight {
+//                return
+//            }
+//            self.scrollView.frame.origin.y = naviBarHeight
+//            topView.frame.origin.y = naviBarHeight + headViewHeight
             return
         } else {
             
@@ -255,10 +288,10 @@ extension Vc8Controller: PageTableViewDelegate {
             topView.frame.origin.y = -offSetY - segmentViewHeight
             self.scrollView.frame.origin.y = topView.frame.origin.y - headViewHeight
             // 不加判断会触发self.scrollView的代理 相当于"递归", 会重复设置为相同的值
-            if self.scrollView.contentOffset.y == deltaOffsetY {
+            if self.scrollView.contentOffset.y == currentOffsetY {
                 return
             }
-            self.scrollView.contentOffset.y = deltaOffsetY
+            self.scrollView.contentOffset.y = currentOffsetY
         }
         
     }
