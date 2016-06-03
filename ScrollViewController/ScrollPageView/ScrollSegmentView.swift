@@ -44,6 +44,7 @@ public class ScrollSegmentView: UIView {
     public var extraBtnOnClick: ((extraBtn: UIButton) -> Void)?
     /// self.bounds.size.width
     private var currentWidth: CGFloat = 0
+
     /// 遮盖x和文字x的间隙
     private var xGap = 5
     /// 遮盖宽度比文字宽度多的部分
@@ -67,6 +68,7 @@ public class ScrollSegmentView: UIView {
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.bounces = true
         scrollV.pagingEnabled = false
+        scrollV.scrollsToTop = false
         return scrollV
         
     }()
@@ -466,6 +468,7 @@ extension ScrollSegmentView {
             coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress
         }
         
+//        print(progress)
         // 文字颜色渐变
         if segmentStyle.gradualChangeTitleColor {
             
@@ -495,6 +498,12 @@ extension ScrollSegmentView {
     public func adjustTitleOffSetToCurrentIndex(currentIndex: Int) {
         
         let currentLabel = labelsArray[currentIndex]
+        
+        labelsArray.enumerate().forEach {[unowned self] in
+            if $0.index != currentIndex {
+                $0.element.textColor = self.segmentStyle.normalTitleColor
+            }
+        }
         
         var offSetX = currentLabel.center.x - currentWidth / 2
         if offSetX < 0 {

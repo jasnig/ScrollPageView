@@ -58,6 +58,7 @@ public class ContentView: UIView {
             flowLayout.minimumLineSpacing = 0
             flowLayout.minimumInteritemSpacing = 0
             
+            collection.scrollsToTop = false
             collection.bounces = false
             collection.showsHorizontalScrollIndicator = false
             collection.frame = strongSelf.bounds
@@ -214,6 +215,7 @@ extension ContentView: UIScrollViewDelegate {
     //
     final public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
+        print("减速完成")
         if self.currentIndex != currentIndex {
             
             addCurrentShowIndexNotification(currentIndex)
@@ -225,7 +227,7 @@ extension ContentView: UIScrollViewDelegate {
         // 保证如果滚动没有到下一页就返回了上一页, 那么在didScroll的代理里面执行之后, currentIndex和oldIndex不对
         // 通过这种方式再次正确设置 index
         
-        delegate?.contentViewDidEndMoveToIndex(currentIndex)
+        delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
 
 
     }
@@ -234,10 +236,18 @@ extension ContentView: UIScrollViewDelegate {
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         delegate?.contentViewDidEndDisPlay(collectionView)
 
+
     }
     
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
+
         delegate?.contentViewDidEndDrag(scrollView)
+        print(scrollView.contentOffset.x)
+        //快速滚动的时候第一页和最后一页滚动代理方法里面可能progress不能准确的设置为0 或 1
+        if scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.width{
+            delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
+        }
     }
     
     // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容
@@ -272,12 +282,20 @@ extension ContentView: UIScrollViewDelegate {
                 currentIndex = childVcs.count - 1
                 return
             }
+            if oldIndex < 0 {
+                oldIndex = 0
+                return
+            }
             
         } else {// 手指右滑, 滑块左移
             currentIndex = Int(floor(offSetX / bounds.size.width))
             oldIndex = currentIndex + 1
             if oldIndex >= childVcs.count {
                 oldIndex = childVcs.count - 1
+                return
+            }
+            if currentIndex < 0 {
+                currentIndex = 0
                 return
             }
             progress = 1.0 - progress
@@ -310,7 +328,7 @@ public protocol ContentViewDelegate: class {
     /// 有默认实现, 不推荐重写
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
     /// 有默认实现, 不推荐重写
-    func contentViewDidEndMoveToIndex(currentIndex: Int)
+    func contentViewDidEndMoveToIndex(fromIndex: Int , toIndex: Int)
     /// 无默认操作, 推荐重写
     func contentViewDidBeginMove(scrollView: UIScrollView)
     
@@ -339,9 +357,9 @@ extension ContentViewDelegate {
     }
     
     // 内容每次滚动完成时调用, 确定title和其他的控件的位置
-    public func contentViewDidEndMoveToIndex(currentIndex: Int) {
-        segmentView.adjustTitleOffSetToCurrentIndex(currentIndex)
-        segmentView.adjustUIWithProgress(1.0, oldIndex: currentIndex, currentIndex: currentIndex)
+    public func contentViewDidEndMoveToIndex(fromIndex: Int , toIndex: Int) {
+        segmentView.adjustTitleOffSetToCurrentIndex(toIndex)
+        segmentView.adjustUIWithProgress(1.0, oldIndex: fromIndex, currentIndex: toIndex)
     }
     
     // 内容正在滚动的时候,同步滚动滑块的控件

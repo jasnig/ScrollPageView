@@ -109,6 +109,7 @@ class Vc8Controller: UIViewController {
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame:  CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: headViewHeight))
         scrollView.delegate = self
+        scrollView.scrollsToTop = false
         scrollView.contentSize = CGSize(width: 0.0, height: headViewHeight*2)
         return scrollView
     }()
