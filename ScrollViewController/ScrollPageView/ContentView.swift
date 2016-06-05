@@ -216,37 +216,36 @@ extension ContentView: UIScrollViewDelegate {
     final public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
         print("减速完成")
-        if self.currentIndex != currentIndex {
+        if self.currentIndex == currentIndex {// 滚动完成
             
             addCurrentShowIndexNotification(currentIndex)
 
         }
         delegate?.contentViewDidEndDisPlay(collectionView)
-
-//        delegate?.contentViewDidEndDisPlay()
-        // 保证如果滚动没有到下一页就返回了上一页, 那么在didScroll的代理里面执行之后, currentIndex和oldIndex不对
+        // 保证如果滚动没有到下一页就返回了上一页
         // 通过这种方式再次正确设置 index
-        
         delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
 
 
     }
     
     // 代码调整contentOffSet但是没有动画的时候不会调用这个
-    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    final public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         delegate?.contentViewDidEndDisPlay(collectionView)
 
 
     }
     
-    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    final public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
 
         delegate?.contentViewDidEndDrag(scrollView)
         print(scrollView.contentOffset.x)
-        //快速滚动的时候第一页和最后一页滚动代理方法里面可能progress不能准确的设置为0 或 1
+        //快速滚动的时候第一页和最后一页
         if scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.width{
-            delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
+            if self.currentIndex != currentIndex {
+                delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
+            }
         }
     }
     
@@ -271,33 +270,20 @@ extension ContentView: UIScrollViewDelegate {
         var progress = temp - floor(temp)
         
         if offSetX - oldOffSetX >= 0 {// 手指左滑, 滑块右移
-            if progress == 0.0 {// 滚动开始和滚动完成的时候不要继续
-                return
-            }
             oldIndex = Int(floor(offSetX / bounds.size.width))
             currentIndex = oldIndex + 1
             if currentIndex >= childVcs.count {
-                // 不要越界, 越界后直接设置currentIndex为数组最后下标
-                // 同时为了避免在最后一页时滚动没有完成返回了原来那一页,导致index错误,就直接返回了, 在完成的代理方法里面重新设置了index
-                currentIndex = childVcs.count - 1
-                return
+                currentIndex = oldIndex - 1
             }
-            if oldIndex < 0 {
-                oldIndex = 0
-                return
+            
+            if offSetX - oldOffSetX == scrollView.bounds.size.width {// 滚动完成
+                progress = 1.0;
+                currentIndex = oldIndex;
             }
             
         } else {// 手指右滑, 滑块左移
             currentIndex = Int(floor(offSetX / bounds.size.width))
             oldIndex = currentIndex + 1
-            if oldIndex >= childVcs.count {
-                oldIndex = childVcs.count - 1
-                return
-            }
-            if currentIndex < 0 {
-                currentIndex = 0
-                return
-            }
             progress = 1.0 - progress
             
         }
