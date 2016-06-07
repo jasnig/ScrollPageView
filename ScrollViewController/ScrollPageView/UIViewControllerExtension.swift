@@ -31,7 +31,7 @@
 import UIKit
 extension UIViewController {
     /// parentViewController
-    var zj_scrollPageController: UIViewController? {
+    public weak var zj_scrollPageController: UIViewController? {
         get {
             var superVc = self.parentViewController
             while superVc != nil {

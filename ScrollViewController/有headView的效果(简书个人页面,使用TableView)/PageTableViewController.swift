@@ -74,6 +74,7 @@ class PageTableViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        print(zj_scrollPageController)
     }
 
     override func didReceiveMemoryWarning() {
