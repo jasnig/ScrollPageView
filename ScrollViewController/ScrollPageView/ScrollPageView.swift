@@ -55,7 +55,6 @@ public class ScrollPageView: UIView {
         self.segmentStyle = segmentStyle
         assert(childVcs.count == titles.count, "标题的个数必须和子控制器的个数相同")
         super.init(frame: frame)
-        // 初始化设置了frame后可以在以后的任何地方直接获取到frame了, 就不必重写layoutsubview()方法在里面设置各个控件的frame
         commonInit()
     }
     
@@ -74,11 +73,9 @@ public class ScrollPageView: UIView {
         
         addSubview(segView)
         addSubview(contentView)
-        // 在这里调用了懒加载的collectionView, 那么之前设置的self.frame将会用于collectionView,如果在layoutsubviews()里面没有相关的处理frame的操作, 那么将导致内容显示不正常
         // 避免循环引用
         segView.titleBtnOnClick = {[unowned self] (label: UILabel, index: Int) in
-            
-            // 切换内容显示
+            // 切换内容显示(update content)
             self.contentView.setContentOffSet(CGPoint(x: self.contentView.bounds.size.width * CGFloat(index), y: 0), animated: self.segmentStyle.changeContentAnimated)
         }
 
@@ -96,15 +93,15 @@ public class ScrollPageView: UIView {
 //MARK: - public helper
 extension ScrollPageView {
     
-    /// 给外界设置选中的下标的方法
+    /// 给外界设置选中的下标的方法(public method to set currentIndex)
     public func selectedIndex(selectedIndex: Int, animated: Bool) {
         // 移动滑块的位置
         segView.selectedIndex(selectedIndex, animated: animated)
         
     }
 
-    ///   给外界重新设置视图内容的标题的方法, 在设置之前需要先移除childViewControllers, 然后添加新的childViewControllers
-    ///
+    ///   给外界重新设置视图内容的标题的方法,添加新的childViewControllers
+    /// (public method to reset childVcs)
     ///  - parameter titles:      newTitles
     ///  - parameter newChildVcs: newChildVcs
     public func reloadChildVcsWithNewTitles(titles: [String], andNewChildVcs newChildVcs: [UIViewController]) {

@@ -74,7 +74,6 @@ class PageTableViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-//        print(tableView.contentOffset.y)
     }
 
     override func didReceiveMemoryWarning() {

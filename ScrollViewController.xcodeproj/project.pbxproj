@@ -22,6 +22,7 @@
 		4B494B841CCF760A00B23680 /* ScrollPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B801CCF760A00B23680 /* ScrollPageView.swift */; };
 		4B494B851CCF760A00B23680 /* ScrollSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */; };
 		4B494B861CCF760A00B23680 /* SegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B494B821CCF760A00B23680 /* SegmentStyle.swift */; };
+		4B56CB9B1D06DB1F00D58BFA /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B56CB9A1D06DB1F00D58BFA /* UIViewControllerExtension.swift */; };
 		4BEB43491CFE817700F1B6F7 /* Vc11Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB43481CFE817700F1B6F7 /* Vc11Controller.swift */; };
 		4BF37F131CCE5110005FBCDC /* Vc5Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EF71CCE5110005FBCDC /* Vc5Controller.swift */; };
 		4BF37F141CCE5110005FBCDC /* Vc3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF37EF91CCE5110005FBCDC /* Vc3Controller.swift */; };
@@ -78,6 +79,7 @@
 		4B494B801CCF760A00B23680 /* ScrollPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPageView.swift; sourceTree = "<group>"; };
 		4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollSegmentView.swift; sourceTree = "<group>"; };
 		4B494B821CCF760A00B23680 /* SegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentStyle.swift; sourceTree = "<group>"; };
+		4B56CB9A1D06DB1F00D58BFA /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		4BEB43481CFE817700F1B6F7 /* Vc11Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc11Controller.swift; sourceTree = "<group>"; };
 		4BF37EF71CCE5110005FBCDC /* Vc5Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc5Controller.swift; sourceTree = "<group>"; };
 		4BF37EF91CCE5110005FBCDC /* Vc3Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vc3Controller.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				4B494B7F1CCF760A00B23680 /* ContentView.swift */,
+				4B56CB9A1D06DB1F00D58BFA /* UIViewControllerExtension.swift */,
 				4B494B801CCF760A00B23680 /* ScrollPageView.swift */,
 				4B494B811CCF760A00B23680 /* ScrollSegmentView.swift */,
 				4B494B821CCF760A00B23680 /* SegmentStyle.swift */,
@@ -452,6 +455,7 @@
 				4BF37F151CCE5110005FBCDC /* Vc9Controller.swift in Sources */,
 				4B0C48511CD3000300B47FE3 /* Vc10Controller.swift in Sources */,
 				4B494B831CCF760A00B23680 /* ContentView.swift in Sources */,
+				4B56CB9B1D06DB1F00D58BFA /* UIViewControllerExtension.swift in Sources */,
 				4BF37F1C1CCE5110005FBCDC /* Vc2Controller.swift in Sources */,
 				4BF37F171CCE5110005FBCDC /* Vc7Controller.swift in Sources */,
 				4BF37F131CCE5110005FBCDC /* Vc5Controller.swift in Sources */,

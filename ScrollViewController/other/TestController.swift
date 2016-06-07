@@ -37,13 +37,14 @@ class TestController: UIViewController {
     // 如果在viewDidLoad()里面注册第一次出现的时候接受不到通知, 这个在oc里面是没有问题的, 很无奈
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didSelectIndex(_:)), name: ScrollPageViewDidShowThePageNotification, object: nil)
 
     }
     func didSelectIndex(noti: NSNotification) {
         let userInfo = noti.userInfo!
         //注意键名是currentIndex
         print(userInfo["currentIndex"])
+        
     }
     
     deinit {
@@ -58,6 +59,7 @@ class TestController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+
     }
     
     

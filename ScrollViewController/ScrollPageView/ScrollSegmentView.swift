@@ -35,12 +35,12 @@ public class ScrollSegmentView: UIView {
     // 1. 实现颜色填充效果
     
     
-    /// 所有的title设置
+    /// 所有的title设置(style setting)
     public var segmentStyle: SegmentStyle
     
-    /// 点击响应的closure
+    /// 点击响应的closure(click title)
     public var titleBtnOnClick:((label: UILabel, index: Int) -> Void)?
-    /// 附加按钮点击响应
+    /// 附加按钮点击响应(click extraBtn)
     public var extraBtnOnClick: ((extraBtn: UIButton) -> Void)?
     /// self.bounds.size.width
     private var currentWidth: CGFloat = 0
@@ -52,13 +52,13 @@ public class ScrollSegmentView: UIView {
         return 2 * xGap
     }
 
-    /// 缓存标题labels
+    /// 缓存标题labels( save labels )
     private var labelsArray: [UILabel] = []
     /// 记录当前选中的下标
     private var currentIndex = 0
     /// 记录上一个下标
     private var oldIndex = 0
-    /// 用来缓存所有标题的宽度, 达到根据文字的字数和font自适应控件的宽度
+    /// 用来缓存所有标题的宽度, 达到根据文字的字数和font自适应控件的宽度(save titles; width)
     private var titlesWidthArray: [CGFloat] = []
     /// 所有的标题
     private var titles:[String]
@@ -184,7 +184,6 @@ public class ScrollSegmentView: UIView {
     
 
 //MARK:- life cycle
-    /// 初始化的过程中做了太多的事了 !!!!!!
     public init(frame: CGRect, segmentStyle: SegmentStyle, titles: [String]) {
         self.segmentStyle = segmentStyle
         self.titles = titles

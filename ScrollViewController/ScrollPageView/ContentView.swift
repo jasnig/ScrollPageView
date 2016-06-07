@@ -136,7 +136,7 @@ public class ContentView: UIView {
 //MARK: - public helper
 extension ContentView {
     
-    // 给外界可以设置ContentOffSet的方法
+    // 给外界可以设置ContentOffSet的方法(public method to set contentOffSet)
     public func setContentOffSet(offSet: CGPoint , animated: Bool) {
         // 不要执行collectionView的scrollView的滚动代理方法
         self.forbidTouchToAdjustPosition = true
@@ -146,7 +146,7 @@ extension ContentView {
 
     }
     
-    // 给外界刷新视图的方法
+    // 给外界刷新视图的方法(public method to reset childVcs)
     public func reloadAllViewsWithNewChildVcs(newChildVcs: [UIViewController] ) {
         
         // removing the old childVcs
@@ -164,12 +164,12 @@ extension ContentView {
             if childVc.isKindOfClass(UINavigationController.self) {
                 fatalError("不要添加UINavigationController包装后的子控制器")
             }
-            // 添加子控制器
+            // add childVc
             parentViewController?.addChildViewController(childVc)
 
         }
         
-        // 刷新视图
+        // refreshing
         collectionView.reloadData()
         
     }
@@ -206,24 +206,18 @@ extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
 
 // MARK: - UIScrollViewDelegate
 extension ContentView: UIScrollViewDelegate {
-    
-    /**
-     为了解决在滚动或接着点击title更换的时候因为index不同步而增加了下边的两个代理方法的判断
-     
-     */
-    // 滚动减速完成时再更新title的位置
-    //
+    // update UI
     final public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
-        print("减速完成")
-        if self.currentIndex == currentIndex {// 滚动完成
-            
-            addCurrentShowIndexNotification(currentIndex)
-
-        }
+//        print("减速完成")
+//        if self.currentIndex == currentIndex {// finish scrolling to next page
+//
+//            addCurrentShowIndexNotification(currentIndex)
+//
+//        }
         delegate?.contentViewDidEndDisPlay(collectionView)
         // 保证如果滚动没有到下一页就返回了上一页
-        // 通过这种方式再次正确设置 index
+        // 通过这种方式再次正确设置 index(still at oldPage )
         delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
 
 
@@ -241,7 +235,7 @@ extension ContentView: UIScrollViewDelegate {
 
         delegate?.contentViewDidEndDrag(scrollView)
         print(scrollView.contentOffset.x)
-        //快速滚动的时候第一页和最后一页
+        //快速滚动的时候第一页和最后一页(scroll too fast will not call 'scrollViewDidEndDecelerating')
         if scrollView.contentOffset.x == 0 || scrollView.contentOffset.x == scrollView.contentSize.width - scrollView.bounds.width{
             if self.currentIndex != currentIndex {
                 delegate?.contentViewDidEndMoveToIndex(self.currentIndex, toIndex: currentIndex)
@@ -249,7 +243,7 @@ extension ContentView: UIScrollViewDelegate {
         }
     }
     
-    // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容
+    // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容(remenber the begin offsetX)
     final public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         /// 用来判断方向
         oldOffSetX = scrollView.contentOffset.x
@@ -258,7 +252,7 @@ extension ContentView: UIScrollViewDelegate {
         forbidTouchToAdjustPosition = false
     }
     
-    // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用
+    // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用 (compute the index and progress)
     final public func scrollViewDidScroll(scrollView: UIScrollView) {
         let offSetX = scrollView.contentOffset.x
         // 如果是点击了title, 就不要计算了, 直接在点击相应的方法里就已经处理了滚动
@@ -302,7 +296,7 @@ extension ContentView: UIScrollViewDelegate {
 // MARK: - UIGestureRecognizerDelegate
 extension ContentView: UIGestureRecognizerDelegate {
     public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        
+        // handle the navigationController's pop gesture
         if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController where naviParentViewController.visibleViewController == parentViewController { // 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
             return collectionView.contentOffset.x == 0
         }
@@ -311,11 +305,11 @@ extension ContentView: UIGestureRecognizerDelegate {
 }
 
 public protocol ContentViewDelegate: class {
-    /// 有默认实现, 不推荐重写
+    /// 有默认实现, 不推荐重写(override is not recommoned)
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
-    /// 有默认实现, 不推荐重写
+    /// 有默认实现, 不推荐重写(override is not recommoned)
     func contentViewDidEndMoveToIndex(fromIndex: Int , toIndex: Int)
-    /// 无默认操作, 推荐重写
+    
     func contentViewDidBeginMove(scrollView: UIScrollView)
     
     func contentViewIsScrolling(scrollView: UIScrollView)
