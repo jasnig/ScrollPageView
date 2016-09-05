@@ -242,8 +242,7 @@ pod 'ScrollPageView', '~> 0.1.4'
         scrollPageView.reloadChildVcsWithNewTitles(newTitles, andNewChildVcs: newChildVcs)
 
 
-###如果您在使用过程中遇到问题, 请联系我
-####QQ:854136959 邮箱: 854136959@qq.com
+
 ####如果对您有帮助,请随手给个star鼓励一下 
 
 ## License

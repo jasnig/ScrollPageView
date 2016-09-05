@@ -29,53 +29,23 @@
 //
 
 import UIKit
-// MARK: PageTableViewDelegate
-protocol PageTableViewDelegate: class {
-    func scrollViewIsScrolling(scrollView: UIScrollView)
-    func setupTableViewOffSetYWhenViewWillAppear(scrollView: UIScrollView)
-}
 
-class PageTableViewController: UIViewController {
-    
-    // 代理
-    weak var delegate: PageTableViewDelegate?
+
+class PageTableViewController: PageViewController {
     
     //
-    var tableView: UITableView!
-    
-    func setupTableView() {
-        tableView = UITableView(frame: self.view.bounds, style: .Plain)
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: self.view.bounds, style: .Plain)
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.bounces = false
-        // 设置背景色
-//        tableView.backgroundColor = UIColor.clearColor()
-//        let headView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.size.width, height: defaultOffSetY))
-//        tableView.tableHeaderView = headView
-
-        // 设置tableview的内容偏移量
-        tableView.contentInset = UIEdgeInsets(top: defaultOffSetY, left: 0, bottom: 0, right: 0)
-        self.view.addSubview(tableView)
+        return tableView
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(tableView)
     }
     
-    
-    /// !!! 不要在viewDidLoad()方法里面设置tableView或者collectionView的偏移量, 在初始化方法中设置偏移量,否则可能导致显示不正常
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        setupTableView()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        print(zj_scrollPageController)
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -100,17 +70,18 @@ extension PageTableViewController: UITableViewDelegate, UITableViewDataSource {
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cellId")
-        cell.textLabel?.text = "未继承--------ceshishishihi"
+        cell.textLabel?.text = "--------ceshishishihi\(indexPath.row)"
         
         return cell
     }
 }
 
 
+//// MARK: UIScrollViewDelegate - 监控tableview的滚动, 将改变通知给通知父控制器
+//extension PageTableViewController: UIScrollViewDelegate {
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        delegate?.scrollViewIsScrolling(scrollView)
+//    }
+//}
 
-// MARK: UIScrollViewDelegate - 监控tableview的滚动, 将改变通知给通知父控制器
-extension PageTableViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        delegate?.scrollViewIsScrolling(scrollView)
-    }
-}
+

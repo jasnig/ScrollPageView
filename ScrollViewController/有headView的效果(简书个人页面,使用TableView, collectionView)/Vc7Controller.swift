@@ -30,15 +30,24 @@
 
 import UIKit
 
-class Vc7Controller: UIViewController {
+let segmentViewHeight: CGFloat = 44.0
+let naviBarHeight: CGFloat  = 64.0
+let headViewHeight: CGFloat  = 200.0
 
-//    let segmentViewHeight = 44.0
-//    let naviBarHeight = 64.0
-//    let headViewHeight = 200.0
-    var offSetY: CGFloat = -defaultOffSetY
+class CustomGestureTableView: UITableView {
+    
+    /// 返回true  ---- 能同时识别多个手势
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return (gestureRecognizer is UIPanGestureRecognizer) && (otherGestureRecognizer is UIPanGestureRecognizer)
+    }
+}
+
+class Vc7Controller: UIViewController {
+    
+    var childScrollView: UIScrollView?
 
     // 懒加载 topView
-    lazy var topView: ScrollSegmentView! = {[unowned self] in
+    lazy var topView: ScrollSegmentView = {[unowned self] in
         
         var style = SegmentStyle()
         
@@ -63,12 +72,17 @@ class Vc7Controller: UIViewController {
             
         }
         
-
-        
         topView.backgroundColor = UIColor.lightGrayColor()
         return topView
         
     }()
+    
+    lazy var headView: UIImageView = {
+        let headView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: self.view.bounds.size.width, height: headViewHeight))
+        headView.image = UIImage(named: "fruit")
+        return headView
+    }()
+    
     
     // 懒加载contentView
     lazy var contentView: ContentView! = {[unowned self] in
@@ -80,8 +94,8 @@ class Vc7Controller: UIViewController {
     
     // 懒加载tableView, 注意如果是从storyBoard中连线过来的,那么注意设置contentView的高度有点不一样
     // 或者在滚动的时候需要渐变navigationBar的时候,需要注意相关的tableView的frame设置和contentInset的设置
-    lazy var tableView: UITableView = {[unowned self] in
-        let table = UITableView(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: self.view.bounds.size.height - naviBarHeight), style: .Plain)
+    lazy var tableView: CustomGestureTableView = {[unowned self] in
+        let table = CustomGestureTableView(frame: CGRect(x: 0.0, y: naviBarHeight, width: self.view.bounds.size.width, height: self.view.bounds.size.height - naviBarHeight), style: .Plain)
         table.delegate = self
         table.dataSource = self
         return table
@@ -89,7 +103,6 @@ class Vc7Controller: UIViewController {
     }()
     
     
-    var test: ((scroll: UIScrollView) -> Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "简书个人主页"
@@ -98,66 +111,54 @@ class Vc7Controller: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
         
         // 设置tableView的headView
-        tableView.tableHeaderView = setTableViewHeadView()
+        tableView.tableHeaderView = headView
         tableView.tableFooterView = UIView()
         // 设置cell行高为contentView的高度
         tableView.rowHeight = contentView.bounds.size.height
         // 设置tableView的sectionHeadHeight为segmentViewHeight
         tableView.sectionHeaderHeight = CGFloat(segmentViewHeight)
+        tableView.showsVerticalScrollIndicator = false
         view.addSubview(tableView)
-    }
-    
-    
-    func setTableViewHeadView() -> UIImageView {
-        let headView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: view.bounds.size.width, height: headViewHeight))
-        headView.image = UIImage(named: "fruit")
-        return headView
+        
+        let normalRefresher = NormalAnimator.normalAnimator()
+        normalRefresher.lastRefreshTimeKey = "vc7Header"
+        
+        /// 添加下拉刷新
+        tableView.zj_addRefreshHeader(normalRefresher) {
+            /// 模拟延时
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(2.0*Double(NSEC_PER_SEC))), dispatch_get_main_queue(), { [weak self] in
+                let strongSelf = self
+                guard let `self` = strongSelf else { return }
+                
+                self.tableView.zj_stopHeaderAnimation()
+            })
+            
+        }
+        
     }
     
     func setChildVcs() -> [UIViewController] {
-        let vc1 = storyboard!.instantiateViewControllerWithIdentifier("test")
-        vc1.title = "国内头条"
-        let vc2 = UIViewController()
-        vc2.view.backgroundColor = UIColor.greenColor()
-        vc2.title = "国际要闻"
         
-        let vc3 = UIViewController()
-        vc3.view.backgroundColor = UIColor.redColor()
-        vc3.title = "趣事"
+        let titles = ["国内头条", "国际要闻", "趣事", "囧图", "明星八卦", "爱车", "国防要事", "科技频道", "手机专页"]
+        var childVcs: [UIViewController] = []
         
-        let vc4 = UIViewController()
-        vc4.view.backgroundColor = UIColor.yellowColor()
-        vc4.title = "囧图"
+        for (index, title) in titles.enumerate() {
+            let childVc: PageViewController
+            
+            if index % 2 == 0 {
+                childVc = PageTableViewController()
+                childVc.delegate = self
+            }
+            else {
+                childVc = PageCollectionViewController()
+                childVc.delegate = self
+            }
+            
+            childVc.title = title
+            childVcs.append(childVc)
+        }
         
-        let vc5 = UIViewController()
-        vc5.view.backgroundColor = UIColor.lightGrayColor()
-        vc5.title = "明星八卦"
-        
-        let vc6 = UIViewController()
-        vc6.view.backgroundColor = UIColor.brownColor()
-        vc6.title = "爱车"
-        
-        let vc7 = UIViewController()
-        vc7.view.backgroundColor = UIColor.orangeColor()
-        vc7.title = "国防要事"
-        
-        let vc8 = UIViewController()
-        vc8.view.backgroundColor = UIColor.blueColor()
-        vc8.title = "科技频道"
-        
-        let vc9 = UIViewController()
-        vc9.view.backgroundColor = UIColor.brownColor()
-        vc9.title = "手机专页"
-        
-        let vc10 = UIViewController()
-        vc10.view.backgroundColor = UIColor.orangeColor()
-        vc10.title = "风景图"
-        
-        let vc11 = UIViewController()
-        vc11.view.backgroundColor = UIColor.blueColor()
-        vc11.title = "段子"
-        
-        return [vc1, vc2, vc3,vc4, vc5, vc6, vc7, vc8, vc9, vc10, vc11]
+        return childVcs
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +167,33 @@ class Vc7Controller: UIViewController {
     }
     
 
+}
+
+extension Vc7Controller: PageViewDelegate {
+    func scrollViewIsScrolling(scrollView: UIScrollView) {
+        /// 记录便于处理联动
+        childScrollView = scrollView
+
+        if tableView.contentOffset.y < headViewHeight {
+            scrollView.contentOffset = CGPoint.zero
+            scrollView.showsVerticalScrollIndicator = false
+        }
+        else {
+            tableView.contentOffset.y = headViewHeight
+            scrollView.showsVerticalScrollIndicator = true
+        }
+        
+    }
+}
+
+// MARK:- UIScrollViewDelegate 这里的代理可以监控tableView的滚动, 在滚动的时候就可以做一些事情, 比如使navigationBar渐变, 或者像简书一样改变头像的属性
+extension Vc7Controller: UIScrollViewDelegate {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if childScrollView?.contentOffset.y > 0 {
+            tableView.contentOffset.y = headViewHeight
+        }
+        
+    }
 }
 
 // MARK:- UITableViewDataSource UITableViewDelegate
@@ -192,13 +220,6 @@ extension Vc7Controller: UITableViewDelegate, UITableViewDataSource {
         return topView
     }
     
-}
-
-// MARK:- UIScrollViewDelegate 这里的代理可以监控tableView的滚动, 在滚动的时候就可以做一些事情, 比如使navigationBar渐变, 或者像简书一样改变头像的属性
-extension Vc7Controller: UIScrollViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        print("gundong --------")
-    }
 }
 
 // MARK:- ContentViewDelegate

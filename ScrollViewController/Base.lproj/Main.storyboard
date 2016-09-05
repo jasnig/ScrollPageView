@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jUn-H6-hBc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jUn-H6-hBc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -103,7 +103,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题不滚动的时候不要使用(缩放+遮盖)或(缩放+滚动条),其他效果之间可以组合!!,您可以大胆的去组合一下试试" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gS3-bf-eh7">
-                                <rect key="frame" x="15" y="451" width="570" height="41"/>
+                                <rect key="frame" x="15" y="416" width="570" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -119,39 +119,19 @@
                                     <segue destination="yG5-zu-UdU" kind="show" id="Buk-aL-LM9"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p61-uB-NFY">
-                                <rect key="frame" x="15" y="507" width="570" height="82"/>
-                                <string key="text">如果对您有帮助,不妨给个star鼓励一下 github: https://github.com/jasnig
-如果您在使用过程中发现问题,请联系qq:854136959或者发邮件到这个qq邮箱给我
-</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zew-uf-zjU">
                                 <rect key="frame" x="0.0" y="307" width="600" height="34"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="简书个人主页效果(不使用TableView)">
+                                <state key="normal" title="简书个人主页效果(使用TableView和CollectionView)">
                                     <color key="titleColor" red="0.66681522650000002" green="0.61430279570000001" blue="0.38850389390000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="eLm-KX-LRn" kind="show" id="t54-yY-tqK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5X-5q-Uq8">
-                                <rect key="frame" x="0.0" y="342" width="600" height="34"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="简书个人主页效果(使用TableView)">
-                                    <color key="titleColor" red="0.66681522650000002" green="0.61430279570000001" blue="0.38850389390000001" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ZH5-0m-1pJ" kind="show" id="bGK-k6-B6I"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XX5-lA-oXQ">
-                                <rect key="frame" x="0.0" y="377" width="600" height="34"/>
+                                <rect key="frame" x="0.0" y="342" width="600" height="34"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="可以在初始化或者返回的时候设置当前页为其他页">
@@ -162,7 +142,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lud-Al-QP1">
-                                <rect key="frame" x="0.0" y="412" width="600" height="34"/>
+                                <rect key="frame" x="0.0" y="377" width="600" height="34"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="网易新闻可以动态修改标题和内容效果示例">
@@ -176,23 +156,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="top" secondItem="2F8-4z-rU3" secondAttribute="bottom" constant="1" id="0Nv-Mm-QIz"/>
-                            <constraint firstItem="w5X-5q-Uq8" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="1" id="139-lk-fPi"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="120" id="6wa-22-kbe"/>
-                            <constraint firstItem="w5X-5q-Uq8" firstAttribute="leading" secondItem="Zew-uf-zjU" secondAttribute="leading" id="CqZ-dF-dV8"/>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="leading" secondItem="2F8-4z-rU3" secondAttribute="leading" id="D06-pJ-3Sn"/>
                             <constraint firstItem="Zew-uf-zjU" firstAttribute="top" secondItem="Xtj-Re-0D2" secondAttribute="bottom" constant="1" id="D9N-kx-9eX"/>
-                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="top" secondItem="w5X-5q-Uq8" secondAttribute="bottom" constant="1" id="E0N-iw-mSi"/>
-                            <constraint firstItem="p61-uB-NFY" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" constant="15" id="HQY-jh-Zop"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="leading" secondItem="2F8-4z-rU3" secondAttribute="leading" id="LcW-ac-X7q"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" constant="15" id="PHH-cR-Vqr"/>
-                            <constraint firstItem="p61-uB-NFY" firstAttribute="top" secondItem="gS3-bf-eh7" secondAttribute="bottom" constant="15" id="PaB-cC-V7a"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Xtj-Re-0D2" secondAttribute="bottom" constant="60" id="PaE-Lx-rfr"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="top" secondItem="JcS-29-cKC" secondAttribute="bottom" constant="1" id="RfG-6r-HqI"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="XX5-lA-oXQ" secondAttribute="bottom" constant="60" id="Sj5-Pc-Nw4"/>
+                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="top" secondItem="Zew-uf-zjU" secondAttribute="bottom" constant="1" id="UJI-H6-wf2"/>
                             <constraint firstItem="JcS-29-cKC" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="WEv-4z-Fje"/>
                             <constraint firstItem="nSE-QW-fa8" firstAttribute="leading" secondItem="nn6-u9-Pno" secondAttribute="leading" id="WFJ-SW-mMl"/>
                             <constraint firstItem="gS3-bf-eh7" firstAttribute="top" secondItem="Lud-Al-QP1" secondAttribute="bottom" constant="5" id="WHB-Eg-Thr"/>
                             <constraint firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="aKL-U1-LnC"/>
+                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="trailing" secondItem="Zew-uf-zjU" secondAttribute="trailing" id="bbY-gp-teq"/>
                             <constraint firstItem="Lud-Al-QP1" firstAttribute="top" secondItem="XX5-lA-oXQ" secondAttribute="bottom" constant="1" id="cmU-4u-62D"/>
                             <constraint firstItem="Zew-uf-zjU" firstAttribute="trailing" secondItem="Xtj-Re-0D2" secondAttribute="trailing" id="fBc-Cg-iPw"/>
                             <constraint firstItem="2F8-4z-rU3" firstAttribute="top" secondItem="nSE-QW-fa8" secondAttribute="bottom" constant="1" id="g2B-cK-PHW"/>
@@ -200,18 +177,15 @@
                             <constraint firstItem="nYz-KC-G1m" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="i6Q-n5-CmO"/>
                             <constraint firstItem="2F8-4z-rU3" firstAttribute="leading" secondItem="nSE-QW-fa8" secondAttribute="leading" id="k0D-Ew-zCo"/>
                             <constraint firstItem="Xtj-Re-0D2" firstAttribute="leading" secondItem="nYz-KC-G1m" secondAttribute="leading" id="kbt-OE-vZq"/>
-                            <constraint firstAttribute="trailing" secondItem="p61-uB-NFY" secondAttribute="trailing" constant="15" id="kl0-y8-uRU"/>
                             <constraint firstItem="Lud-Al-QP1" firstAttribute="trailing" secondItem="XX5-lA-oXQ" secondAttribute="trailing" id="lEz-yH-gaS"/>
                             <constraint firstItem="nYz-KC-G1m" firstAttribute="leading" secondItem="2F8-4z-rU3" secondAttribute="leading" id="mJQ-ke-j2U"/>
                             <constraint firstItem="Xtj-Re-0D2" firstAttribute="trailing" secondItem="nYz-KC-G1m" secondAttribute="trailing" id="mNJ-jr-KcU"/>
                             <constraint firstAttribute="trailing" secondItem="gS3-bf-eh7" secondAttribute="trailing" constant="15" id="pIO-ly-WqO"/>
                             <constraint firstItem="2F8-4z-rU3" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="pOm-MO-oJX"/>
-                            <constraint firstItem="w5X-5q-Uq8" firstAttribute="trailing" secondItem="Zew-uf-zjU" secondAttribute="trailing" id="r1x-vK-dK8"/>
-                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="trailing" secondItem="w5X-5q-Uq8" secondAttribute="trailing" id="rR8-eG-kI0"/>
+                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="leading" secondItem="Zew-uf-zjU" secondAttribute="leading" id="q2b-kq-z8L"/>
                             <constraint firstItem="nSE-QW-fa8" firstAttribute="top" secondItem="kX7-yn-wQM" secondAttribute="bottom" constant="33" id="rUA-U6-yfl"/>
                             <constraint firstItem="nYz-KC-G1m" firstAttribute="top" secondItem="I7r-Wi-FTV" secondAttribute="bottom" constant="1" id="rWH-iw-L60"/>
                             <constraint firstItem="I7r-Wi-FTV" firstAttribute="trailing" secondItem="nSE-QW-fa8" secondAttribute="trailing" id="t5O-fr-3kP"/>
-                            <constraint firstItem="XX5-lA-oXQ" firstAttribute="leading" secondItem="w5X-5q-Uq8" secondAttribute="leading" id="xSL-jD-5oS"/>
                             <constraint firstItem="Zew-uf-zjU" firstAttribute="leading" secondItem="Xtj-Re-0D2" secondAttribute="leading" id="xT8-Yv-gza"/>
                             <constraint firstItem="Xtj-Re-0D2" firstAttribute="top" secondItem="nYz-KC-G1m" secondAttribute="bottom" constant="1" id="zcB-dz-6wX"/>
                         </constraints>
@@ -412,24 +386,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zaY-1A-MXR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1054" y="3183"/>
-        </scene>
-        <!--Vc8 Controller-->
-        <scene sceneID="iu9-UW-ubP">
-            <objects>
-                <viewController id="ZH5-0m-1pJ" customClass="Vc8Controller" customModule="ScrollViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="AGF-9e-UDD"/>
-                        <viewControllerLayoutGuide type="bottom" id="oG5-hN-3R1"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nlB-uy-v2q">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Za7-qD-JGa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1047" y="4584"/>
         </scene>
         <!--Vc10 Controller-->
         <scene sceneID="bmg-Eo-iSJ">
