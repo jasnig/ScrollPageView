@@ -123,7 +123,9 @@ public class ContentView: UIView {
     }
     
     deinit {
-        naviParentViewController.interactivePopGestureRecognizer?.delegate = originalPopGesutreRecognizerDelegate
+        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController {
+            naviParentViewController.interactivePopGestureRecognizer?.delegate = dddddd
+        }
         parentViewController = nil
         print("\(self.debugDescription) --- 销毁")
     }
