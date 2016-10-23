@@ -31,6 +31,22 @@
 import UIKit
 
 
+public class CustomGestureCollectionView: UICollectionView {
+    
+    var panGestureShouldBeginClosure: ((panGesture: UIPanGestureRecognizer, collectionView: CustomGestureCollectionView) -> Bool)?
+    func setupPanGestureShouldBeginClosure(closure: (panGesture: UIPanGestureRecognizer, collectionView: CustomGestureCollectionView) -> Bool) {
+        panGestureShouldBeginClosure = closure
+    }
+    override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let panGestureShouldBeginClosure = panGestureShouldBeginClosure, let panGesture = gestureRecognizer as? UIPanGestureRecognizer {
+            return panGestureShouldBeginClosure(panGesture: panGesture, collectionView: self)
+        }
+        else {
+            return super.gestureRecognizerShouldBegin(gestureRecognizer)
+        }
+    }
+}
+
 public class ContentView: UIView {
     static let cellId = "cellId"
     
@@ -47,10 +63,10 @@ public class ContentView: UIView {
     private weak var parentViewController: UIViewController?
     public weak var delegate: ContentViewDelegate?
     
-    private(set) lazy var collectionView: UICollectionView = {[weak self] in
+    private(set) lazy var collectionView: CustomGestureCollectionView = {[weak self] in
         let flowLayout = UICollectionViewFlowLayout()
         
-        let collection = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
+        let collection = CustomGestureCollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
         
         if let strongSelf = self {
             flowLayout.itemSize = strongSelf.bounds.size
@@ -68,7 +84,6 @@ public class ContentView: UIView {
             collection.delegate = strongSelf
             collection.dataSource = strongSelf
             collection.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: ContentView.cellId)
-            
         }
         return collection
     }()
@@ -104,13 +119,27 @@ public class ContentView: UIView {
         addSubview(collectionView)
         
         // 设置naviVVc手势代理, 处理pop手势
-        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController, let popGesture = naviParentViewController.interactivePopGestureRecognizer {
-            if naviParentViewController.viewControllers.count == 1 { return }// 如果是第一个不要设置代理
-            naviParentViewController.interactivePopGestureRecognizer?.delegate = self
-            // 优先执行naviParentViewController.interactivePopGestureRecognizer的手势
-            // 在代理方法中会判断是否真的执行, 不执行的时候就执行scrollView的滚动手势
-            collectionView.panGestureRecognizer.requireGestureRecognizerToFail(popGesture)
-            
+        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController {
+            if naviParentViewController.viewControllers.count == 1 { return }
+            collectionView.setupPanGestureShouldBeginClosure({[weak self] (panGesture, collectionView) -> Bool in
+                
+                let strongSelf = self
+                guard let `self` = strongSelf else { return false}
+
+                let transionX = panGesture.velocityInView(panGesture.view).x
+                
+                if collectionView.contentOffset.x == 0 && transionX > 0 {
+                    naviParentViewController.interactivePopGestureRecognizer?.enabled = true
+
+                }
+                else {
+                    naviParentViewController.interactivePopGestureRecognizer?.enabled = false
+
+                }
+                return  self.delegate?.contentViewShouldBeginPanGesture(panGesture, collectionView: collectionView) ?? true
+
+                
+            })
         }
     }
     
@@ -123,7 +152,8 @@ public class ContentView: UIView {
     override public func layoutSubviews() {
         super.layoutSubviews()
         collectionView.frame = bounds
-
+        let  vc = childVcs[currentIndex]
+        vc.view.frame = bounds
     }
     
     deinit {
@@ -227,12 +257,14 @@ extension ContentView: UIScrollViewDelegate {
     final public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         delegate?.contentViewDidEndDisPlay(collectionView)
 
-
     }
     
     final public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let currentIndex = Int(floor(scrollView.contentOffset.x / bounds.size.width))
+        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController {
+            naviParentViewController.interactivePopGestureRecognizer?.enabled = true
 
+        }
         delegate?.contentViewDidEndDrag(scrollView)
         print(scrollView.contentOffset.x)
         //快速滚动的时候第一页和最后一页(scroll too fast will not call 'scrollViewDidEndDecelerating')
@@ -293,23 +325,13 @@ extension ContentView: UIScrollViewDelegate {
     
 }
 
-// MARK: - UIGestureRecognizerDelegate
-extension ContentView: UIGestureRecognizerDelegate {
-    public override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        // handle the navigationController's pop gesture
-        if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController where naviParentViewController.visibleViewController == parentViewController { // 当显示的是ScrollPageView的时候 只在第一个tag处执行pop手势
-            return collectionView.contentOffset.x == 0
-        }
-        return true
-    }
-}
-
 public protocol ContentViewDelegate: class {
     /// 有默认实现, 不推荐重写(override is not recommoned)
     func contentViewMoveToIndex(fromIndex: Int, toIndex: Int, progress: CGFloat)
     /// 有默认实现, 不推荐重写(override is not recommoned)
     func contentViewDidEndMoveToIndex(fromIndex: Int , toIndex: Int)
-    
+    func contentViewShouldBeginPanGesture(panGesture: UIPanGestureRecognizer , collectionView: CustomGestureCollectionView) -> Bool;
+
     func contentViewDidBeginMove(scrollView: UIScrollView)
     
     func contentViewIsScrolling(scrollView: UIScrollView)
@@ -335,6 +357,10 @@ extension ContentViewDelegate {
     public func contentViewDidBeginMove(scrollView: UIScrollView) {
         
     }
+    public func contentViewShouldBeginPanGesture(panGesture: UIPanGestureRecognizer , collectionView: CustomGestureCollectionView) -> Bool {
+        return true
+    }
+    
     
     // 内容每次滚动完成时调用, 确定title和其他的控件的位置
     public func contentViewDidEndMoveToIndex(fromIndex: Int , toIndex: Int) {
