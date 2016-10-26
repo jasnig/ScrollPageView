@@ -45,6 +45,10 @@ public class ScrollPageView: UIView {
     private var titlesArray: [String] = []
     /// 所有的子控制器
     private var childVcs: [UIViewController] = []
+    /// 当前呈现子控制器
+    public var currentChildVc: UIViewController {
+        return contentView.currentChildVc
+    }
     // 这里使用weak避免循环引用
     private weak var parentViewController: UIViewController?
 

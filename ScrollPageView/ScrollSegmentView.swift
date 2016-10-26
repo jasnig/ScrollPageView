@@ -64,6 +64,7 @@ public class ScrollSegmentView: UIView {
     
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
+        scrollV.scrollsToTop = false
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.bounces = true
         scrollV.pagingEnabled = false
