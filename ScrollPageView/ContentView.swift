@@ -41,7 +41,11 @@ public class ContentView: UIView {
     /// 用来记录开始滚动的offSetX
     private var oldOffSetX:CGFloat = 0.0
     private var oldIndex = 0
-    private var currentIndex = 1
+    public private(set) var currentIndex = 1
+    /// 当前显示的子控制器
+    public var currentChildVc: UIViewController {
+        return childVcs[currentIndex]
+    }
     
     // 这里使用weak 避免循环引用
     private weak var parentViewController: UIViewController?
@@ -51,6 +55,7 @@ public class ContentView: UIView {
         let flowLayout = UICollectionViewFlowLayout()
         
         let collection = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
+        collection.scrollsToTop = false
         
         if let strongSelf = self {
             flowLayout.itemSize = strongSelf.bounds.size
