@@ -67,8 +67,8 @@ public class ScrollSegmentView: UIView {
         scrollV.showsHorizontalScrollIndicator = false
         scrollV.bounces = true
         scrollV.pagingEnabled = false
+        scrollV.scrollsToTop = false
         return scrollV
-        
     }()
     
     /// 滚动条
