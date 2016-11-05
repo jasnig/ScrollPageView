@@ -62,7 +62,7 @@ public class ScrollSegmentView: UIView {
     private var titlesWidthArray: [CGFloat] = []
     /// 所有的标题
     private var titles:[String]
-    
+    /// 管理标题的滚动
     private lazy var scrollView: UIScrollView = {
         let scrollV = UIScrollView()
         scrollV.showsHorizontalScrollIndicator = false
@@ -85,10 +85,9 @@ public class ScrollSegmentView: UIView {
             return nil
         }
         let cover = UIView()
-        cover.layer.cornerRadius = CGFloat(self.segmentStyle.coverCornerRadius)
+        cover.layer.cornerRadius = self.segmentStyle.coverCornerRadius
         // 这里只有一个cover 需要设置圆角, 故不用考虑离屏渲染的消耗, 直接设置 masksToBounds 来设置圆角
         cover.layer.masksToBounds = true
-        
         return cover
     
     }()
@@ -131,7 +130,6 @@ public class ScrollSegmentView: UIView {
         } else {
             fatalError("设置普通状态的文字颜色时 请使用RGB空间的颜色值")
         }
-        
     }()
     
     private lazy var selectedTitleColorRgb: (r: CGFloat, g: CGFloat, b: CGFloat) =  {
@@ -146,14 +144,8 @@ public class ScrollSegmentView: UIView {
     
     //FIXME: 如果提供的不是RGB空间的颜色值就可能crash
     private func getColorRGB(color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat)? {
-//        let colorString = String(color)
-//        let colorArr = colorString.componentsSeparatedByString(" ")
-//        print(colorString)
-//        guard let r = Int(colorArr[1]), let g = Int(colorArr[2]), let b = Int(colorArr[3]) else {
-//            return nil
-//        }
         
-        
+//         print(UIColor.getRed(color))
         let numOfComponents = CGColorGetNumberOfComponents(color.CGColor)
         if numOfComponents == 4 {
             let componemts = CGColorGetComponents(color.CGColor)
@@ -198,11 +190,13 @@ public class ScrollSegmentView: UIView {
         if let extraBtn = extraButton {
             addSubview(extraBtn)
         }
-        // 设置了frame之后可以直接设置其他的控件的frame了, 不需要在layoutsubView()里面设置
+        // 根据titles添加相应的控件
         setupTitles()
+        // 设置frame
         setupUI()
     }
     
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -263,6 +257,8 @@ extension ScrollSegmentView {
     }
 }
 
+
+
 //MARK: - private helper
 extension ScrollSegmentView {
     private func setupTitles() {
@@ -276,13 +272,16 @@ extension ScrollSegmentView {
             label.textAlignment = .Center
             label.userInteractionEnabled = true
             
+            // 添加点击手势
             let tapGes = UITapGestureRecognizer(target: self, action: #selector(self.titleLabelOnClick(_:)))
             label.addGestureRecognizer(tapGes)
-            
+            // 计算文字尺寸
             let size = (title as NSString).boundingRectWithSize(CGSizeMake(CGFloat(MAXFLOAT), 0.0), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: label.font], context: nil)
-            
+            // 缓存文字宽度
             titlesWidthArray.append(size.width)
+            // 缓存label
             labelsArray.append(label)
+            // 添加label
             scrollView.addSubview(label)
         }
     }
@@ -450,13 +449,15 @@ extension ScrollSegmentView {
         let oldLabel = labelsArray[oldIndex] as! CustomLabel
         let currentLabel = labelsArray[currentIndex] as! CustomLabel
         
-        // 需要改变的距离 和 宽度
+        // 从一个label滚动到另一个label 需要改变的总的距离 和 总的宽度
         let xDistance = currentLabel.frame.origin.x - oldLabel.frame.origin.x
         let wDistance = currentLabel.frame.size.width - oldLabel.frame.size.width
         
-        // 设置滚动条位置
+        // 设置滚动条位置 = 最初的位置 + 改变的总距离 * 进度
         scrollLine?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress
+        // 设置滚动条宽度 = 最初的宽度 + 改变的总宽度 * 进度
         scrollLine?.frame.size.width = oldLabel.frame.size.width + wDistance * progress
+        
         
         // 设置 cover位置
         if segmentStyle.scrollTitle {
@@ -466,7 +467,7 @@ extension ScrollSegmentView {
             coverLayer?.frame.origin.x = oldLabel.frame.origin.x + xDistance * progress
             coverLayer?.frame.size.width = oldLabel.frame.size.width + wDistance * progress
         }
-        
+    
 //        print(progress)
         // 文字颜色渐变
         if segmentStyle.gradualChangeTitleColor {
@@ -474,7 +475,6 @@ extension ScrollSegmentView {
             oldLabel.textColor = UIColor(red:selectedTitleColorRgb.r + rgbDelta.deltaR * progress, green: selectedTitleColorRgb.g + rgbDelta.deltaG * progress, blue: selectedTitleColorRgb.b + rgbDelta.deltaB * progress, alpha: 1.0)
             
             currentLabel.textColor = UIColor(red: normalColorRgb.r - rgbDelta.deltaR * progress, green: normalColorRgb.g - rgbDelta.deltaG * progress, blue: normalColorRgb.b - rgbDelta.deltaB * progress, alpha: 1.0)
-            
             
         }
         
@@ -503,9 +503,10 @@ extension ScrollSegmentView {
                 $0.element.textColor = self.segmentStyle.normalTitleColor
             }
         }
-        
+        // 目标是让currentLabel居中显示
         var offSetX = currentLabel.center.x - currentWidth / 2
         if offSetX < 0 {
+            // 最小为0
             offSetX = 0
         }
         // considering the exist of extraButton
@@ -542,9 +543,6 @@ extension ScrollSegmentView {
         
     }
 }
-
-
-
 
 public class CustomLabel: UILabel {
     /// 用来记录当前label的缩放比例

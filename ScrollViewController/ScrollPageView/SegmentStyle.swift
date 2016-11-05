@@ -85,7 +85,7 @@ public struct SegmentStyle {
     /// 遮盖的背景颜色
     public var coverBackgroundColor = UIColor.lightGrayColor()
     /// 遮盖圆角
-    public var coverCornerRadius = 14.0
+    public var coverCornerRadius: CGFloat = 14.0
     
     /// cover的高度 默认28
     public var coverHeight: CGFloat = 28.0

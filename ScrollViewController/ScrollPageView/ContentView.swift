@@ -55,7 +55,7 @@ public class ContentView: UIView {
     /// 用来判断是否是点击了title, 点击了就不要调用scrollview的代理来进行相关的计算
     private var forbidTouchToAdjustPosition = false
     /// 用来记录开始滚动的offSetX
-    private var oldOffSetX:CGFloat = 0.0
+    private var beginOffSetX:CGFloat = 0.0
     private var oldIndex = 0
     private var currentIndex = 1
     
@@ -63,13 +63,11 @@ public class ContentView: UIView {
     private weak var parentViewController: UIViewController?
     public weak var delegate: ContentViewDelegate?
     
-    private(set) lazy var collectionView: CustomGestureCollectionView = {[weak self] in
+    private(set) lazy var collectionView: CustomGestureCollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         
         let collection = CustomGestureCollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        
-        if let strongSelf = self {
-            flowLayout.itemSize = strongSelf.bounds.size
+            flowLayout.itemSize = self.bounds.size
             flowLayout.scrollDirection = .Horizontal
             flowLayout.minimumLineSpacing = 0
             flowLayout.minimumInteritemSpacing = 0
@@ -77,14 +75,13 @@ public class ContentView: UIView {
             collection.scrollsToTop = false
             collection.bounces = false
             collection.showsHorizontalScrollIndicator = false
-            collection.frame = strongSelf.bounds
+            collection.frame = self.bounds
             collection.collectionViewLayout = flowLayout
             collection.pagingEnabled = true
             // 如果不设置代理, 将不会调用scrollView的delegate方法
-            collection.delegate = strongSelf
-            collection.dataSource = strongSelf
+            collection.delegate = self
+            collection.dataSource = self
             collection.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: ContentView.cellId)
-        }
         return collection
     }()
     
@@ -118,7 +115,7 @@ public class ContentView: UIView {
         // 在这里调用了懒加载的collectionView, 那么之前设置的self.frame将会用于collectionView,如果在layoutsubviews()里面没有相关的处理frame的操作, 那么将导致内容显示不正常
         addSubview(collectionView)
         
-        // 设置naviVVc手势代理, 处理pop手势
+        // 设置naviVVc手势代理, 处理pop手势 只在第一个页面的时候执行系统的滑动返回手势
         if let naviParentViewController = self.parentViewController?.parentViewController as? UINavigationController {
             if naviParentViewController.viewControllers.count == 1 { return }
             collectionView.setupPanGestureShouldBeginClosure({[weak self] (panGesture, collectionView) -> Bool in
@@ -185,6 +182,7 @@ extension ContentView {
             childVc.view.removeFromSuperview()
             childVc.removeFromParentViewController()
         }
+        childVcs.removeAll()
         // setting the new childVcs
         childVcs = newChildVcs
         
@@ -204,8 +202,6 @@ extension ContentView {
         
     }
 }
-
-
 
 //MARK:- UICollectionViewDelegate, UICollectionViewDataSource
 extension ContentView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -278,11 +274,13 @@ extension ContentView: UIScrollViewDelegate {
     // 手指开始拖的时候, 记录此时的offSetX, 并且表示不是点击title切换的内容(remenber the begin offsetX)
     final public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         /// 用来判断方向
-        oldOffSetX = scrollView.contentOffset.x
+        beginOffSetX = scrollView.contentOffset.x
         delegate?.contentViewDidBeginMove(collectionView)
 
         forbidTouchToAdjustPosition = false
     }
+    
+
     
     // 需要实时更新滚动的进度和移动的方向及下标 以便于外部使用 (compute the index and progress)
     final public func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -293,16 +291,17 @@ extension ContentView: UIScrollViewDelegate {
         }
         
         let temp = offSetX / bounds.size.width
+        // 滚动的进度 -- 取小数位
         var progress = temp - floor(temp)
-        
-        if offSetX - oldOffSetX >= 0 {// 手指左滑, 滑块右移
+        // 根据滚动的方向
+        if offSetX - beginOffSetX >= 0 {// 手指左滑, 滑块右移
             oldIndex = Int(floor(offSetX / bounds.size.width))
             currentIndex = oldIndex + 1
             if currentIndex >= childVcs.count {
                 currentIndex = oldIndex - 1
             }
             
-            if offSetX - oldOffSetX == scrollView.bounds.size.width {// 滚动完成
+            if offSetX - beginOffSetX == scrollView.bounds.size.width {// 滚动完成
                 progress = 1.0;
                 currentIndex = oldIndex;
             }

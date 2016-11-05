@@ -40,8 +40,8 @@ public class ScrollPageView: UIView {
         }
     }
     
-    private var segView: ScrollSegmentView!
-    private var contentView: ContentView!
+    private(set) var segView: ScrollSegmentView!
+    private(set) var contentView: ContentView!
     private var titlesArray: [String] = []
     /// 所有的子控制器
     private var childVcs: [UIViewController] = []
