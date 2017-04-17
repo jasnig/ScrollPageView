@@ -1,9 +1,9 @@
-#ScrollPageView
+# ScrollPageView
 ----
-###OC版的请点[这里](https://github.com/jasnig/ZJScrollPageView)
+### OC版的请点[这里](https://github.com/jasnig/ZJScrollPageView)
 ----
 
-##使用示例效果
+## 使用示例效果
 
 ![更新示例.gif](http://upload-images.jianshu.io/upload_images/1271831-fedc212e01f79347.gif?imageMogr2/auto-orient/strip) ![示例效果1.gif](http://upload-images.jianshu.io/upload_images/1271831-1cff5db09208a125.gif?imageMogr2/auto-orient/strip)  ![示例效果2.gif](http://upload-images.jianshu.io/upload_images/1271831-764800343e557870.gif?imageMogr2/auto-orient/strip)![示例效果3.gif](http://upload-images.jianshu.io/upload_images/1271831-b6ac95954eeb7c0e.gif?imageMogr2/auto-orient/strip)
 
@@ -23,9 +23,9 @@
 ---
 
 ### 书写思路移步
-###[简书1](http://www.jianshu.com/p/b84f4dd96d0c)            
-###[简书2](http://www.jianshu.com/p/6be2597345e4) 
-###[简书3](http://www.jianshu.com/p/273ee7c2a0f5)
+### [简书1](http://www.jianshu.com/p/b84f4dd96d0c)            
+### [简书2](http://www.jianshu.com/p/6be2597345e4) 
+### [简书3](http://www.jianshu.com/p/273ee7c2a0f5)
 
 
 
@@ -39,7 +39,7 @@
 ## Installation
 
 ### CocoaPods
-####1.在你的项目Podfile里面添加下面的内容
+#### 1.在你的项目Podfile里面添加下面的内容
 
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
@@ -47,29 +47,29 @@ use_frameworks!
 
 pod 'ScrollPageView', '~> 0.1.4'
 
-###2.终端中执行命令 pod install
-###3. 使用{Project}.xcworkspace打开项目
+### 2.终端中执行命令 pod install
+### 3. 使用{Project}.xcworkspace打开项目
 
 
 ---
-###或者直接下载将下载文件的ScrollPageView文件夹下的文件拖进您的项目中就可以使用了
+### 或者直接下载将下载文件的ScrollPageView文件夹下的文件拖进您的项目中就可以使用了
 
-###Usage
+### Usage
 ---
-###如果是使用cocoapods安装的需要在使用的文件中
-###import ScrollPageView
+### 如果是使用cocoapods安装的需要在使用的文件中
+### import ScrollPageView
 ---
 
-###特别说明
+### 特别说明
 因为大家可能会复用同一个controller来显示内容, 这里提供两种方法
 * 在对应的controller的viewWillAppear()等生命周期里面可以根据不同的title来显示不同的内容或者刷新视图
 * 新增了一个通知ScrollPageViewDidShowThePageNotification, 你可以监听这个通知来获取到正在显示的页数, 使用的示例可以参照 SegmentStyle里面的说明, 特别需要注意的是如果你的控制器是在storyboard中初始化的那么请重写这个controller的required init?(coder aDecoder: NSCoder), 并在里面注册通知监听者
 
-###Update (更新说明) -- 2016/04/29
+### Update (更新说明) -- 2016/04/29
  * 废弃了前面版本的使用方法(前面使用过的朋友请修改为新的使用方法), 提供了更合理的使用方法, 不需要addChildViewController, 只需要提供一个addChildViewControllers的数组即可
  * 添加了更新titles和childViewControllers的方法, 可以动态的修改和更新显示的内容
 
-####一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
+#### 一. 使用ScrollPageView , 提供了各种效果的组合,但是不能修改segmentView和ContentView的相对位置,两者是结合在一起的
 
 
 		//1. 设置子控制器,类似
@@ -145,7 +145,7 @@ pod 'ScrollPageView', '~> 0.1.4'
 
 	
 	
-####二 使用 ScrollSegmentView 和 ContentView, 提供相同的效果组合, 但是同时可以分离开segmentView和contentView,可以单独设置他们的frame, 使用更灵活
+#### 二 使用 ScrollSegmentView 和 ContentView, 提供相同的效果组合, 但是同时可以分离开segmentView和contentView,可以单独设置他们的frame, 使用更灵活
 
 
 			// 1. 添加子控制器
